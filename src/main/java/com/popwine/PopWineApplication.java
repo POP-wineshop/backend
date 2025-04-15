@@ -1,4 +1,4 @@
-package com.popwine.popwine;
+package com.popwine;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

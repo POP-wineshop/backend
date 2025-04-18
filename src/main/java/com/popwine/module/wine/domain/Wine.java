@@ -1,5 +1,7 @@
-package com.popwine.module.order.domain;
+package com.popwine.module.wine.domain;
 
+import com.popwine.module.wine.domain.vo.Price;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
@@ -15,5 +17,11 @@ public class Wine {
 
     private String name;
 
-    private price;
+
+    @Embedded
+    private Price price;
+
+    private int vintage;
+
+    private String origin;
 }

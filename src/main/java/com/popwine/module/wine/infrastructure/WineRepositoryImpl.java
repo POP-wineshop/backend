@@ -1,5 +1,6 @@
 package com.popwine.module.wine.infrastructure;
 
+
 import com.popwine.module.wine.domain.Wine;
 import com.popwine.module.wine.domain.repository.WineRepository;
 import com.popwine.module.wine.domain.vo.Price;
@@ -42,7 +43,9 @@ public class WineRepositoryImpl implements WineRepository {
 
     @Override
     public List<Wine> findByPriceRange(Price minPrice, Price maxPrice) {
-        // Price 필드가 Embedded 객체이므로, 이 메서드는 별도의 쿼리 메서드나 JPQL을 사용해야 합니다.
-        return List.of(); // 구현 필요
+        // Price 필드가 Embedded 객체이므로, JPA 쿼리에서 직접 사용할 수 없습니다.
+        // 가격 범위를 기준으로 검색하는 쿼리를 작성
+        // return jpaWineRepository.findByPriceBetween(minPrice, maxPrice);
+        return List.of(); // 임시로 빈 리스트 반환
     }
 }

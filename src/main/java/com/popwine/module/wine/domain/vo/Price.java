@@ -1,8 +1,8 @@
 package com.popwine.module.wine.domain.vo;
 
-import lombok.Value;
+import lombok.Getter;
 
-@Value
+@Getter
 public class Price {
     int value;
 

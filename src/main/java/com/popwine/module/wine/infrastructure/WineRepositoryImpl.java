@@ -5,6 +5,7 @@ import com.popwine.module.wine.domain.QWine;
 import com.popwine.module.wine.domain.Wine;
 import com.popwine.module.wine.domain.repository.WineRepository;
 import com.popwine.module.wine.domain.vo.Price;
+import com.popwine.module.wine.domain.vo.WineType;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -68,13 +69,9 @@ public class WineRepositoryImpl implements WineRepository {
         if (region != null && !region.isEmpty()) {
             builder.and(QWine.wine.region.eq(region));
         }
-        if (winery != null && !winery.isEmpty()) {
-            builder.and(QWine.wine.winery.eq(winery));
-        }
         if (wineType != null && !wineType.isEmpty()) {
-            builder.and(QWine.wine.body.eq(wineType));
+            builder.and(QWine.wine.wineType.eq(WineType.from(wineType)));
         }
-
         return jpaQueryFactory.selectFrom(QWine.wine)
                 .where(builder)
                 .fetch();

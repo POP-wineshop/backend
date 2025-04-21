@@ -3,20 +3,20 @@ package com.popwine.module.wine.domain.vo;
 import lombok.Getter;
 
 @Getter
-public enum WIneType {
+public enum WineType {
     RED("Red Wine"),
     WHITE("White Wine"),
     ROSE("Rose Wine"),
     SPARKLING("Sparkling Wine");
 
-    private final String Value;
+    private final String value;
 
-    WIneType(String value) {
-        this.Value = value;
+    WineType(String value) {
+        this.value = value;
     }
 
-    public static WIneType from(String value) {
-        for (WIneType color : WIneType.values()) {
+    public static WineType from(String value) {
+        for (WineType color : WineType.values()) {
             if (color.getValue().equalsIgnoreCase(value)) {
                 return color;
             }

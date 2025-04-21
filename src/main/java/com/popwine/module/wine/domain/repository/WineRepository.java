@@ -13,4 +13,8 @@ public interface WineRepository {
      List<Wine> findByRegion(String region);
      List<Wine> findByGrapeVariety(String grapeVariety);
      List<Wine> findByPriceRange(Price minPrice, Price maxPrice);
+
+     List<Wine> findByCategoryIdsContainingAny(List<Long> categoryIds);
+
+     List<Wine> findByDynamicFilters(String country, String region, String winery, String wineType);
 }

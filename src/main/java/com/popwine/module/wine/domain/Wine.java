@@ -26,7 +26,7 @@ public class Wine {
     private String origin;
 
     @ElementCollection
-    @CollectionTable(name = "wine_categoty", joinColumns = @JoinColumn(name = "wine_id"))
+    @CollectionTable(name = "wine_category", joinColumns = @JoinColumn(name = "wine_id"))
     @Column(name = "category_id")
     private List<Long> categoryIDs;
     private String grapeVariety;

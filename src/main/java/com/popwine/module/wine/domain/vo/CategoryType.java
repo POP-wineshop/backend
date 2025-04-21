@@ -6,11 +6,11 @@ import lombok.Getter;
 
 @Getter
 public enum CategoryType {
-    ORIGIN("나라"),
-    REGION("지역"),
-    GRAPE_VARIETY("포도 품종"),
-    WINE_TYPE("와인 타입"),
-    WINERY("와이너리");
+    ORIGIN("ORGIN"),
+    REGION("REGION"),
+    GRAPE_VARIETY("GRAPE_VARIETY"),
+    WINE_TYPE("WINE_TYPE"),
+    WINERY("WINERY"),;
 
     private final String value;
 

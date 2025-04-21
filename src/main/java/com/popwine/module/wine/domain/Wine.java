@@ -1,6 +1,7 @@
 package com.popwine.module.wine.domain;
 
 import com.popwine.module.wine.domain.vo.Price;
+import com.popwine.module.wine.domain.vo.WineType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -30,6 +31,9 @@ public class Wine {
     @Column(name = "category_id")
     private List<Long> categoryIDs;
     private String grapeVariety;
+
+    @Enumerated(EnumType.STRING)
+    private WineType wineType;
 
     private String region;
     private String winery;

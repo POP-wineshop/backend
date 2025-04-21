@@ -16,9 +16,9 @@ public enum WineType {
     }
 
     public static WineType from(String value) {
-        for (WineType color : WineType.values()) {
-            if (color.getValue().equalsIgnoreCase(value)) {
-                return color;
+        for (WineType wineType : WineType.values()) {
+            if (wineType.getValue().equalsIgnoreCase(value)) {
+                return wineType;
             }
 
         }

@@ -30,13 +30,18 @@ public class WineService {
 
     //2. 카테고리 와인 조회
     @Transactional(readOnly = true)
-    public List<WineResponseDto> findWinesByCategories(List<Long> categoryIds) {
-            List<Wine> wines = wineRepository.findByCategoryIdsContainingAny(categoryIds);
+    public List<WineResponseDto> findWinesByCategories(String counry, String region,String wineType) {
+            List<Wine> wines = wineRepository.findByDynamicFilters(counry, region, wineType);
         return wines.stream()
                 .map(WineResponseDto::from)
                 .collect(Collectors.toList());
     }
 
-
+    //3. 와인 ID통해 상세정보 조회
+    public WineResponseDto getWineById(Long id) {
+        return wineRepository.findById(id)
+                .map(WineResponseDto::from)
+                .orElseThrow(() -> new IllegalArgumentException("와인을 찾을 수 없습니다: " + id));
+    }
 }
 

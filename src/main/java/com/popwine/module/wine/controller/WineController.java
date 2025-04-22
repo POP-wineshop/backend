@@ -21,7 +21,16 @@ public class WineController {
         return wineService.getAllWines();
     }
 
-    //특정 카테고리 와인 조회(다중 카테고리 가능)
+    //2. 카테고리 와인 조회
+    @GetMapping("/category")
+    public List<WineResponseDto> findWinesByCategories(String country, String region, String wineType) {
+        return wineService.findWinesByCategories(country, region, wineType);
+    }
+    //3. 와인 상세정보 조회
+    @GetMapping("/{id}")
+    public WineResponseDto getWineById(Long id) {
+        return wineService.getWineById(id);
+    }
     }
 
 

@@ -1,19 +1,21 @@
 package com.popwine.module.wine.domain;
 
 import com.popwine.module.wine.domain.vo.Price;
+import com.popwine.module.wine.domain.vo.TasteProfile;
 import com.popwine.module.wine.domain.vo.WineType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
+@AllArgsConstructor
 public class Wine {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -41,11 +43,10 @@ public class Wine {
     private String tastingNote;
     private String foodPairing;
     private String description;
-    private String color;
-    private String sweetness;
-    private String acidity;
-    private String tannin;
-    private String body;
+
+    @Embedded//당도, 산도, 타닌, 바디
+    private TasteProfile tasteProfile;
+
     private String imageUrl;
 
     public void addCategory(Long categoryId) {

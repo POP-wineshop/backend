@@ -2,6 +2,8 @@ package com.popwine.module.wine.controller;
 
 
 import com.popwine.module.wine.domain.Wine;
+import com.popwine.module.wine.domain.vo.TasteProfile;
+import com.popwine.module.wine.domain.vo.WineType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -16,6 +18,8 @@ public class WineResponseDto {
     private final String grapeVariety;
     private final String region;
     private final String imageUrl;
+    private final TasteProfile tasteProfile;
+    private final WineType wineType;
 
     public static WineResponseDto from(Wine wine) {
         return new WineResponseDto(
@@ -26,7 +30,9 @@ public class WineResponseDto {
                 wine.getOrigin(),
                 wine.getGrapeVariety(),
                 wine.getRegion(),
-                wine.getImageUrl()
+                wine.getImageUrl(),
+                wine.getTasteProfile(),
+                wine.getWineType()
         );
     }
 }

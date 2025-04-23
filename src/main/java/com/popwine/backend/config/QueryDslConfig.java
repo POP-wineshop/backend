@@ -1,4 +1,4 @@
-package com.popwine.config;
+package com.popwine.backend.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

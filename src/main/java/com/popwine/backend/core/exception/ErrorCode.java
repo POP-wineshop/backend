@@ -1,4 +1,4 @@
-package com.popwine.core.exception;
+package com.popwine.backend.core.exception;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

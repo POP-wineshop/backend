@@ -1,4 +1,4 @@
-package com.popwine.core.exception;
+package com.popwine.backend.core.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,12 +1,13 @@
-package com.popwine.module.wine.domain;
+package com.popwine.backend.module.wine.domain;
 
-import com.popwine.module.wine.domain.vo.CategoryType;
+import com.popwine.backend.module.wine.domain.vo.CategoryType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "category")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category {

@@ -1,14 +1,15 @@
-package com.popwine.module.wine.domain;
+package com.popwine.backend.module.wine.domain;
 
-import com.popwine.module.wine.domain.vo.Price;
-import com.popwine.module.wine.domain.vo.TasteProfile;
-import com.popwine.module.wine.domain.vo.WineType;
+import com.popwine.backend.module.wine.domain.vo.Price;
+import com.popwine.backend.module.wine.domain.vo.WineType;
+import com.popwine.backend.module.wine.domain.vo.TasteProfile;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 
 @Entity
+@Table(name = "wine")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder

@@ -1,9 +1,9 @@
-package com.popwine.module.wine.controller;
+package com.popwine.backend.module.wine.controller;
 
 
-import com.popwine.module.wine.domain.Wine;
-import com.popwine.module.wine.domain.vo.TasteProfile;
-import com.popwine.module.wine.domain.vo.WineType;
+import com.popwine.backend.module.wine.domain.Wine;
+import com.popwine.backend.module.wine.domain.vo.TasteProfile;
+import com.popwine.backend.module.wine.domain.vo.WineType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

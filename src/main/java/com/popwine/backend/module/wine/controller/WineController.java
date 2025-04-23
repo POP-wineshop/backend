@@ -1,8 +1,9 @@
-package com.popwine.module.wine.controller;
+package com.popwine.backend.module.wine.controller;
 
-import com.popwine.module.wine.application.WineService;
+import com.popwine.backend.module.wine.application.WineService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +29,7 @@ public class WineController {
     }
     //3. 와인 상세정보 조회
     @GetMapping("/{id}")
-    public WineResponseDto getWineById(Long id) {
+    public WineResponseDto getWineById(@PathVariable Long id) {
         return wineService.getWineById(id);
     }
     }

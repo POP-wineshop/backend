@@ -1,7 +1,6 @@
-package com.popwine.module.wine.domain.repository;
+package com.popwine.backend.module.wine.domain.repository;
 
-import com.popwine.module.wine.domain.Wine;
-import com.popwine.module.wine.domain.vo.Price;
+import com.popwine.backend.module.wine.domain.Wine;
 
 import java.util.List;
 import java.util.Optional;

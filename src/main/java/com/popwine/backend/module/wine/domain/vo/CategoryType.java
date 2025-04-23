@@ -1,4 +1,4 @@
-package com.popwine.module.wine.domain.vo;
+package com.popwine.backend.module.wine.domain.vo;
 
 
 import lombok.Getter;
@@ -6,11 +6,11 @@ import lombok.Getter;
 
 @Getter
 public enum CategoryType {
-    ORIGIN("ORGIN"),
-    REGION("REGION"),
-    GRAPE_VARIETY("GRAPE_VARIETY"),
-    WINE_TYPE("WINE_TYPE"),
-    WINERY("WINERY"),;
+        ORIGIN("Origin"),
+    REGION("Region"),
+    GRAPE_VARIETY("Grape Variety"),
+    WINE_TYPE("Wine Type"),
+    WINERY("Winery"),;
 
     private final String value;
 

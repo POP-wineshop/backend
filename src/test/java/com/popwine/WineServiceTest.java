@@ -1,12 +1,12 @@
 package com.popwine;
 
-import com.popwine.module.wine.application.WineService;
-import com.popwine.module.wine.controller.WineResponseDto;
-import com.popwine.module.wine.domain.Wine;
-import com.popwine.module.wine.domain.repository.WineRepository;
-import com.popwine.module.wine.domain.vo.Price;
-import com.popwine.module.wine.domain.vo.TasteProfile;
-import com.popwine.module.wine.domain.vo.WineType;
+import com.popwine.backend.module.wine.application.WineService;
+import com.popwine.backend.module.wine.controller.WineResponseDto;
+import com.popwine.backend.module.wine.domain.Wine;
+import com.popwine.backend.module.wine.domain.repository.WineRepository;
+import com.popwine.backend.module.wine.domain.vo.Price;
+import com.popwine.backend.module.wine.domain.vo.TasteProfile;
+import com.popwine.backend.module.wine.domain.vo.WineType;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

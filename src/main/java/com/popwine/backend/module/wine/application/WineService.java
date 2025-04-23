@@ -1,9 +1,8 @@
-package com.popwine.module.wine.application;
+package com.popwine.backend.module.wine.application;
 
-import com.popwine.module.wine.controller.WineResponseDto;
-import com.popwine.module.wine.domain.Wine;
-import com.popwine.module.wine.domain.repository.CategoryRepository;
-import com.popwine.module.wine.domain.repository.WineRepository;
+import com.popwine.backend.module.wine.domain.repository.WineRepository;
+import com.popwine.backend.module.wine.controller.WineResponseDto;
+import com.popwine.backend.module.wine.domain.Wine;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +15,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class WineService {
     private final WineRepository wineRepository;
-    private final CategoryRepository categoryRepository;
 
 
     //1. 모든 와인 조회
@@ -30,8 +28,8 @@ public class WineService {
 
     //2. 카테고리 와인 조회
     @Transactional(readOnly = true)
-    public List<WineResponseDto> findWinesByCategories(String counry, String region,String wineType) {
-            List<Wine> wines = wineRepository.findByDynamicFilters(counry, region, wineType);
+    public List<WineResponseDto> findWinesByCategories(String country, String region,String wineType) {
+            List<Wine> wines = wineRepository.findByDynamicFilters(country, region, wineType);
         return wines.stream()
                 .map(WineResponseDto::from)
                 .collect(Collectors.toList());

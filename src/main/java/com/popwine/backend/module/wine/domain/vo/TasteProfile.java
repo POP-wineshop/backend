@@ -8,15 +8,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class TasteProfile {
-    private String sweetness;
-    private String acidity;
-    private String tannin;
-    private String body;
+    private int sweetness;
+    private int acidity;
+    private int body;
 
-    public TasteProfile(String sweetness, String acidity, String tannin, String body) {
+    public TasteProfile(int sweetness, int acidity,  int body) {
         this.sweetness = sweetness;
         this.acidity = acidity;
-        this.tannin = tannin;
         this.body = body;
     }
 }

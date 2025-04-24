@@ -1,9 +1,9 @@
 package com.popwine.backend.module.wine.controller;
 
 
-import com.popwine.backend.module.wine.domain.Wine;
+import com.popwine.backend.module.wine.domain.entity.Wine;
 import com.popwine.backend.module.wine.domain.vo.TasteProfile;
-import com.popwine.backend.module.wine.domain.vo.WineType;
+import com.popwine.backend.module.wine.domain.enums.WineType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -24,7 +24,7 @@ public class WineResponseDto {
     public static WineResponseDto from(Wine wine) {
         return new WineResponseDto(
                 wine.getId(),
-                wine.getName(),
+                wine.getName().name(),
                 wine.getPrice().getValue(),
                 wine.getVintage(),
                 wine.getOrigin(),

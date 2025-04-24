@@ -3,8 +3,8 @@ package com.popwine.backend.module.wine.infrastructure;
 
 import com.popwine.backend.module.wine.domain.QWine;
 import com.popwine.backend.module.wine.domain.repository.WineRepository;
-import com.popwine.backend.module.wine.domain.Wine;
-import com.popwine.backend.module.wine.domain.vo.WineType;
+import com.popwine.backend.module.wine.domain.entity.Wine;
+import com.popwine.backend.module.wine.domain.enums.WineType;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.popwine.backend.module.wine.domain.repository;
 
-import com.popwine.backend.module.wine.domain.Category;
+import com.popwine.backend.module.wine.domain.entity.Category;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

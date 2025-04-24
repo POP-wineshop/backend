@@ -2,7 +2,7 @@ package com.popwine.backend.module.wine.application;
 
 import com.popwine.backend.module.wine.domain.repository.WineRepository;
 import com.popwine.backend.module.wine.controller.WineResponseDto;
-import com.popwine.backend.module.wine.domain.Wine;
+import com.popwine.backend.module.wine.domain.entity.Wine;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,6 +1,6 @@
 package com.popwine.backend.module.wine.infrastructure;
 
-import com.popwine.backend.module.wine.domain.Wine;
+import com.popwine.backend.module.wine.domain.entity.Wine;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

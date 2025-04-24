@@ -1,5 +1,6 @@
 package com.popwine.backend.module.wine.controller;
 
+import com.popwine.backend.core.response.ApiResponse;
 import com.popwine.backend.module.wine.application.WineService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,19 +19,19 @@ public class WineController {
 
     //1. 모든 와인 조회
     @GetMapping
-    public List<WineResponseDto> getAllWines() {
-        return wineService.getAllWines();
+    public ApiResponse<List<WineResponseDto>> getAllWines() {
+        return ApiResponse.success(wineService.getAllWines());
     }
 
     //2. 카테고리 와인 조회
     @GetMapping("/category")
-    public List<WineResponseDto> findWinesByCategories(String country, String region, String wineType) {
-        return wineService.findWinesByCategories(country, region, wineType);
+    public ApiResponse< List<WineResponseDto>> findWinesByCategories(String country, String region, String wineType) {
+        return ApiResponse.success(wineService.findWinesByCategories(country, region, wineType));
     }
     //3. 와인 상세정보 조회
     @GetMapping("/{id}")
-    public WineResponseDto getWineById(@PathVariable Long id) {
-        return wineService.getWineById(id);
+    public ApiResponse<WineResponseDto> getWineById(@PathVariable Long id) {
+        return ApiResponse.success(wineService.getWineById(id));
     }
     }
 

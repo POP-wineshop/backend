@@ -1,5 +1,6 @@
 package com.popwine.backend.module.wine.domain.entity;
 
+import com.popwine.backend.core.BaseTimeEntity;
 import com.popwine.backend.module.wine.domain.vo.Price;
 import com.popwine.backend.module.wine.domain.enums.WineType;
 import com.popwine.backend.module.wine.domain.vo.TasteProfile;
@@ -15,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @AllArgsConstructor
-public class Wine {
+public class Wine extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

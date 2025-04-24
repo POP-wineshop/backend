@@ -2,11 +2,12 @@ package com.popwine;
 
 import com.popwine.backend.module.wine.application.WineService;
 import com.popwine.backend.module.wine.controller.WineResponseDto;
-import com.popwine.backend.module.wine.domain.Wine;
+import com.popwine.backend.module.wine.domain.entity.Wine;
 import com.popwine.backend.module.wine.domain.repository.WineRepository;
 import com.popwine.backend.module.wine.domain.vo.Price;
 import com.popwine.backend.module.wine.domain.vo.TasteProfile;
-import com.popwine.backend.module.wine.domain.vo.WineType;
+import com.popwine.backend.module.wine.domain.enums.WineType;
+import com.popwine.backend.module.wine.domain.vo.WineName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -35,7 +36,7 @@ class WineServiceTest {
         //Given
         Wine wine = Wine.builder()
                 .id(1L)
-                .name("Chateau Margaux")
+                .name(new WineName("샤또 마고", "Chateau Margaux"))
                 .price(new Price(150000))
                 .vintage(2020)
                 .origin("France")
@@ -46,7 +47,7 @@ class WineServiceTest {
 
         Wine wine2 = Wine.builder()
                 .id(2L)
-                .name("Opus One")
+                .name(new WineName("오푸스 원", "Opus One"))
                 .price(new Price(200000))
                 .vintage(2018)
                 .region("Napa Valley")
@@ -80,7 +81,7 @@ class WineServiceTest {
 
         Wine wine = Wine.builder()
                 .id(1L)
-                .name("Chateau Margaux")
+                .name(new WineName("샤또 마고", "Chateau Margaux"))
                 .price(new Price(150000))
                 .vintage(2020)
                 .origin(country)
@@ -88,7 +89,7 @@ class WineServiceTest {
                 .grapeVariety("Cabernet Sauvignon")
                 .wineType(WineType.valueOf(wineTypeString)) // enum으로 변환
                 .imageUrl("https://example.com/image.jpg")
-                .tasteProfile(new TasteProfile("Dry", "Medium", "Low", "Medium"))
+                .tasteProfile(new TasteProfile(3,3,3)) // 예시로 TasteProfile 객체 생성
                 .build();
 
         when(wineRepository.findByDynamicFilters(country, region, wineTypeString))
@@ -111,7 +112,7 @@ class WineServiceTest {
 
         Wine wine = Wine.builder()
                 .id(wineId)
-                .name("Chateau Margaux")
+                .name(new WineName("샤또 마고", "Chateau Margaux"))
                 .price(new Price(150000))
                 .vintage(2020)
                 .origin("France")
@@ -119,7 +120,7 @@ class WineServiceTest {
                 .grapeVariety("Cabernet Sauvignon")
                 .wineType(WineType.RED)
                 .imageUrl("https://example.com/image.jpg")
-                .tasteProfile(new TasteProfile("Dry", "Medium", "Low", "Medium"))
+                .tasteProfile(new TasteProfile(3,3,3))
                 .build();
 
         when(wineRepository.findById(wineId)).thenReturn(java.util.Optional.of(wine));

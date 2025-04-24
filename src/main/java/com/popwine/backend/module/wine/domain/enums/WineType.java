@@ -1,4 +1,4 @@
-package com.popwine.backend.module.wine.domain.vo;
+package com.popwine.backend.module.wine.domain.enums;
 
 import lombok.Getter;
 

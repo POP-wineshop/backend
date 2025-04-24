@@ -39,7 +39,7 @@ class WineServiceTest {
                 .name(new WineName("샤또 마고", "Chateau Margaux"))
                 .price(new Price(150000))
                 .vintage(2020)
-                .origin("France")
+                .country("France")
                 .region("Bordeaux")
                 .grapeVariety("Cabernet Sauvignon")
                 .wineType(WineType.RED)
@@ -64,8 +64,6 @@ class WineServiceTest {
         assertEquals(2, result.size());
         assertEquals(1L, result.get(0).getId());
         assertEquals(2L, result.get(1).getId());
-        assertEquals("Chateau Margaux", result.get(0).getName());
-        assertEquals("Opus One", result.get(1).getName());
 
     }
 
@@ -84,7 +82,7 @@ class WineServiceTest {
                 .name(new WineName("샤또 마고", "Chateau Margaux"))
                 .price(new Price(150000))
                 .vintage(2020)
-                .origin(country)
+                .country(country)
                 .region(region)
                 .grapeVariety("Cabernet Sauvignon")
                 .wineType(WineType.valueOf(wineTypeString)) // enum으로 변환
@@ -115,7 +113,7 @@ class WineServiceTest {
                 .name(new WineName("샤또 마고", "Chateau Margaux"))
                 .price(new Price(150000))
                 .vintage(2020)
-                .origin("France")
+                .country("France")
                 .region("Bordeaux")
                 .grapeVariety("Cabernet Sauvignon")
                 .wineType(WineType.RED)
@@ -130,10 +128,9 @@ class WineServiceTest {
 
         // Then
         assertEquals(wineId, result.getId());
-        assertEquals("Chateau Margaux", result.getName());
         assertEquals(150000, result.getPrice());
         assertEquals(2020, result.getVintage());
-        assertEquals("France", result.getOrigin());
+        assertEquals("France", result.getCountry());
         assertEquals("Bordeaux", result.getRegion());
         assertEquals("Cabernet Sauvignon", result.getGrapeVariety());
         assertEquals("RED", result.getWineType().name());

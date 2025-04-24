@@ -11,7 +11,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class WineResponseDto {
     private final Long id;
-    private final String name;
+    private final String KorName;
+    private final String EngName;
     private final int price;
     private final int vintage;
     private final String origin;
@@ -24,7 +25,8 @@ public class WineResponseDto {
     public static WineResponseDto from(Wine wine) {
         return new WineResponseDto(
                 wine.getId(),
-                wine.getName().name(),
+                wine.getName().getKorean(),
+                wine.getName().getEnglish(),
                 wine.getPrice().getValue(),
                 wine.getVintage(),
                 wine.getOrigin(),

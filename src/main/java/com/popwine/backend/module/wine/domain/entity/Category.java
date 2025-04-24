@@ -1,6 +1,6 @@
-package com.popwine.backend.module.wine.domain;
+package com.popwine.backend.module.wine.domain.entity;
 
-import com.popwine.backend.module.wine.domain.vo.CategoryType;
+import com.popwine.backend.module.wine.domain.enums.CategoryType;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

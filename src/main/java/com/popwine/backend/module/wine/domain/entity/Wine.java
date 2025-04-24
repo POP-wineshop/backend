@@ -1,7 +1,8 @@
-package com.popwine.backend.module.wine.domain;
+package com.popwine.backend.module.wine.domain.entity;
 
+import com.popwine.backend.module.wine.domain.enums.Name;
 import com.popwine.backend.module.wine.domain.vo.Price;
-import com.popwine.backend.module.wine.domain.vo.WineType;
+import com.popwine.backend.module.wine.domain.enums.WineType;
 import com.popwine.backend.module.wine.domain.vo.TasteProfile;
 import jakarta.persistence.*;
 import lombok.*;
@@ -19,8 +20,8 @@ public class Wine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
+    @Enumerated(EnumType.STRING)
+    private Name name;
 
     @Embedded
     private Price price;

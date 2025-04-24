@@ -32,7 +32,7 @@ public class Wine {
     private int vintage;
 
     //와인 원산지
-    private String origin;
+    private String country;
 
     //와인 카테고리
     @ElementCollection

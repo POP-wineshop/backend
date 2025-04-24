@@ -15,7 +15,7 @@ public class WineResponseDto {
     private final String EngName;
     private final int price;
     private final int vintage;
-    private final String origin;
+    private final String country;
     private final String grapeVariety;
     private final String region;
     private final String imageUrl;
@@ -29,7 +29,7 @@ public class WineResponseDto {
                 wine.getName().getEnglish(),
                 wine.getPrice().getValue(),
                 wine.getVintage(),
-                wine.getOrigin(),
+                wine.getCountry(),
                 wine.getGrapeVariety(),
                 wine.getRegion(),
                 wine.getImageUrl(),

@@ -1,7 +1,8 @@
 package com.popwine.backend.module.wine.infrastructure;
 
 
-import com.popwine.backend.module.wine.domain.QWine;
+
+import com.popwine.backend.module.wine.domain.entity.QWine;
 import com.popwine.backend.module.wine.domain.repository.WineRepository;
 import com.popwine.backend.module.wine.domain.entity.Wine;
 import com.popwine.backend.module.wine.domain.enums.WineType;
@@ -49,7 +50,7 @@ public class WineRepositoryImpl implements WineRepository {
         BooleanBuilder builder = new BooleanBuilder();
 
         if (country != null && !country.isEmpty()) {
-            builder.and(QWine.wine.origin.eq(country));
+            builder.and(QWine.wine.country.eq(country));
         }
         if (region != null && !region.isEmpty()) {
             builder.and(QWine.wine.region.eq(region));

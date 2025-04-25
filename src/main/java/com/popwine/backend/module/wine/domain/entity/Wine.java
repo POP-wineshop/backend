@@ -8,6 +8,7 @@ import com.popwine.backend.module.wine.domain.vo.WineName;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -62,4 +63,13 @@ public class Wine extends BaseTimeEntity {
 
     //와인 이미지 URL
     private String imageUrl;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WineCategory> wineCategories = new ArrayList<>();
+
+    public void addCategory(Category category) {
+        this.wineCategories.add(new WineCategory(this, category));
+    }
 }
+

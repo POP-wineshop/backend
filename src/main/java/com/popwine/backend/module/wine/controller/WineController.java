@@ -2,6 +2,8 @@ package com.popwine.backend.module.wine.controller;
 
 import com.popwine.backend.core.response.ApiResponse;
 import com.popwine.backend.module.wine.application.WineService;
+import com.popwine.backend.module.wine.controller.dto.WineRequestDto;
+import com.popwine.backend.module.wine.controller.dto.WineResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +28,14 @@ public class WineController {
     (@RequestParam List<Long> categoryIds) {
         return ApiResponse.success(wineService.getWinesByCategory(categoryIds));
     }
-    //3. 와인 상세정보 조회
+
+    //3. 와인 상세 정보 조회
     @GetMapping("/{id}")
     public ApiResponse<WineResponseDto> getWineById(@PathVariable Long id) {
         return ApiResponse.success(wineService.getWineById(id));
     }
-    }
 
+
+}
 
 

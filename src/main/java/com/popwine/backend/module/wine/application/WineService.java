@@ -28,9 +28,9 @@ public class WineService {
 
     //2. 카테고리 와인 조회
     @Transactional(readOnly = true)
-    public List<WineResponseDto> findWinesByCategories(String country, String region,String wineType) {
-            List<Wine> wines = wineRepository.findByDynamicFilters(country, region, wineType);
-        return wines.stream()
+    public List<WineResponseDto> getWinesByCategory(List<Long> categoryIds) {
+        return wineRepository.findByCategoryFilters(categoryIds)
+                .stream()
                 .map(WineResponseDto::from)
                 .collect(Collectors.toList());
     }

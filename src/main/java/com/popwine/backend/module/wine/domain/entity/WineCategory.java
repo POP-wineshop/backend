@@ -1,27 +1,32 @@
 package com.popwine.backend.module.wine.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "wine_category")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class WineCategory {
 
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long wineId;
-    private Long categoryId;
+    // 와인 연관관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wine_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Wine wine;
 
-    public WineCategory(Long wineId, Long categoryId) {
-        this.wineId = wineId;
-        this.categoryId = categoryId;
+    // 카테고리 연관관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    private Category category;
+
+    public WineCategory(Wine wine, Category category) {
+        this.wine = wine;
+        this.category = category;
     }
 }

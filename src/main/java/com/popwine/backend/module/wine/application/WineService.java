@@ -1,7 +1,11 @@
 package com.popwine.backend.module.wine.application;
 
+import com.popwine.backend.module.wine.controller.dto.WineRequestDto;
+import com.popwine.backend.module.wine.domain.entity.Category;
+import com.popwine.backend.module.wine.domain.enums.CategoryType;
+import com.popwine.backend.module.wine.domain.repository.CategoryRepository;
 import com.popwine.backend.module.wine.domain.repository.WineRepository;
-import com.popwine.backend.module.wine.controller.WineResponseDto;
+import com.popwine.backend.module.wine.controller.dto.WineResponseDto;
 import com.popwine.backend.module.wine.domain.entity.Wine;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +19,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class WineService {
     private final WineRepository wineRepository;
+    private final CategoryRepository categoryRepository;
 
 
     //1. 모든 와인 조회
@@ -41,5 +46,28 @@ public class WineService {
                 .map(WineResponseDto::from)
                 .orElseThrow(() -> new IllegalArgumentException("와인을 찾을 수 없습니다: " + id));
     }
+
+    //4. 와인 등록 (관리자용)
+    @Transactional
+    public WineResponseDto createWine(WineRequestDto dto) {
+        Wine wine = dto.toEntity();
+
+        Category countryCategory = getOrCreateCategory(dto.getCountry(), CategoryType.COUNTRY);
+        Category regionCategory = getOrCreateCategory(dto.getRegion(), CategoryType.REGION);
+        Category wineTypeCategory = getOrCreateCategory(dto.getWineType().name(), CategoryType.WINE_TYPE);
+
+        wine.addCategory(countryCategory);
+        wine.addCategory(regionCategory);
+        wine.addCategory(wineTypeCategory);
+
+        Wine saved = wineRepository.save(wine);
+        return WineResponseDto.from(saved);
+    }
+
+    private Category getOrCreateCategory(String name, CategoryType type) {
+        return categoryRepository.findByNameAndType(name, type)
+                .orElseGet(() -> categoryRepository.save(new Category(name, type)));
+    }
+
 }
 

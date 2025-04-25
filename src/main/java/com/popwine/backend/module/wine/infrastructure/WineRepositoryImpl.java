@@ -3,6 +3,7 @@ package com.popwine.backend.module.wine.infrastructure;
 
 
 import com.popwine.backend.module.wine.domain.entity.QWine;
+import com.popwine.backend.module.wine.domain.entity.QWineCategory;
 import com.popwine.backend.module.wine.domain.repository.WineRepository;
 import com.popwine.backend.module.wine.domain.entity.Wine;
 import com.popwine.backend.module.wine.domain.enums.WineType;
@@ -45,21 +46,22 @@ public class WineRepositoryImpl implements WineRepository {
     public List<Wine> findByGrapeVariety(String grapeVariety) {
         return jpaWineRepository.findByGrapeVariety(grapeVariety);
     }
-    @Override
-    public List<Wine> findByDynamicFilters(String country, String region, String wineType) {
-        BooleanBuilder builder = new BooleanBuilder();
 
-        if (country != null && !country.isEmpty()) {
-            builder.and(QWine.wine.country.eq(country));
+    @Override
+    public List<Wine> findByCategoryFilters(List<Long> categoryIds) {
+        QWine wine = QWine.wine;
+        QWineCategory wineCategory = QWineCategory.wineCategory;
+
+        if (categoryIds == null || categoryIds.isEmpty()) {
+                return jpaQueryFactory.selectFrom(wine).fetch();
         }
-        if (region != null && !region.isEmpty()) {
-            builder.and(QWine.wine.region.eq(region));
-        }
-        if (wineType != null && !wineType.isEmpty()) {
-            builder.and(QWine.wine.wineType.eq(WineType.from(wineType)));
-        }
-        return jpaQueryFactory.selectFrom(QWine.wine)
-                .where(builder)
+
+        return jpaQueryFactory
+                .selectFrom(wine)
+                .join(wineCategory).on(wine.id.eq(wineCategory.wineId))
+                .where(wineCategory.categoryId.in(categoryIds))
+                .groupBy(wine.id)
+                .having(wineCategory.categoryId.countDistinct().eq((long) categoryIds.size()))
                 .fetch();
     }
 }

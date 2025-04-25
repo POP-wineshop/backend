@@ -35,12 +35,6 @@ public class Wine extends BaseTimeEntity {
     //와인 원산지
     private String country;
 
-    //와인 카테고리
-    @ElementCollection
-    @CollectionTable(name = "wine_category", joinColumns = @JoinColumn(name = "wine_id"))
-    @Column(name = "category_id")
-    private List<Long> categoryIDs;
-
     //와인 포도 품종
     private String grapeVariety;
 

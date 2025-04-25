@@ -1,4 +1,4 @@
-package com.popwine.backend.module.wine.controller;
+package com.popwine.backend.module.wine.controller.dto;
 
 
 import com.popwine.backend.module.wine.domain.entity.Wine;

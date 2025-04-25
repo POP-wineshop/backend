@@ -12,4 +12,7 @@ public interface WineRepository {
      List<Wine> findByRegion(String region);
      List<Wine> findByGrapeVariety(String grapeVariety);
      List<Wine> findByCategoryFilters(List<Long> categoryIds);
+     Wine save(Wine wine);
+
+
 }

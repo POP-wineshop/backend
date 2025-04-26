@@ -1,11 +1,9 @@
-package com.popwine.module.order.domain.vo;
+package com.popwine.backend.module.order.domain.enums;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 
 @Getter
-@RequiredArgsConstructor
 public enum Orderstatus {
     PENDING("주문 대기중"),
     PROCESSING("처리중"),
@@ -15,7 +13,14 @@ public enum Orderstatus {
 
     private final String value;
 
+    Orderstatus(String value) {
+        this.value = value;
+    }
+
     public static Orderstatus fromString(String value) throws BadRequestException {
+        if (value == null || value.isEmpty()) {
+            throw new BadRequestException("주문 상태는 null 또는 빈 문자열일 수 없습니다.");
+        }
         for (Orderstatus orderstatus : Orderstatus.values()) {
             if(orderstatus.value.equalsIgnoreCase(value)) {
                 return orderstatus;

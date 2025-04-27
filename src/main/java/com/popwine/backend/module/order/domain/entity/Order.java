@@ -1,11 +1,12 @@
 package com.popwine.backend.module.order.domain.entity;
 
+import com.popwine.backend.core.BaseTimeEntity;
 import com.popwine.backend.module.order.domain.enums.Orderstatus;
-import com.popwine.backend.module.order.domain.vo.OrderedWineInfo;
+import com.popwine.backend.module.order.domain.vo.OrderItem;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -13,25 +14,22 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    //주문 상태
     @Enumerated(EnumType.STRING)
     private Orderstatus orderstatus;
-
-
 
     // 주문자 이름
     private String ordererName;
 
-    // 주문한 와인 정보 (스냅샷)
-    @Embedded
-    private OrderedWineInfo wineInfo;
-
-    // 주문 시간
-    private LocalDateTime orderedAt;
-
+    //주문 아이템
+    @ElementCollection
+    @CollectionTable(name = "order_item", joinColumns = @JoinColumn(name = "order_id"))
+    private List<OrderItem> orderItems = new ArrayList<>();
 }

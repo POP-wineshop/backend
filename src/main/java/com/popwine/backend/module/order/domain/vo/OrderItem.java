@@ -20,10 +20,10 @@ public class OrderItem {
     private int winePrice;
 
     //주문 수량
-    private int orderedQuantity;
+    private OrderedQuantity orderedQuantity;
 
     //총 주문 금액
-    private int orderedPrice;
+    private OrderedPrice orderedPrice;
 
     //와인 이미지 URL
     private String wineImageUrl;

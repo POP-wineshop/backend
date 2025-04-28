@@ -7,8 +7,7 @@ import org.apache.coyote.BadRequestException;
 public enum Orderstatus {
     PENDING("주문 대기중"),
     PROCESSING("처리중"),
-    SHIPPED("배송중"),
-    DELIVERED("배송완료"),
+    COMPLETED("주문 완료"),
     CANCELED("취소됨");
 
     private final String value;

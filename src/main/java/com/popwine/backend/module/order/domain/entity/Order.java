@@ -25,11 +25,33 @@ public class Order extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Orderstatus orderstatus;
 
-    // 주문자 이름
-    private String ordererName;
+
+
+    //TODO 주문자 이름 + 어떤 인증 키를 쓸 건지 추후 정의
+//    private String ordererName;
 
     //주문 아이템
     @ElementCollection
     @CollectionTable(name = "order_item", joinColumns = @JoinColumn(name = "order_id"))
     private List<OrderItem> orderItems = new ArrayList<>();
+
+
+    // ✅ 장바구니 상품 수량 수정
+    public void updateItemQuantity(Long wineId, int newQuantity) {
+        for (OrderItem item : orderItems) {
+            if (item.getWineId().equals(wineId)) {
+                item.updateQuantity(newQuantity);
+                break;
+            }
+        }
+    }
+    // ✅ 장바구니 상품 삭제
+    public void deleteItem(Long wineId) {
+        orderItems.removeIf(item -> item.getWineId().equals(wineId));
+    }
+
+    // ✅ 결제 완료 처리
+    public void complete() {
+        this.orderstatus = Orderstatus.COMPLETED;
+    }
 }

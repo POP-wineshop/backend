@@ -1,5 +1,6 @@
 package com.popwine.backend.module.order.domain.vo;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
@@ -14,9 +15,11 @@ public class OrderItem {
     private Long wineId;
 
     //와인 이름
+    @Column(name = "wine_name_kor")
     private String wineNameKor;
 
     //개별 와인 가격
+    @Column(name = "wine_price")
     private int winePrice;
 
     //주문 수량
@@ -29,4 +32,9 @@ public class OrderItem {
     private String wineImageUrl;
 
 
+    // ✅ 수량 업데이트 메서드
+    public void updateQuantity(int quantity) {
+        this.orderedQuantity = OrderedQuantity.of(quantity);
+        this.orderedPrice = OrderedPrice.of(this.winePrice, this.orderedQuantity);
+    }
 }

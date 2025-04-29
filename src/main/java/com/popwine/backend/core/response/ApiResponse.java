@@ -14,10 +14,18 @@ public class ApiResponse<T> {
         return new ApiResponse<>(200, "성공", data);
     }
 
+    // 성공 응답 생성 (데이터 없음)
+    public static ApiResponse<Void> success() {
+        return new ApiResponse<>(200, "성공", null);
+    }
+
+
     // 실패 응답 생성 (데이터 없이)
     public static <T> ApiResponse<T> fail(int status, String message) {
         return new ApiResponse<>(status, message, null);
     }
+
+
 
     public ApiResponse(int status, String message, T data) {
         this.status = status;

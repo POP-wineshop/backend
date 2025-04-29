@@ -20,7 +20,7 @@ public class OrderItemResponse {
                 item.getWineId(),
                 item.getWineNameKor(),
                 item.getWinePrice(),
-                item.getOrderedQuantity().getValue(),
+                item.getOrderedQuantity().getQuantity(),
                 item.getOrderedPrice().getValue(),
                 item.getWineImageUrl()
         );

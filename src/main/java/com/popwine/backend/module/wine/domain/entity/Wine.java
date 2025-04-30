@@ -39,22 +39,25 @@ public class Wine extends BaseTimeEntity {
     //와인 포도 품종
     private String grapeVariety;
 
-
     //와인 종류
     @Enumerated(EnumType.STRING)
     private WineType wineType;
 
-
     //와인 지역
     private String region;
+
     //와인 제조사
     private String winery;
+
     //와인 알콜 도수
-    private String alcoholContent;
+    private int alcoholContent;
+
     //와인 테이스팅노트
     private String tastingNote;
+
     //와인 페어링
     private String foodPairing;
+
     //와인 설명
     private String description;
 

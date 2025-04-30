@@ -44,7 +44,7 @@ public class WineService {
     public WineResponseDto getWineById(Long id) {
         return wineRepository.findById(id)
                 .map(WineResponseDto::from)
-                .orElseThrow(() -> new IllegalArgumentException("와인을 찾을 수 없습니다: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 와인을 찾을 수 없다: " + id));
     }
 
     //4. 와인 등록 (관리자용)
@@ -60,8 +60,8 @@ public class WineService {
         wine.addCategory(regionCategory);
         wine.addCategory(wineTypeCategory);
 
-        Wine saved = wineRepository.save(wine);
-        return WineResponseDto.from(saved);
+        Wine savedWine = wineRepository.save(wine);
+        return WineResponseDto.from(savedWine);
     }
 
     private Category getOrCreateCategory(String name, CategoryType type) {

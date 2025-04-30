@@ -8,7 +8,4 @@ import java.util.List;
 public interface JpaWineRepository extends JpaRepository<Wine,Long> {
     List<Wine> findByName(String name);
 
-    List<Wine> findByRegion(String region);
-
-    List<Wine> findByGrapeVariety(String grapeVariety);
 }

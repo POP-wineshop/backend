@@ -9,8 +9,6 @@ public interface WineRepository {
      Optional<Wine> findById(Long id);
      List<Wine> findAll();
      List<Wine> findByName(String name);
-     List<Wine> findByRegion(String region);
-     List<Wine> findByGrapeVariety(String grapeVariety);
      List<Wine> findByCategoryFilters(List<Long> categoryIds);
      Wine save(Wine wine);
 

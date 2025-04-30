@@ -38,16 +38,6 @@ public class WineRepositoryImpl implements WineRepository {
     }
 
     @Override
-    public List<Wine> findByRegion(String region) {
-        return jpa.findByRegion(region);
-    }
-
-    @Override
-    public List<Wine> findByGrapeVariety(String grapeVariety) {
-        return jpa.findByGrapeVariety(grapeVariety);
-    }
-
-    @Override
     public List<Wine> findByCategoryFilters(List<Long> categoryIds) {
         QWine wine = QWine.wine;
         QWineCategory wineCategory = QWineCategory.wineCategory;

@@ -7,7 +7,8 @@ public enum WineType {
     RED("Red"),
     WHITE("White"),
     ROSE("Rose"),
-    SPARKLING("Sparkling");
+    SPARKLING("Sparkling"),
+    DESSERT("Dessert");
 
     private final String value;
 
@@ -22,6 +23,6 @@ public enum WineType {
             }
 
         }
-        throw new IllegalArgumentException("설명에 해당하는 색상을 찾을 수 없습니다.");
+        throw new IllegalArgumentException("해당하는 와인타입을 찾을 수 없다.");
     }
-}
+    }

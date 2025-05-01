@@ -24,7 +24,7 @@ public class WineRequestDto {
     private String region;
     private String grapeVariety;
     private String winery;
-    private String alcoholContent;
+    private int alcoholContent;
     private String tastingNote;
     private String foodPairing;
 

@@ -73,6 +73,7 @@ class WineServiceTest {
     void testGetWinesByCategory() {
         // Given
         List<Long> categoryIds = List.of(1L, 2L);
+        String keyword = "마고";
 
         Wine wine = Wine.builder()
                 .id(1L)
@@ -87,10 +88,10 @@ class WineServiceTest {
                 .imageUrl("https://example.com/image.jpg")
                 .build();
 
-        when(wineRepository.findByCategoryFilters(categoryIds)).thenReturn(List.of(wine));
+        when(wineRepository.findByCategoryAndNameFilters(categoryIds,keyword)).thenReturn(List.of(wine));
 
         // When
-        List<WineResponseDto> result = wineService.getWinesByCategory(categoryIds);
+        List<WineResponseDto> result = wineService.getWinesByCategory(categoryIds,keyword);
 
         // Then
         assertEquals(1, result.size());

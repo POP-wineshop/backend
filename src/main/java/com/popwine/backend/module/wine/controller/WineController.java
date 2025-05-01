@@ -24,8 +24,9 @@ public class WineController {
     //2. 카테고리 와인 조회
     @GetMapping("/category")
     public ApiResponse<List<WineResponseDto>> getWinesByCategory
-    (@RequestParam List<Long> categoryIds) {
-        return ApiResponse.success(wineService.getWinesByCategory(categoryIds));
+    ( @RequestParam(required = false) List<Long> categoryIds,
+      @RequestParam(required = false)String keyword) {
+        return ApiResponse.success(wineService.getWinesByCategory(categoryIds, keyword));
     }
 
     //3. 와인 상세 정보 조회

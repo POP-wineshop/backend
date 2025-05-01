@@ -33,8 +33,8 @@ public class WineService {
 
     //2. 카테고리 와인 조회
     @Transactional(readOnly = true)
-    public List<WineResponseDto> getWinesByCategory(List<Long> categoryIds) {
-        return wineRepository.findByCategoryFilters(categoryIds)
+    public List<WineResponseDto> getWinesByCategory(List<Long> categoryIds,String keyword) {
+        return wineRepository.findByCategoryAndNameFilters(categoryIds, keyword)
                 .stream()
                 .map(WineResponseDto::from)
                 .collect(Collectors.toList());

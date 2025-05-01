@@ -2,10 +2,12 @@ package com.popwine.backend.module.wine.infrastructure;
 
 
 
+import com.popwine.backend.module.wine.domain.entity.QCategory;
 import com.popwine.backend.module.wine.domain.entity.QWine;
 import com.popwine.backend.module.wine.domain.entity.QWineCategory;
 import com.popwine.backend.module.wine.domain.repository.WineRepository;
 import com.popwine.backend.module.wine.domain.entity.Wine;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -13,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-import static com.popwine.backend.module.wine.domain.entity.QCategory.category;
 
 @Repository
 @RequiredArgsConstructor
@@ -32,29 +33,42 @@ public class WineRepositoryImpl implements WineRepository {
         return jpa.findAll();
     }
 
-    @Override
-    public List<Wine> findByName(String name) {
-        return jpa.findByName(name);
-    }
 
     @Override
-    public List<Wine> findByCategoryFilters(List<Long> categoryIds) {
+    public List<Wine> findByCategoryAndNameFilters(List<Long> categoryIds, String keyword) {
         QWine wine = QWine.wine;
         QWineCategory wineCategory = QWineCategory.wineCategory;
+        QCategory category = QCategory.category;
 
-        if (categoryIds == null || categoryIds.isEmpty()) {
-            return jpaQueryFactory.selectFrom(wine).fetch();
+        BooleanBuilder condition = new BooleanBuilder();
+
+        // 이름 검색 조건 (한글 또는 영어)
+        if (keyword != null && !keyword.isBlank()) {
+            condition.and(
+                    wine.name.korean.containsIgnoreCase(keyword)
+                            .or(wine.name.english.containsIgnoreCase(keyword))
+            );
         }
 
+        // 카테고리 필터가 있을 경우
+        if (categoryIds != null && !categoryIds.isEmpty()) {
+            condition.and(category.id.in(categoryIds));
+
+            return jpaQueryFactory
+                    .selectFrom(wine)
+                    .join(wine.wineCategories, wineCategory)
+                    .join(wineCategory.category, category)
+                    .where(condition)
+                    .groupBy(wine.id)
+                    .having(category.id.countDistinct().eq((long) categoryIds.size()))
+                    .fetch();
+        }
+
+        // 카테고리 필터 없을 경우 (이름 검색만)
         return jpaQueryFactory
                 .selectFrom(wine)
-                .join(wine.wineCategories, wineCategory)
-                .join(wineCategory.category, category)
-                .where(category.id.in(categoryIds))
-                .groupBy(wine.id)
-                .having(category.id.countDistinct().eq((long) categoryIds.size()))
+                .where(condition)
                 .fetch();
-
     }
 
     @Override

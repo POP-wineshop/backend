@@ -8,8 +8,8 @@ import java.util.Optional;
 public interface WineRepository {
      Optional<Wine> findById(Long id);
      List<Wine> findAll();
-     List<Wine> findByName(String name);
-     List<Wine> findByCategoryFilters(List<Long> categoryIds);
+     List<Wine> findByCategoryAndNameFilters(List<Long> categoryIds, String keyword);
+
      Wine save(Wine wine);
 
 

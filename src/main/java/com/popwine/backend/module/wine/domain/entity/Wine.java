@@ -50,7 +50,7 @@ public class Wine extends BaseTimeEntity {
     private String winery;
 
     //와인 알콜 도수
-    private int alcoholContent;
+    private double alcoholContent;
 
     //와인 테이스팅노트
     private String tastingNote;
@@ -66,6 +66,9 @@ public class Wine extends BaseTimeEntity {
 
     //와인 이미지 URL
     private String imageUrl;
+
+    //와인 재고
+    private int stock;
 
     @Builder.Default
     @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -24,12 +24,14 @@ public class WineRequestDto {
     private String region;
     private String grapeVariety;
     private String winery;
-    private int alcoholContent;
+    private double alcoholContent;
     private String tastingNote;
     private String foodPairing;
 
     private String description;
     private String imageUrl;
+
+    private int stock;
 
     public Wine toEntity() {
         return Wine.builder()
@@ -47,6 +49,7 @@ public class WineRequestDto {
                 .foodPairing(foodPairing)
                 .description(description)
                 .imageUrl(imageUrl)
+                .stock(stock)
                 .build();
     }
 

@@ -22,7 +22,7 @@ public class PaymentService {
 
         // 응답을 Payment 엔티티로 저장
         Payment payment = Payment.builder()
-                .id(orderId)
+                .orderId(orderId)
                 .paymentKey(response.getPaymentKey())
                 .amount(response.getAmount())
                 .status(PaymentStatus.valueOf(response.getStatus()))

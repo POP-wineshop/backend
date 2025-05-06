@@ -21,7 +21,7 @@ public class PaymentConfirmResponse {
 
     public Payment toEntity(Long orderId) {
         return Payment.builder()
-                .reservationId(orderId)
+                .orderId(orderId)
                 .paymentKey(paymentKey)
                 .amount(amount)
                 .status(PaymentStatus.valueOf(status))

@@ -8,6 +8,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+//결제 승인 API 연동
 @FeignClient(
         name = "tossPaymentClient",
         url = "https://api.tosspayments.com/v1",

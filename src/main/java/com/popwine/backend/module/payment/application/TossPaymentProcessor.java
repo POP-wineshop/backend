@@ -14,6 +14,7 @@ public class TossPaymentProcessor implements PgPaymentProcessor {
 
     @Override
     public PaymentConfirmResponse confirmPayment(PaymentConfirmRequest request) {
+        //confirmPayment 메서드에서 TossPaymentClient를 사용하여 결제 승인 요청을 처리
         return tossPaymentClient.confirmPayment(request);
     }
 }

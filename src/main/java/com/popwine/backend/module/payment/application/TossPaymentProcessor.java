@@ -5,8 +5,9 @@ import com.popwine.backend.module.payment.controller.dto.PaymentConfirmResponse;
 import com.popwine.backend.module.payment.infrastructure.client.TossPaymentClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class TossPaymentProcessor implements PgPaymentProcessor {
 

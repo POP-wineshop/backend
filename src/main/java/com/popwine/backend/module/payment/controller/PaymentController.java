@@ -20,7 +20,7 @@ public class PaymentController {
     @PostMapping("/{orderId}/confirm")
     public ResponseEntity<PaymentConfirmResponse> confirmPayment(
             @RequestBody PaymentConfirmRequest request,
-            @PathVariable("orderId") Long orderId
+            @PathVariable("orderId") Long  orderId
     ) {
         PaymentConfirmResponse response = paymentService.confirmPayment(request, orderId);
         return ResponseEntity.ok(response);

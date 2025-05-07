@@ -3,7 +3,6 @@ package com.popwine.backend.module.payment.application;
 import com.popwine.backend.module.payment.controller.dto.PaymentConfirmRequest;
 import com.popwine.backend.module.payment.controller.dto.PaymentConfirmResponse;
 import com.popwine.backend.module.payment.domain.entity.Payment;
-import com.popwine.backend.module.payment.domain.enums.PaymentStatus;
 import com.popwine.backend.module.payment.domain.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,13 +20,9 @@ public class PaymentService {
         PaymentConfirmResponse response = paymentProcessor.confirmPayment(request);
 
         // 응답을 Payment 엔티티로 저장
-        Payment payment = Payment.builder()
-                .orderId(orderId)
-                .paymentKey(response.getPaymentKey())
-                .amount(response.getAmount())
-                .status(PaymentStatus.valueOf(response.getStatus()))
-                .approvedAt(response.getApprovedAt())
-                .build();
+        //TODO  (엔티티에 박히는 값인데 application에서 처리하는게 맞는지? )
+        //Mapper를 사용하여 변환하는게 좋을지?
+        Payment payment = response.toEntity(orderId);
 
         paymentRepository.save(payment);
         return response;

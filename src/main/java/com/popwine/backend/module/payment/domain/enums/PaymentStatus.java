@@ -1,5 +1,8 @@
 package com.popwine.backend.module.payment.domain.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum PaymentStatus {
     READY("결제 준비"),
     COMPLETED("결제 완료"),
@@ -10,9 +13,5 @@ public enum PaymentStatus {
 
     PaymentStatus(String description) {
         this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }

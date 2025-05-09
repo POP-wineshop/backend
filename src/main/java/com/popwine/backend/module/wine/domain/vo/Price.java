@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Price {
 
-    @Column(nullable = false)
+    @Column(name = "price", nullable = false)
     private int value;
 
     public Price(int value) {

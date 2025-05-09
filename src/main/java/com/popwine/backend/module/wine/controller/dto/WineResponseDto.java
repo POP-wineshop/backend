@@ -18,9 +18,11 @@ public class WineResponseDto {
     private final String country;
     private final String grapeVariety;
     private final String region;
+    private final double alcoholContent;
     private final String imageUrl;
     private final TasteProfile tasteProfile;
     private final WineType wineType;
+    private final int stock;
 
     public static WineResponseDto from(Wine wine) {
         return new WineResponseDto(
@@ -32,9 +34,11 @@ public class WineResponseDto {
                 wine.getCountry(),
                 wine.getGrapeVariety(),
                 wine.getRegion(),
+                wine.getAlcoholContent(),
                 wine.getImageUrl(),
                 wine.getTasteProfile(),
                 wine.getWineType()
+                , wine.getStock()
         );
     }
 }

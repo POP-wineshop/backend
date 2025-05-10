@@ -1,6 +1,7 @@
 package com.popwine.backend.module.order.domain.vo;
 
 
+import com.popwine.backend.core.exception.BadRequestException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
@@ -17,7 +18,7 @@ public class OrderedQuantity {
 
     public OrderedQuantity(int quan) {
         if (quan <= 0) {
-            throw new IllegalArgumentException("수량은 0보다 작거나 같을 수 없습니다.");
+            throw new BadRequestException("수량은 0보다 작거나 같을 수 없습니다.");
         }
         this.quantity = quan;
     }

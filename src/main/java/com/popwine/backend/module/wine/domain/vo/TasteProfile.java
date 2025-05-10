@@ -1,5 +1,6 @@
 package com.popwine.backend.module.wine.domain.vo;
 
+import com.popwine.backend.core.exception.BadRequestException;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +25,7 @@ public class TasteProfile {
 
     public void validate(String name, int value) {
         if (value<1 || value>5) {
-            throw new IllegalArgumentException(name+"는 1 이상 5 이하여야 한다.");
+            throw new BadRequestException(name+"는 1 이상 5 이하여야 한다.");
         }
     }
 }

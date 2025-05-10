@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public class ApiResponse<T> {
 
-    private int status;   // HTTP 상태 코드
-    private String message; // 응답 메시지 (성공/실패 안내)
-    private T data;       // 실제 응답 데이터
+    private final int status;   // HTTP 상태 코드
+    private final String message; // 응답 메시지 (성공/실패 안내)
+    private final T data;       // 실제 응답 데이터
 
     // 성공 응답 생성 (데이터 포함)
     public static <T> ApiResponse<T> success(T data) {

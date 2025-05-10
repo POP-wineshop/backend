@@ -1,6 +1,7 @@
-package com.popwine.backend.module.auth.vo;
+package com.popwine.backend.module.auth.domain.vo;
 
 import com.popwine.backend.core.exception.BadRequestException;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class Password {
     private static final String PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*(),.?\":{}|<>])[A-Za-z\\d!@#$%^&*(),.?\":{}|<>]{8,20}$";
     private static final Pattern PASSWORD_PATTERN = Pattern.compile(PASSWORD_REGEX);
 
+    @Column(name = "password", nullable = false)
     private String password;
 
     public Password(String password, PasswordEncoder encoder) {

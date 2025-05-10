@@ -1,15 +1,15 @@
-package com.popwine.backend.module.auth.entity;
+package com.popwine.backend.module.auth.domain.entity;
 
 import com.popwine.backend.core.BaseTimeEntity;
-import com.popwine.backend.module.auth.vo.Password;
+import com.popwine.backend.module.auth.domain.vo.Password;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Table(name = "users")
 public class User extends BaseTimeEntity {
 
@@ -17,11 +17,9 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String account;
+    private String username;
 
+    private String name;
     @Embedded
-    @AttributeOverrides(
-            @AttributeOverride(name = "password", column = @Column(name = "password", nullable = false))
-    )
     private Password password;
 }

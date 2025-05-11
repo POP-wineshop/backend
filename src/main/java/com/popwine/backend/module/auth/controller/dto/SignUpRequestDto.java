@@ -1,4 +1,4 @@
-package com.popwine.backend.module.auth.controller;
+package com.popwine.backend.module.auth.controller.dto;
 
 
 import com.popwine.backend.module.auth.domain.entity.User;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserRequestDto {
+public class SignUpRequestDto {
 
     private String name;
     private String username;

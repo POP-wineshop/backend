@@ -2,6 +2,7 @@ package com.popwine.backend.module.auth.infrastructure;
 
 import com.popwine.backend.module.auth.domain.entity.User;
 import com.popwine.backend.module.auth.domain.repository.UserRepository;
+import com.popwine.backend.module.auth.domain.vo.Username;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,11 @@ import java.util.Optional;
 public class UserRepositoryImpl implements UserRepository {
 
     private final JpaUserRepository jpa;
+
+    @Override
+    public Optional<User> findByUsername(Username username) {
+        return jpa.findByUsername(username.getValue());
+    }
 
     @Override
     public Optional<User> findById(Long id) {

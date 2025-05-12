@@ -4,10 +4,7 @@ package com.popwine.backend.module.auth.controller;
 import com.popwine.backend.core.response.ApiResponse;
 import com.popwine.backend.module.auth.application.LoginService;
 import com.popwine.backend.module.auth.application.SignUpService;
-import com.popwine.backend.module.auth.controller.dto.LoginRequestDto;
-import com.popwine.backend.module.auth.controller.dto.LoginResponseDto;
-import com.popwine.backend.module.auth.controller.dto.SignUpRequestDto;
-import com.popwine.backend.module.auth.controller.dto.SignUpResponseDto;
+import com.popwine.backend.module.auth.controller.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,5 +29,12 @@ public class AuthController {
     @PostMapping("/login")
     public ApiResponse<LoginResponseDto> login(@RequestBody LoginRequestDto dto) {
         return ApiResponse.success(loginService.login(dto));
+
     }
+
+    @PostMapping("/refresh")
+    public ApiResponse<LoginResponseDto> refresh(@RequestBody TokenRefreshRequest request) {
+        return ApiResponse.success(loginService.refreshToken(request.getRefreshToken()));
+    }
+
 }

@@ -51,9 +51,10 @@ public class JwtTokenProvider {
      * @param username 사용자 이름
      * @return 생성된 Access Token
      */
-    public String generateAccessToken(String username) {
+    public String generateAccessToken(Long userId, String username) {
         return Jwts.builder()
                 .setSubject(username)
+                .claim("userId",userId)
                 .setExpiration(new Date(System.currentTimeMillis() + accessTokenValidity))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -61,12 +62,15 @@ public class JwtTokenProvider {
 
     /**
      * JWT Refresh Token을 생성
+     *
      * @param username 사용자 이름
      * @return 생성된 Refresh Token
      */
-    public String generateRefreshToken(String username) {
+    public String generateRefreshToken(Long userId, String username) {
+
         return Jwts.builder()
                 .setSubject(username)
+                .claim("userId",userId)
                 .setExpiration(new Date(System.currentTimeMillis() + refreshTokenValidity))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();

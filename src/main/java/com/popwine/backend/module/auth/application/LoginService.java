@@ -31,9 +31,9 @@ public class LoginService {
             throw new BadRequestException(ErrorCode.UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");
         }
 
-        String accessToken = jwtTokenProvider.generateAccessToken(user.getUsername());
-        String refreshToken = jwtTokenProvider.generateRefreshToken(user.getUsername());
-
+        String accessToken = jwtTokenProvider.generateAccessToken(user.getId(), user.getUsername());
+        String refreshToken = jwtTokenProvider.generateRefreshToken(user.getId(), user.getUsername());
+        
         return new LoginResponseDto(accessToken, refreshToken);
     }
 

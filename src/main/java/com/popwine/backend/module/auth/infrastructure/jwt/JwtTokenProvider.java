@@ -121,5 +121,19 @@ public class JwtTokenProvider {
             throw new BadRequestException(ErrorCode.BAD_REQUEST, "JWT 토큰이 잘못되었습니다.");
         }
     }
+
+
+    public Claims getClaims(String token) {
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (JwtException e) {
+            throw new BadRequestException(ErrorCode.UNAUTHORIZED, "유효하지 않은 JWT입니다.");
+        }
     }
+
+}
 

@@ -2,6 +2,7 @@ package com.popwine.backend.module.auth.infrastructure.jwt;
 
 import com.popwine.backend.core.exception.BadRequestException;
 import com.popwine.backend.core.exception.ErrorCode;
+import com.popwine.backend.module.auth.security.CustomUserPrincipal;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -9,17 +10,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
-import java.util.List;
+
 
 @Slf4j
 @Component
@@ -82,10 +81,19 @@ public class JwtTokenProvider {
      * @return 사용자 이름
      */
     public Authentication getAuthentication(String token) {
-        String username = getUsernameFromToken(token);
-        UserDetails userDetails = new User(username, "", List.of());
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+        Claims claims = getClaims(token);
+        Long userId = claims.get("userId", Long.class);
+        String username = claims.getSubject();
+
+        CustomUserPrincipal principal = new CustomUserPrincipal(userId, username);
+
+        return new UsernamePasswordAuthenticationToken(
+                principal,
+                null,
+                principal.getAuthorities() // 지금은 emptyList()
+        );
     }
+
 
     /**
      * JWT 토큰에서 사용자 이름을 추출한 뒤,

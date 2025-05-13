@@ -2,7 +2,7 @@ package com.popwine.backend.module.payment.application;
 
 import com.popwine.backend.module.payment.controller.dto.PaymentConfirmRequest;
 import com.popwine.backend.module.payment.controller.dto.PaymentConfirmResponse;
-import com.popwine.backend.module.payment.infrastructure.client.TossPaymentClient;
+import com.popwine.backend.module.payment.infra.client.TossPaymentClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package com.popwine.backend.module.wine.domain.entity;
 
-import com.popwine.backend.core.BaseTimeEntity;
+import com.popwine.backend.core.common.BaseTimeEntity;
 import com.popwine.backend.module.wine.domain.vo.Price;
 import com.popwine.backend.module.wine.domain.enums.WineType;
 import com.popwine.backend.module.wine.domain.vo.TasteProfile;

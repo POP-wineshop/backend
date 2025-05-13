@@ -1,6 +1,6 @@
 package com.popwine.backend.module.order.controller;
 
-import com.popwine.backend.core.response.ApiResponse;
+import com.popwine.backend.core.common.ApiResponse;
 import com.popwine.backend.module.order.application.OrderService;
 import com.popwine.backend.module.order.controller.dto.OrderRequestDto;
 import com.popwine.backend.module.order.controller.dto.OrderResponse;

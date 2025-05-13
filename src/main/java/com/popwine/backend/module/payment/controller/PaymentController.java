@@ -1,12 +1,11 @@
 package com.popwine.backend.module.payment.controller;
 
 
-import com.popwine.backend.core.response.ApiResponse;
+import com.popwine.backend.core.common.ApiResponse;
 import com.popwine.backend.module.payment.application.PaymentService;
 import com.popwine.backend.module.payment.controller.dto.PaymentConfirmRequest;
 import com.popwine.backend.module.payment.controller.dto.PaymentConfirmResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 

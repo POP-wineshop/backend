@@ -1,7 +1,7 @@
 package com.popwine.backend.module.auth.controller;
 
 
-import com.popwine.backend.core.response.ApiResponse;
+import com.popwine.backend.core.common.ApiResponse;
 import com.popwine.backend.module.auth.application.LoginService;
 import com.popwine.backend.module.auth.application.SignUpService;
 import com.popwine.backend.module.auth.controller.dto.*;

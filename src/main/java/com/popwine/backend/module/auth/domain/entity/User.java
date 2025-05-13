@@ -1,6 +1,6 @@
 package com.popwine.backend.module.auth.domain.entity;
 
-import com.popwine.backend.core.BaseTimeEntity;
+import com.popwine.backend.core.common.BaseTimeEntity;
 import com.popwine.backend.module.auth.domain.vo.Password;
 import jakarta.persistence.*;
 import lombok.*;

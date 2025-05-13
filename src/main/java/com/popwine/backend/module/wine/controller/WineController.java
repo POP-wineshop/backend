@@ -1,6 +1,6 @@
 package com.popwine.backend.module.wine.controller;
 
-import com.popwine.backend.core.response.ApiResponse;
+import com.popwine.backend.core.common.ApiResponse;
 import com.popwine.backend.module.wine.application.WineService;
 import com.popwine.backend.module.wine.controller.dto.WineResponseDto;
 import lombok.RequiredArgsConstructor;

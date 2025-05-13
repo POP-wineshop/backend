@@ -7,10 +7,11 @@ import com.popwine.backend.module.auth.controller.dto.LoginResponseDto;
 import com.popwine.backend.module.auth.domain.entity.User;
 import com.popwine.backend.module.auth.domain.repository.UserRepository;
 import com.popwine.backend.module.auth.domain.vo.Username;
-import com.popwine.backend.module.auth.infrastructure.jwt.JwtTokenProvider;
-import com.popwine.backend.module.auth.infrastructure.redis.RedisService;
+import com.popwine.backend.core.security.jwt.JwtTokenProvider;
+import com.popwine.backend.core.infra.redis.RedisService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,12 @@ public class LoginService {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisService redisService;
 
+    @Value("${jwt.refresh-token-validity}")
+    private long refreshTokenValidity;
+
     // 로그인 메서드
     public LoginResponseDto login(LoginRequestDto dto) {
+
         Username username = new Username(dto.getUsername());
 
         User user = userRepository.findByUsername(username)
@@ -37,6 +42,8 @@ public class LoginService {
         String accessToken = jwtTokenProvider.generateAccessToken(user.getId(), user.getUsername());
         String refreshToken = jwtTokenProvider.generateRefreshToken(user.getId(), user.getUsername());
 
+
+        redisService.saveRefreshToken(user.getId(), refreshToken, refreshTokenValidity);
         return new LoginResponseDto(accessToken, refreshToken);
     }
 

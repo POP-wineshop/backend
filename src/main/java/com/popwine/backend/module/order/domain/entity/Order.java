@@ -1,6 +1,6 @@
 package com.popwine.backend.module.order.domain.entity;
 
-import com.popwine.backend.core.BaseTimeEntity;
+import com.popwine.backend.core.common.BaseTimeEntity;
 import com.popwine.backend.module.order.domain.enums.Orderstatus;
 import com.popwine.backend.module.order.domain.vo.OrderItem;
 import jakarta.persistence.*;

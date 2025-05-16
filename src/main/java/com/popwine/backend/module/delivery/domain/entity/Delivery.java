@@ -39,4 +39,13 @@ public class Delivery {
     public static Delivery of(Long userId, String address, String detailAddress, String recipientName, String recipientPhoneNumber, String deliveryMessage, boolean isDefault) {
         return new Delivery(null, userId, address, detailAddress, recipientName, recipientPhoneNumber, deliveryMessage, isDefault);
     }
+
+    public void update(Delivery delivery) {
+        this.address = delivery.getAddress();
+        this.detailAddress = delivery.getDetailAddress();
+        this.recipientName = delivery.getRecipientName();
+        this.recipientPhoneNumber = delivery.getRecipientPhoneNumber();
+        this.deliveryMessage = delivery.getDeliveryMessage();
+        this.isDefault = delivery.isDefault();
+    }
 }

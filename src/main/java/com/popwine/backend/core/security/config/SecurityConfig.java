@@ -17,13 +17,23 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+
     private final JwtTokenProvider jwtTokenProvider;
 
+    /*
+     * 비밀번호 암호화를 위한 PasswordEncoder Bean 등록
+     * BCryptPasswordEncoder를 사용하여 비밀번호를 암호화
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+
+    /*
+     * SecurityFilterChain을 설정하는 메서드
+     * HttpSecurity를 사용하여 보안 설정을 구성
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http

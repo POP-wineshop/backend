@@ -1,5 +1,6 @@
 package com.popwine.backend.module.delivery.controller.dto;
 
+import com.popwine.backend.module.delivery.domain.entity.Delivery;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +20,17 @@ public class DeliveryResponseDto {
     private String deliveryMessage; // 배송 메시지
     private boolean isDefault; // 기본 배송지 여부
 
-    public static DeliveryResponseDto of(Long id, String address, String detailAddress, String recipientName, String recipientPhoneNumber, String deliveryMessage, boolean isDefault) {
-        return new DeliveryResponseDto(id, address, detailAddress, recipientName, recipientPhoneNumber, deliveryMessage, isDefault);
+
+    //Entity -> DTO 변환
+    public static DeliveryResponseDto from(Delivery savedDelivery) {
+        return DeliveryResponseDto.builder()
+                .id(savedDelivery.getId())
+                .address(savedDelivery.getAddress())
+                .detailAddress(savedDelivery.getDetailAddress())
+                .recipientName(savedDelivery.getRecipientName())
+                .recipientPhoneNumber(savedDelivery.getRecipientPhoneNumber())
+                .deliveryMessage(savedDelivery.getDeliveryMessage())
+                .isDefault(savedDelivery.isDefault())
+                .build();
     }
 }

@@ -35,11 +35,19 @@ public class Delivery {
     private boolean isDefault; // 기본 배송지 여부
 
 
-    //빌더처리
     public static Delivery of(Long userId, String address, String detailAddress, String recipientName, String recipientPhoneNumber, String deliveryMessage, boolean isDefault) {
-        return new Delivery(null, userId, address, detailAddress, recipientName, recipientPhoneNumber, deliveryMessage, isDefault);
+        return Delivery.builder()
+                .userId(userId)
+                .address(address)
+                .detailAddress(detailAddress)
+                .recipientName(recipientName)
+                .recipientPhoneNumber(recipientPhoneNumber)
+                .deliveryMessage(deliveryMessage)
+                .isDefault(isDefault)
+                .build();
     }
 
+    // 수정 메서드
     public void update(Delivery delivery) {
         this.address = delivery.getAddress();
         this.detailAddress = delivery.getDetailAddress();

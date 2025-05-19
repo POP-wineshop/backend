@@ -12,9 +12,10 @@ public class DeliveryRepositoryImpl implements DeliveryRepository {
     private final JpaDeliveryRepository jpa;
 
     @Override
-    public void save(Delivery delivery) {
-        jpa.save(delivery);
+    public Delivery save(Delivery delivery) {
+        return jpa.save(delivery);
     }
+
 
     @Override
     public Delivery findById(Long id) {

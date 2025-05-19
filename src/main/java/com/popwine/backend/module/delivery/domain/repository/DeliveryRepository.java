@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 public interface DeliveryRepository {
 
     // 배송지 등록
-    void save(Delivery delivery);
+    Delivery save(Delivery delivery);
 
     // 배송지 조회
     Delivery findById(Long id);

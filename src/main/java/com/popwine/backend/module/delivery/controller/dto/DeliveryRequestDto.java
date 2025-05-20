@@ -18,10 +18,6 @@ public class DeliveryRequestDto {
     private String deliveryMessage; // 배송 메시지
     private boolean isDefault; // 기본 배송지 여부
 
-    public static DeliveryRequestDto of(String address, String detailAddress, String recipientName, String recipientPhoneNumber, String deliveryMessage, boolean isDefault) {
-        return new DeliveryRequestDto(address, detailAddress, recipientName, recipientPhoneNumber, deliveryMessage, isDefault);
-    }
-
 
     // DTO -> Entity 변환
     public Delivery toEntity() {

@@ -1,5 +1,6 @@
 package com.popwine.backend.module.order.application;
 
+import com.popwine.backend.core.exception.BadRequestException;
 import com.popwine.backend.module.order.controller.dto.OrderRequestDto;
 import com.popwine.backend.module.order.controller.dto.OrderResponse;
 import com.popwine.backend.module.order.domain.entity.Order;
@@ -72,16 +73,16 @@ public class OrderService {
     @Transactional
     public void updateOrderItemQuantity(Long orderId, Long wineId, int newQuantity) {
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new IllegalArgumentException("주문이 존재하지 않습니다."));
+                .orElseThrow(() -> new BadRequestException("주문이 존재하지 않습니다."));
 
         order.updateItemQuantity(wineId, newQuantity);
     }
 
-    // 4. 장바구니 상품 삭제
+    // 4. 장바구니 상품 삭제 (여기는 장바구니상태라 그냥 삭제 해도 괜찮)
     @Transactional
     public void deleteOrderItem(Long orderId, Long wineId) {
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new IllegalArgumentException("주문이 존재하지 않습니다."));
+                .orElseThrow(() -> new BadRequestException("주문이 존재하지 않습니다."));
 
         order.deleteItem(wineId);
     }
@@ -90,5 +91,13 @@ public class OrderService {
     @Transactional
     public void deleteOrder(Long orderId) {
         orderRepository.deleteById(orderId);
+    }
+
+    // 6. 결제 된 건에 대한 주문 취소 처리(soft delete)
+    @Transactional
+    public void cancelOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new BadRequestException("주문이 존재하지 않습니다."));
+        order.cancel();
     }
 }

@@ -1,6 +1,7 @@
 package com.popwine.backend.module.order.domain.entity;
 
 import com.popwine.backend.core.common.BaseTimeEntity;
+import com.popwine.backend.core.exception.BadRequestException;
 import com.popwine.backend.module.order.domain.enums.Orderstatus;
 import com.popwine.backend.module.order.domain.vo.OrderItem;
 import jakarta.persistence.*;
@@ -45,13 +46,21 @@ public class Order extends BaseTimeEntity {
             }
         }
     }
-    // ✅ 장바구니 상품 삭제
+    // 장바구니 상품 삭제
     public void deleteItem(Long wineId) {
         orderItems.removeIf(item -> item.getWineId().equals(wineId));
     }
 
-    // ✅ 결제 완료 처리
+    // 결제 완료 처리
     public void complete() {
         this.orderstatus = Orderstatus.COMPLETED;
+    }
+
+    //결제 취소 처리
+    public void cancel() {
+        if (this.orderstatus != Orderstatus.PENDING) {
+            throw new BadRequestException("결제된 주문만 취소 할 수 있습니다");
+        }
+        this.orderstatus = Orderstatus.CANCELED;
     }
 }

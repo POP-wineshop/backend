@@ -1,14 +1,13 @@
 package com.popwine.backend.module.order.application;
 
 import com.popwine.backend.core.exception.BadRequestException;
+import com.popwine.backend.module.order.controller.dto.InstantOrderRequestDto;
 import com.popwine.backend.module.order.controller.dto.OrderRequestDto;
 import com.popwine.backend.module.order.controller.dto.OrderResponse;
 import com.popwine.backend.module.order.domain.entity.Order;
 import com.popwine.backend.module.order.domain.enums.Orderstatus;
 import com.popwine.backend.module.order.domain.repository.OrderRepository;
 import com.popwine.backend.module.order.domain.vo.OrderItem;
-import com.popwine.backend.module.order.domain.vo.OrderedPrice;
-import com.popwine.backend.module.order.domain.vo.OrderedQuantity;
 import com.popwine.backend.module.wine.domain.entity.Wine;
 import com.popwine.backend.module.wine.domain.repository.WineRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,19 +32,7 @@ public class OrderService {
                 .map(itemRequest -> {
                     Wine wine = wineRepository.findById(itemRequest.getWineId())
                             .orElseThrow(() -> new IllegalArgumentException("와인 정보가 없습니다."));
-
-                    int winePrice = wine.getPrice().getValue();
-                    OrderedQuantity quantity = OrderedQuantity.of(itemRequest.getQuantity());
-                    OrderedPrice orderedPrice = OrderedPrice.of(winePrice, quantity);
-
-                    return OrderItem.builder()
-                            .wineId(wine.getId())
-                            .wineNameKor(wine.getName().getKorean())
-                            .winePrice(winePrice)
-                            .orderedQuantity(quantity)
-                            .orderedPrice(orderedPrice)
-                            .wineImageUrl(wine.getImageUrl())
-                            .build();
+                    return OrderItem.of(wine, itemRequest.getQuantity());
                 })
                 .collect(Collectors.toList());
 
@@ -100,4 +87,23 @@ public class OrderService {
                 .orElseThrow(() -> new BadRequestException("주문이 존재하지 않습니다."));
         order.cancel();
     }
+    // 7. 즉시 주문 생성 (장바구니 없이 바로 주문)
+    @Transactional
+    public OrderResponse createInstantOrder(InstantOrderRequestDto request) {
+
+        Wine wine = wineRepository.findById(request.getWineId())
+                .orElseThrow(() -> new IllegalArgumentException("와인 정보가 없습니다."));
+
+        OrderItem orderItem = OrderItem.of(wine, request.getQuantity());
+
+        Order order = Order.builder()
+                .orderstatus(Orderstatus.CONFIRMED) // 바로 결제 직전 상태
+                .orderItems(List.of(orderItem))
+                .build();
+
+        Order savedOrder = orderRepository.save(order);
+        return OrderResponse.from(savedOrder);
+    }
+
+
 }

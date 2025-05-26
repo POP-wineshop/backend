@@ -2,6 +2,7 @@ package com.popwine.backend.module.order.controller;
 
 import com.popwine.backend.core.common.ApiResponse;
 import com.popwine.backend.module.order.application.OrderService;
+import com.popwine.backend.module.order.controller.dto.InstantOrderRequestDto;
 import com.popwine.backend.module.order.controller.dto.OrderRequestDto;
 import com.popwine.backend.module.order.controller.dto.OrderResponse;
 import lombok.RequiredArgsConstructor;
@@ -55,5 +56,20 @@ public class OrderController {
         orderService.deleteOrder(orderId);
         return ApiResponse.success();
     }
+
+    //6. 주문 삭제 상태만 변경 (주문 취소)
+    @DeleteMapping("/{orderId}/cancel")
+    public ApiResponse<Void> cancelOrder(@PathVariable Long orderId) {
+        orderService.cancelOrder(orderId);
+        return ApiResponse.success();
+    }
+
+    //7. 즉시 주문 생성
+    @PostMapping("/instant")
+    public ApiResponse<OrderResponse> createInstantOrder(@RequestBody InstantOrderRequestDto request) {
+        return ApiResponse.success(orderService.createInstantOrder(request));
+    }
 }
+
+
 

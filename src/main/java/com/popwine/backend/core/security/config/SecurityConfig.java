@@ -40,9 +40,17 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/login", "/api/auth/signup","/api/wines","api/wines/","/api/wines/category","/api/auth/refresh","/api/admin/wines").permitAll() // 허용할 경로
-                        .anyRequest().authenticated() // 나머지는 인증 필요
+                        .requestMatchers(
+                                "/api/auth/login",
+                                "/api/auth/signup",
+                                "/api/wines/**",
+                                "/api/wines/category",
+                                "/api/auth/refresh",
+                                "/api/admin/wines"
+                        ).permitAll()
+                        .anyRequest().authenticated()
                 )
+
                 .addFilterBefore(new JwtAuthFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

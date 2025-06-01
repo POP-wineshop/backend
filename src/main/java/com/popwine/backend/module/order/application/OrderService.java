@@ -31,7 +31,7 @@ public class OrderService {
         List<OrderItem> orderItems = request.getOrderItems().stream()
                 .map(itemRequest -> {
                     Wine wine = wineRepository.findById(itemRequest.getWineId())
-                            .orElseThrow(() -> new IllegalArgumentException("와인 정보가 없습니다."));
+                            .orElseThrow(() -> new BadRequestException("와인 정보가 없습니다."));
                     return OrderItem.of(wine, itemRequest.getQuantity());
                 })
                 .collect(Collectors.toList());
@@ -92,7 +92,7 @@ public class OrderService {
     public OrderResponse createInstantOrder(InstantOrderRequestDto request) {
 
         Wine wine = wineRepository.findById(request.getWineId())
-                .orElseThrow(() -> new IllegalArgumentException("와인 정보가 없습니다."));
+                .orElseThrow(() -> new BadRequestException("와인 정보가 없습니다."));
 
         OrderItem orderItem = OrderItem.of(wine, request.getQuantity());
 

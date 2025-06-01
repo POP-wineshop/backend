@@ -52,7 +52,10 @@ public class WineRepositoryImpl implements WineRepository {
         }
 
         if (type != null && !type.isBlank()) {
-            condition.and(wine.wineType.stringValue().equalsIgnoreCase(type));
+            categoryCondition.or(
+                    category.name.eq(type)
+                            .and(category.type.eq(CategoryType.WINE_TYPE))
+            );
         }
 
         if (country != null && !country.isBlank()) {

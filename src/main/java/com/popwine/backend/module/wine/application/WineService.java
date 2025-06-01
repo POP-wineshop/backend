@@ -33,11 +33,11 @@ public class WineService {
 
     //2. 카테고리 와인 조회
     @Transactional(readOnly = true)
-    public List<WineResponseDto> getWinesByCategory(List<Long> categoryIds,String keyword) {
-        return wineRepository.findByCategoryAndNameFilters(categoryIds, keyword)
-                .stream()
+    public List<WineResponseDto> searchWines(String country, String region, String type, String keyword) {
+        List<Wine> wines = wineRepository.findByFilters(country, region, type, keyword);
+        return wines.stream()
                 .map(WineResponseDto::from)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     //3. 와인 ID통해 상세정보 조회

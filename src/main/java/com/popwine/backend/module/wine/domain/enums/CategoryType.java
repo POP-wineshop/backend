@@ -1,6 +1,7 @@
 package com.popwine.backend.module.wine.domain.enums;
 
 
+import com.popwine.backend.core.exception.BadRequestException;
 import lombok.Getter;
 
 
@@ -22,6 +23,6 @@ public enum CategoryType {
                 return categoryType;
             }
         }
-        throw new IllegalArgumentException("설명에 해당하는 카테고리 타입을 찾을 수 없습니다.");
+        throw new BadRequestException("설명에 해당하는 카테고리 타입을 찾을 수 없습니다.");
     }
 }

@@ -22,11 +22,16 @@ public class WineController {
     }
 
     //2. 카테고리 와인 조회
-    @GetMapping("/category")
-    public ApiResponse<List<WineResponseDto>> getWinesByCategory
-    ( @RequestParam(required = false) List<Long> categoryIds,
-      @RequestParam(required = false)String keyword) {
-        return ApiResponse.success(wineService.getWinesByCategory(categoryIds, keyword));
+    @GetMapping("/search")
+    public ApiResponse<List<WineResponseDto>> searchWines(
+            @RequestParam(required = false) String country,
+            @RequestParam(required = false) String region,
+            @RequestParam(required = false) String wineType,
+            @RequestParam(required = false) String keyword
+    ) {
+        return ApiResponse.success(
+                wineService.searchWines(country, region, wineType, keyword)
+        );
     }
 
     //3. 와인 상세 정보 조회

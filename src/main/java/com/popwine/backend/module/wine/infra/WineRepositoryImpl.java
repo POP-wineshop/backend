@@ -5,6 +5,7 @@ package com.popwine.backend.module.wine.infra;
 import com.popwine.backend.module.wine.domain.entity.QCategory;
 import com.popwine.backend.module.wine.domain.entity.QWine;
 import com.popwine.backend.module.wine.domain.entity.QWineCategory;
+import com.popwine.backend.module.wine.domain.enums.CategoryType;
 import com.popwine.backend.module.wine.domain.repository.WineRepository;
 import com.popwine.backend.module.wine.domain.entity.Wine;
 import com.querydsl.core.BooleanBuilder;
@@ -32,44 +33,51 @@ public class WineRepositoryImpl implements WineRepository {
     public List<Wine> findAll() {
         return jpa.findAll();
     }
-
-
     @Override
-    public List<Wine> findByCategoryAndNameFilters(List<Long> categoryIds, String keyword) {
+    public List<Wine> findByFilters(String country, String region, String type, String keyword) {
         QWine wine = QWine.wine;
         QWineCategory wineCategory = QWineCategory.wineCategory;
         QCategory category = QCategory.category;
 
         BooleanBuilder condition = new BooleanBuilder();
+        BooleanBuilder categoryCondition = new BooleanBuilder();
 
-        // 이름 검색 조건 (한글 또는 영어)
         if (keyword != null && !keyword.isBlank()) {
-            condition.and(
-                    wine.name.korean.containsIgnoreCase(keyword)
-                            .or(wine.name.english.containsIgnoreCase(keyword))
+            condition.andAnyOf(
+                    wine.name.korean.containsIgnoreCase(keyword),
+                    wine.name.english.containsIgnoreCase(keyword),
+                    wine.wineType.stringValue().containsIgnoreCase(keyword),
+                    category.name.containsIgnoreCase(keyword)
             );
         }
 
-        // 카테고리 필터가 있을 경우
-        if (categoryIds != null && !categoryIds.isEmpty()) {
-            condition.and(category.id.in(categoryIds));
-
-            return jpaQueryFactory
-                    .selectFrom(wine)
-                    .join(wine.wineCategories, wineCategory)
-                    .join(wineCategory.category, category)
-                    .where(condition)
-                    .groupBy(wine.id)
-                    .having(category.id.countDistinct().eq((long) categoryIds.size()))
-                    .fetch();
+        if (type != null && !type.isBlank()) {
+            condition.and(wine.wineType.stringValue().equalsIgnoreCase(type));
         }
 
-        // 카테고리 필터 없을 경우 (이름 검색만)
+        if (country != null && !country.isBlank()) {
+            categoryCondition.or(
+                    category.name.eq(country)
+                            .and(category.type.eq(CategoryType.COUNTRY))
+            );
+        }
+
+        if (region != null && !region.isBlank()) {
+            categoryCondition.or(
+                    category.name.eq(region)
+                            .and(category.type.eq(CategoryType.REGION))
+            );
+        }
+
         return jpaQueryFactory
                 .selectFrom(wine)
-                .where(condition)
+                .distinct()
+                .join(wine.wineCategories, wineCategory)
+                .join(wineCategory.category, category)
+                .where(condition.and(categoryCondition))
                 .fetch();
     }
+
 
     @Override
     public Wine save(Wine wine) {

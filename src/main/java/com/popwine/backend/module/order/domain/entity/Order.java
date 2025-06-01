@@ -37,7 +37,7 @@ public class Order extends BaseTimeEntity {
     private List<OrderItem> orderItems = new ArrayList<>();
 
 
-    // ✅ 장바구니 상품 수량 수정
+    // 장바구니 상품 수량 수정
     public void updateItemQuantity(Long wineId, int newQuantity) {
         for (OrderItem item : orderItems) {
             if (item.getWineId().equals(wineId)) {

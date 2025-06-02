@@ -14,7 +14,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderRepositoryImpl implements OrderRepository {
 
-    private final  JpaOrderRepository jpaOrderRepository;
+    private final JpaOrderRepository jpaOrderRepository;
 
 
     //주문 저장
@@ -44,7 +44,12 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     //주문 상태로 주문 조회
     @Override
-    public List<Order> findByOrderstatus(Orderstatus orderstatus) {
-        return jpaOrderRepository.findByOrderstatus(orderstatus);
+    public List<Order> findByUserIdAndOrderstatus(Long userId, Orderstatus orderstatus) {
+        return jpaOrderRepository.findByUserIdAndOrderstatus(userId, orderstatus);
+    }
+
+    @Override
+    public List<Order> findByUserId(Long userId) {
+        return jpaOrderRepository.findByUserId(userId);
     }
 }

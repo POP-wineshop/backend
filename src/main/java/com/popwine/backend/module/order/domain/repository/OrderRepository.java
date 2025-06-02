@@ -13,6 +13,9 @@ public interface OrderRepository {
     void deleteById(Long id);
     List<Order> findAll();
     Optional<Order> findById(Long id);
-    List<Order> findByOrderstatus(Orderstatus orderstatus);
 
+    //주문 상태로 주문 조회
+    List<Order> findByUserIdAndOrderstatus(Long userId, Orderstatus orderstatus);
+
+    List<Order> findByUserId(Long userId);
 }

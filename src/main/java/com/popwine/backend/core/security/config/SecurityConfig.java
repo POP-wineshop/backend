@@ -46,7 +46,8 @@ public class SecurityConfig {
                                 "/api/wines/**",
                                 "/api/wines/category",
                                 "/api/auth/refresh",
-                                "/api/admin/wines"
+                                "/api/admin/wines",
+                                "/v3/api-docs/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

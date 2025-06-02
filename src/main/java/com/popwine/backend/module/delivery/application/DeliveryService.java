@@ -4,7 +4,7 @@ import com.popwine.backend.module.delivery.controller.dto.DeliveryRequestDto;
 import com.popwine.backend.module.delivery.controller.dto.DeliveryResponseDto;
 import com.popwine.backend.module.delivery.domain.entity.Delivery;
 import com.popwine.backend.module.delivery.domain.repository.DeliveryRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,13 +23,24 @@ public class DeliveryService {
     }
 
     // 배송지 조회
-    @Transactional
+    @Transactional(readOnly = true)
     public DeliveryResponseDto getDelivery(Long id) {
-        Delivery delivery = deliveryRepository.findById(id); // 배송지 조회
-        return DeliveryResponseDto.from(delivery); // Delivery -> DeliveryResponseDto 변환 후 반환
+        Delivery delivery = deliveryRepository.findById(id);
+        return DeliveryResponseDto.from(delivery);
     }
 
     // 배송지 수정
+    @Transactional
+    public DeliveryResponseDto updateDelivery(Long id, DeliveryRequestDto requestDto) {
+        Delivery delivery = deliveryRepository.findById(id);
+        delivery.update(requestDto.toEntity());
+        return DeliveryResponseDto.from(delivery);
+    }
+
     // 배송지 삭제 상태만 변경
-    // 기본 배송지 조회
+    @Transactional
+    public void deleteDelivery(Long id) {
+        Delivery delivery = deliveryRepository.findById(id);
+    }
+
 }

@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class DeliveryController {
 
     private final DeliveryService deliveryService;
-    // 배송지 등록
 
+    // 배송지 등록
     public ApiResponse<DeliveryResponseDto> createDelivery(DeliveryRequestDto requestDto) {
         DeliveryResponseDto response = deliveryService.createDelivery(requestDto);
         return ApiResponse.success(response);
@@ -27,7 +27,20 @@ public class DeliveryController {
         DeliveryResponseDto response = deliveryService.getDelivery(id);
         return ApiResponse.success(response);
     }
+
+
     // 배송지 수정
+    public ApiResponse<DeliveryResponseDto> updateDelivery(Long id, DeliveryRequestDto requestDto) {
+        DeliveryResponseDto response = deliveryService.updateDelivery(id, requestDto);
+        return ApiResponse.success(response);
+    }
+
     // 배송지 삭제 상태만 변경
-    // 기본 배송지 조회
+    public ApiResponse<Void> deleteDelivery(Long id) {
+        deliveryService.deleteDelivery(id);
+        return ApiResponse.success();
+    }
+
+
+
 }

@@ -1,8 +1,10 @@
 package com.popwine.backend.module.order.application;
 
 import com.popwine.backend.core.exception.BadRequestException;
+import com.popwine.backend.core.security.util.SecurityUtil;
+import com.popwine.backend.module.Cart.domain.entity.CartItem;
+import com.popwine.backend.module.Cart.domain.repo.CartRepo;
 import com.popwine.backend.module.order.controller.dto.InstantOrderRequestDto;
-import com.popwine.backend.module.order.controller.dto.OrderRequestDto;
 import com.popwine.backend.module.order.controller.dto.OrderResponse;
 import com.popwine.backend.module.order.domain.entity.Order;
 import com.popwine.backend.module.order.domain.enums.Orderstatus;
@@ -15,6 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,86 +28,101 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final WineRepository wineRepository;
+    private final CartRepo cartRepo;
 
-    // 1. 장바구니에 상품 담기 (Order 생성)
+
     @Transactional
-    public OrderResponse createOrder(OrderRequestDto request) {
+    public OrderResponse createOrderFromCart() {
+        Long userId = SecurityUtil.getCurrentUserId();
 
-        List<OrderItem> orderItems = request.getOrderItems().stream()
-                .map(itemRequest -> {
-                    Wine wine = wineRepository.findById(itemRequest.getWineId())
-                            .orElseThrow(() -> new BadRequestException("와인 정보가 없습니다."));
-                    return OrderItem.of(wine, itemRequest.getQuantity());
+        // 1-1. 해당 유저의 장바구니 조회
+        List<CartItem> cartItems = cartRepo.findByUserId(userId);
+        if (cartItems.isEmpty()) {
+            throw new BadRequestException("장바구니가 비어있습니다.");
+        }
+
+        // 1-2. 장바구니의 wineId 리스트 → 와인 정보 가져오기
+        List<Long> wineIds = cartItems.stream()
+                .map(CartItem::getWineId)
+                .collect(Collectors.toList());
+        List<Wine> wines = wineRepository.findAllById(wineIds);
+        Map<Long, Wine> wineMap = wines.stream()
+                .collect(Collectors.toMap(Wine::getId, Function.identity()));
+
+
+        //1- 3. OrderItem 리스트 생성
+        List<OrderItem> orderItems = cartItems.stream()
+                .map(item -> {
+                    Wine wine = wineMap.get(item.getWineId());
+                    if (wine == null) {
+                        throw new BadRequestException("장바구니에 유효하지 않은 와인이 포함되어 있습니다. ID: " + item.getWineId());
+                    }
+                    return OrderItem.of(wine, item.getQuantity());
                 })
                 .collect(Collectors.toList());
 
+        // 1-4. 주문 생성
         Order order = Order.builder()
-                .orderstatus(Orderstatus.PENDING) // 장바구니 상태
+                .userId(userId)
+                .orderstatus(Orderstatus.PENDING)
                 .orderItems(orderItems)
                 .build();
 
-        Order savedOrder = orderRepository.save(order);
-        return OrderResponse.from(savedOrder);
+        Order saved = orderRepository.save(order);
+
+        return OrderResponse.from(saved);
     }
 
 
-    // 2. 장바구니 상품 조회
-    @Transactional(readOnly = true)
-    public List<OrderResponse> getPendingOrders() {
-        return orderRepository.findByOrderstatus(Orderstatus.PENDING)
-                .stream()
-                .map(OrderResponse::from)
-                .collect(Collectors.toList());
-    }
-
-
-    // 3. 장바구니 상품 수량 수정
-    @Transactional
-    public void updateOrderItemQuantity(Long orderId, Long wineId, int newQuantity) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new BadRequestException("주문이 존재하지 않습니다."));
-
-        order.updateItemQuantity(wineId, newQuantity);
-    }
-
-    // 4. 장바구니 상품 삭제 (여기는 장바구니상태라 그냥 삭제 해도 괜찮)
-    @Transactional
-    public void deleteOrderItem(Long orderId, Long wineId) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new BadRequestException("주문이 존재하지 않습니다."));
-
-        order.deleteItem(wineId);
-    }
-
-    // 5. 장바구니 전체 삭제
-    @Transactional
-    public void deleteOrder(Long orderId) {
-        orderRepository.deleteById(orderId);
-    }
-
-    // 6. 결제 된 건에 대한 주문 취소 처리(soft delete)
-    @Transactional
-    public void cancelOrder(Long orderId) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new BadRequestException("주문이 존재하지 않습니다."));
-        order.cancel();
-    }
-    // 7. 즉시 주문 생성 (장바구니 없이 바로 주문)
+    // 2. 단일 상품 즉시 주문 생성
     @Transactional
     public OrderResponse createInstantOrder(InstantOrderRequestDto request) {
+        Long userId = SecurityUtil.getCurrentUserId();
 
         Wine wine = wineRepository.findById(request.getWineId())
                 .orElseThrow(() -> new BadRequestException("와인 정보가 없습니다."));
 
         OrderItem orderItem = OrderItem.of(wine, request.getQuantity());
 
-        Order order = Order.builder()
-                .orderstatus(Orderstatus.CONFIRMED) // 바로 결제 직전 상태
-                .orderItems(List.of(orderItem))
-                .build();
-
+        Order order = Order.create(userId, List.of(orderItem));
         Order savedOrder = orderRepository.save(order);
+
         return OrderResponse.from(savedOrder);
+    }
+
+    //3. 주문 전체 조회
+    @Transactional(readOnly = true)
+    public List<OrderResponse> getMyOrders() {
+        Long userId = SecurityUtil.getCurrentUserId();
+
+        List<Order> orders = orderRepository.findByUserId(userId);
+        return orders.stream()
+                .map(OrderResponse::from)
+                .collect(Collectors.toList());
+    }
+//3-1. 주문 상세 조회
+@Transactional(readOnly = true)
+public OrderResponse getOrderDetail(Long orderId) {
+    Long userId = SecurityUtil.getCurrentUserId();
+
+    Order order = orderRepository.findById(orderId)
+            .orElseThrow(() -> new BadRequestException("해당 주문이 존재하지 않습니다."));
+
+    if (!order.getUserId().equals(userId)) {
+        throw new BadRequestException("해당 주문에 접근할 수 없습니다.");
+    }
+
+    return OrderResponse.from(order);
+}
+
+
+
+    //4. 결제 된 건에 대한 주문 취소 처리
+    @Transactional
+    public void cancelOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new BadRequestException("주문이 존재하지 않습니다."));
+        order.cancel();
     }
 
 

@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -21,6 +22,8 @@ public class Order extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    private Long userId; // 주문자 ID
 
     //주문 상태
     @Enumerated(EnumType.STRING)
@@ -39,17 +42,33 @@ public class Order extends BaseTimeEntity {
 
     // 장바구니 상품 수량 수정
     public void updateItemQuantity(Long wineId, int newQuantity) {
-        for (OrderItem item : orderItems) {
-            if (item.getWineId().equals(wineId)) {
-                item.updateQuantity(newQuantity);
-                break;
-            }
-        }
+        // 새로운 OrderItem 리스트 생성
+        List<OrderItem> updatedItems = this.orderItems.stream()
+                .map(item -> {
+                    if (item.getWineId().equals(wineId)) {
+                        return item.changeQuantity(newQuantity);
+                    }
+                    return item;
+                })
+                .collect(Collectors.toList());
+
+        this.orderItems = updatedItems;
     }
+
     // 장바구니 상품 삭제
     public void deleteItem(Long wineId) {
         orderItems.removeIf(item -> item.getWineId().equals(wineId));
     }
+
+    // 주문 생성 메서드
+    public static Order create(Long userId, List<OrderItem> orderItems) {
+        return Order.builder()
+                .userId(userId)
+                .orderItems(orderItems)
+                .orderstatus(Orderstatus.PENDING)
+                .build();
+    }
+
 
     // 결제 완료 처리
     public void complete() {

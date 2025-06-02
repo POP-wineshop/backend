@@ -34,9 +34,15 @@ public class OrderItem {
 
 
     // 수량 업데이트 메서드
-    public void updateQuantity(int quantity) {
-        this.orderedQuantity = OrderedQuantity.of(quantity);
-        this.orderedPrice = OrderedPrice.of(this.winePrice, this.orderedQuantity);
+    public OrderItem changeQuantity(int newQuantity) {
+        return OrderItem.builder()
+                .wineId(this.wineId)
+                .wineNameKor(this.wineNameKor)
+                .winePrice(this.winePrice)
+                .orderedQuantity(OrderedQuantity.of(newQuantity))
+                .orderedPrice(OrderedPrice.of(this.winePrice, OrderedQuantity.of(newQuantity)))
+                .wineImageUrl(this.wineImageUrl)
+                .build();
     }
 
     // 주문 아이템 생성 메서드

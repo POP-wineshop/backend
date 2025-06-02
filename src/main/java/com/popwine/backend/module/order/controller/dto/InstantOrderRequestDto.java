@@ -1,9 +1,11 @@
 package com.popwine.backend.module.order.controller.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class InstantOrderRequestDto {
-    private Long wineId;
-    private int quantity;
+@NoArgsConstructor
+public class InstantOrderRequestDto extends OrderRequestDto.OrderItemRequest {
+
 }
+

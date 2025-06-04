@@ -11,8 +11,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class WineResponseDto {
     private final Long id;
-    private final String KorName;
-    private final String EngName;
+    private final String korName;
+    private final String engName;
     private final int price;
     private final int vintage;
     private final String country;

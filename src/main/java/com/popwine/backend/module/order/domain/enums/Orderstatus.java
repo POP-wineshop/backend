@@ -1,7 +1,8 @@
 package com.popwine.backend.module.order.domain.enums;
 
+import com.popwine.backend.core.exception.BadRequestException;
 import lombok.Getter;
-import org.apache.coyote.BadRequestException;
+
 
 @Getter
 public enum Orderstatus {

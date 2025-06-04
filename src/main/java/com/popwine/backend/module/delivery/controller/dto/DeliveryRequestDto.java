@@ -11,6 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class DeliveryRequestDto {
+
+    private Long userId; // 사용자 ID
+    private Long orderId; // 주문 ID
+
     private String address; // 배송지 주소
     private String detailAddress; // 상세 주소
     private String recipientName; // 수령인 이름

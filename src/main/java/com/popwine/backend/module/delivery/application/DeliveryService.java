@@ -17,9 +17,9 @@ public class DeliveryService {
     // 배송지 등록
     @Transactional
     public DeliveryResponseDto createDelivery(DeliveryRequestDto requestDto) {
-        Delivery delivery = requestDto.toEntity(); // DeliveryRequestDto -> Delivery 변환
-        Delivery savedDelivery = deliveryRepository.save(delivery); // 저장된 Delivery 반환
-        return DeliveryResponseDto.from(savedDelivery); // Delivery -> DeliveryResponseDto 변환 후 반환
+        Delivery delivery = requestDto.toEntity();
+        Delivery savedDelivery = deliveryRepository.save(delivery);
+        return DeliveryResponseDto.from(savedDelivery);
     }
 
     // 배송지 조회

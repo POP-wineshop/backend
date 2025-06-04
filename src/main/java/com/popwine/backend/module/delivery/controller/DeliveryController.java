@@ -6,8 +6,7 @@ import com.popwine.backend.module.delivery.controller.dto.DeliveryRequestDto;
 import com.popwine.backend.module.delivery.controller.dto.DeliveryResponseDto;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/delivery")
@@ -17,26 +16,30 @@ public class DeliveryController {
     private final DeliveryService deliveryService;
 
     // 배송지 등록
-    public ApiResponse<DeliveryResponseDto> createDelivery(DeliveryRequestDto requestDto) {
+    @PostMapping("/create")
+    public ApiResponse<DeliveryResponseDto> createDelivery(@RequestBody DeliveryRequestDto requestDto) {
         DeliveryResponseDto response = deliveryService.createDelivery(requestDto);
         return ApiResponse.success(response);
     }
 
     // 배송지 조회
-    public ApiResponse<DeliveryResponseDto> getDelivery(Long id) {
+    @GetMapping("/{id}")
+    public ApiResponse<DeliveryResponseDto> getDelivery(@PathVariable Long id) {
         DeliveryResponseDto response = deliveryService.getDelivery(id);
         return ApiResponse.success(response);
     }
 
 
     // 배송지 수정
-    public ApiResponse<DeliveryResponseDto> updateDelivery(Long id, DeliveryRequestDto requestDto) {
+    @PutMapping("/{id}")
+    public ApiResponse<DeliveryResponseDto> updateDelivery(@PathVariable Long id,@RequestBody DeliveryRequestDto requestDto) {
         DeliveryResponseDto response = deliveryService.updateDelivery(id, requestDto);
         return ApiResponse.success(response);
     }
 
     // 배송지 삭제 상태만 변경
-    public ApiResponse<Void> deleteDelivery(Long id) {
+    @DeleteMapping("/{id}")
+    public ApiResponse<Void> deleteDelivery(@PathVariable Long id) {
         deliveryService.deleteDelivery(id);
         return ApiResponse.success();
     }

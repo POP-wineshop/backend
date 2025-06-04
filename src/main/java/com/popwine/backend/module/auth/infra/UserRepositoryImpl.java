@@ -32,17 +32,17 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void delete(User user) {
-
+        jpa.delete(user);
     }
 
     @Override
     public List<User> findAll() {
-        return List.of();
+        return jpa.findAll();
     }
 
     @Override
     public boolean existsByUsername(String username) {
-        return false;
+        return jpa.findByUsername(username).isPresent();
     }
 }
 

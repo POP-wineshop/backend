@@ -1,4 +1,4 @@
-package com.popwine.backend.module.Cart.controller.dto;
+package com.popwine.backend.module.cart.controller.dto;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,10 +1,10 @@
-package com.popwine.backend.module.Cart.controller;
+package com.popwine.backend.module.cart.controller;
 
 import com.popwine.backend.core.common.ApiResponse;
-import com.popwine.backend.module.Cart.controller.dto.CartAddRequest;
-import com.popwine.backend.module.Cart.controller.dto.CartResponse;
-import com.popwine.backend.module.Cart.domain.application.CartService;
-import com.popwine.backend.module.Cart.controller.dto.UpdateQuantityRequest;
+import com.popwine.backend.module.cart.controller.dto.CartAddRequest;
+import com.popwine.backend.module.cart.controller.dto.CartResponse;
+import com.popwine.backend.module.cart.domain.application.CartService;
+import com.popwine.backend.module.cart.controller.dto.UpdateQuantityRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

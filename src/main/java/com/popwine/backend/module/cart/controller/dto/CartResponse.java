@@ -1,6 +1,6 @@
-package com.popwine.backend.module.Cart.controller.dto;
+package com.popwine.backend.module.cart.controller.dto;
 
-import com.popwine.backend.module.Cart.domain.entity.CartItem;
+import com.popwine.backend.module.cart.domain.entity.CartItem;
 import com.popwine.backend.module.wine.domain.entity.Wine;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

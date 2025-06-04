@@ -1,7 +1,6 @@
-package com.popwine.backend.module.Cart.domain.repo;
+package com.popwine.backend.module.cart.domain.repo;
 
-import com.popwine.backend.module.Cart.domain.entity.CartItem;
-import org.springframework.stereotype.Repository;
+import com.popwine.backend.module.cart.domain.entity.CartItem;
 
 import java.util.List;
 import java.util.Optional;

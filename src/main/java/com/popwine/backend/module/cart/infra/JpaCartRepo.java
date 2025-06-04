@@ -1,6 +1,6 @@
-package com.popwine.backend.module.Cart.infra;
+package com.popwine.backend.module.cart.infra;
 
-import com.popwine.backend.module.Cart.domain.entity.CartItem;
+import com.popwine.backend.module.cart.domain.entity.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

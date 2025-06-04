@@ -1,4 +1,4 @@
-package com.popwine.backend.module.Cart.domain.entity;
+package com.popwine.backend.module.cart.domain.entity;
 
 import com.popwine.backend.core.common.BaseTimeEntity;
 import jakarta.persistence.*;

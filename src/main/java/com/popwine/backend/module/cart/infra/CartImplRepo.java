@@ -1,7 +1,7 @@
-package com.popwine.backend.module.Cart.infra;
+package com.popwine.backend.module.cart.infra;
 
-import com.popwine.backend.module.Cart.domain.entity.CartItem;
-import com.popwine.backend.module.Cart.domain.repo.CartRepo;
+import com.popwine.backend.module.cart.domain.entity.CartItem;
+import com.popwine.backend.module.cart.domain.repo.CartRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

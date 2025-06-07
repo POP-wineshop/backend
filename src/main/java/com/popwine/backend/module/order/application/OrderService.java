@@ -10,6 +10,7 @@ import com.popwine.backend.module.order.domain.entity.Order;
 import com.popwine.backend.module.order.domain.enums.Orderstatus;
 import com.popwine.backend.module.order.domain.repository.OrderRepository;
 import com.popwine.backend.module.order.domain.vo.OrderItem;
+import com.popwine.backend.module.order.infra.kafka.OrderEventPublisher;
 import com.popwine.backend.module.wine.domain.entity.Wine;
 import com.popwine.backend.module.wine.domain.repository.WineRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final WineRepository wineRepository;
     private final CartRepo cartRepo;
+    private final OrderEventPublisher orderEventPublisher;
 
 
     @Transactional
@@ -114,8 +116,6 @@ public OrderResponse getOrderDetail(Long orderId) {
     return OrderResponse.from(order);
 }
 
-
-
     //4. 결제 된 건에 대한 주문 취소 처리
     @Transactional
     public void cancelOrder(Long orderId) {
@@ -125,4 +125,14 @@ public OrderResponse getOrderDetail(Long orderId) {
     }
 
 
+    //5. 결제 완료된 주문 상태 변경 및 이벤트 발행
+    @Transactional
+    public void completeOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new BadRequestException("주문 정보가 없습니다."));
+        order.complete();
+        orderRepository.save(order);
+        orderEventPublisher.publish(order.toEvent());
+    }
 }
+

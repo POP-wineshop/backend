@@ -1,6 +1,7 @@
 package com.popwine.backend.module.wine.domain.entity;
 
 import com.popwine.backend.core.common.BaseTimeEntity;
+import com.popwine.backend.core.exception.BadRequestException;
 import com.popwine.backend.module.wine.domain.vo.Price;
 import com.popwine.backend.module.wine.domain.enums.WineType;
 import com.popwine.backend.module.wine.domain.vo.TasteProfile;
@@ -77,5 +78,15 @@ public class Wine extends BaseTimeEntity {
     public void addCategory(Category category) {
         this.wineCategories.add(new WineCategory(this, category));
     }
+
+
+    //재고 차감
+    public void decreaseStock(int quantity) {
+        if (this.stock < quantity) {
+            throw new BadRequestException("재고가 부족합니다.");
+        }
+        this.stock -= quantity;
+    }
+
 }
 

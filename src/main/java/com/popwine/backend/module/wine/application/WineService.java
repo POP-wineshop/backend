@@ -1,5 +1,9 @@
 package com.popwine.backend.module.wine.application;
 
+import com.popwine.backend.core.exception.BadRequestException;
+import com.popwine.backend.module.order.domain.entity.Order;
+import com.popwine.backend.module.order.domain.repository.OrderRepository;
+import com.popwine.backend.module.order.domain.vo.OrderItem;
 import com.popwine.backend.module.wine.controller.dto.WineRequestDto;
 import com.popwine.backend.module.wine.domain.entity.Category;
 import com.popwine.backend.module.wine.domain.enums.CategoryType;
@@ -20,6 +24,7 @@ import java.util.stream.Collectors;
 public class WineService {
     private final WineRepository wineRepository;
     private final CategoryRepository categoryRepository;
+    private final OrderRepository orderRepository;
 
 
     //1. 모든 와인 조회
@@ -64,10 +69,28 @@ public class WineService {
         return WineResponseDto.from(savedWine);
     }
 
+
+
+    //5.  카테고리 이름으로 카테고리 조회, 없으면 생성
     private Category getOrCreateCategory(String name, CategoryType type) {
         return categoryRepository.findByNameAndType(name, type)
                 .orElseGet(() -> categoryRepository.save(new Category(name, type)));
     }
+
+
+    //6. 와인 재고 감소 (주문 시 사용)
+    @Transactional
+    public void decreaseStockByOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new BadRequestException("주문 정보가 없습니다."));
+
+        for (OrderItem item : order.getOrderItems()) {
+            Wine wine = wineRepository.findById(item.getWineId())
+                    .orElseThrow(() -> new BadRequestException("해당 와인이 존재하지 않습니다."));
+            wine.decreaseStock(item.getOrderedQuantity().getQuantity());
+        }
+    }
+
 
 }
 

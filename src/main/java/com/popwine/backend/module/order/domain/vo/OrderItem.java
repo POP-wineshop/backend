@@ -33,6 +33,14 @@ public class OrderItem {
     private String wineImageUrl;
 
 
+
+    // 총 주문 금액 반환 메서드
+    public int getTotalPrice() {
+        return orderedPrice.getValue();
+    }
+
+
+
     // 수량 업데이트 메서드
     public OrderItem changeQuantity(int newQuantity) {
         return OrderItem.builder()

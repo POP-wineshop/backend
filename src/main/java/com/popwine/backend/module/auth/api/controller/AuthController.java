@@ -2,11 +2,9 @@ package com.popwine.backend.module.auth.api.controller;
 
 
 import com.popwine.backend.core.common.ApiResponse;
-import com.popwine.backend.module.auth.api.controller.dto.*;
 import com.popwine.backend.module.auth.api.dto.*;
 import com.popwine.backend.module.auth.application.LoginService;
 import com.popwine.backend.module.auth.application.SignUpService;
-import com.popwine.backend.module.auth.controller.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

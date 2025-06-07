@@ -4,6 +4,7 @@ import com.popwine.backend.core.common.BaseTimeEntity;
 import com.popwine.backend.core.exception.BadRequestException;
 import com.popwine.backend.module.order.domain.enums.Orderstatus;
 import com.popwine.backend.module.order.domain.vo.OrderItem;
+import com.popwine.backend.module.order.infra.kafka.OrderCompletedEvent;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
@@ -82,4 +83,17 @@ public class Order extends BaseTimeEntity {
         }
         this.orderstatus = Orderstatus.CANCELED;
     }
+
+    // 주문 완료 이벤트로 변환
+    public OrderCompletedEvent toEvent() {
+        return new OrderCompletedEvent(this.id);
+    }
+
+    // 총 주문 금액 계산
+    public int getTotalPrice() {
+        return this.orderItems.stream()
+                .mapToInt(OrderItem::getTotalPrice)
+                .sum();
+    }
+
 }

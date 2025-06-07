@@ -1,6 +1,6 @@
 package com.popwine.backend.core.infra.redis;
 
-import com.popwine.backend.module.auth.controller.dto.UserCacheDto;
+import com.popwine.backend.module.auth.api.dto.UserCacheDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;

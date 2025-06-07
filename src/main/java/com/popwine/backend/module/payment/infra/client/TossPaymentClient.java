@@ -1,8 +1,8 @@
 package com.popwine.backend.module.payment.infra.client;
 
 
-import com.popwine.backend.module.payment.controller.dto.PaymentConfirmRequest;
-import com.popwine.backend.module.payment.controller.dto.PaymentConfirmResponse;
+import com.popwine.backend.module.payment.api.dto.PaymentConfirmRequest;
+import com.popwine.backend.module.payment.api.dto.PaymentConfirmResponse;
 import com.popwine.backend.module.payment.infra.config.PaymentFeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;

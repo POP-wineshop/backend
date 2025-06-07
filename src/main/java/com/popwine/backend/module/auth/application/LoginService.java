@@ -2,11 +2,11 @@ package com.popwine.backend.module.auth.application;
 
 import com.popwine.backend.core.exception.BadRequestException;
 import com.popwine.backend.core.exception.ErrorCode;
-import com.popwine.backend.module.auth.controller.dto.LoginRequestDto;
-import com.popwine.backend.module.auth.controller.dto.LoginResponseDto;
-import com.popwine.backend.module.auth.controller.dto.UserCacheDto;
+import com.popwine.backend.module.auth.api.dto.LoginRequestDto;
+import com.popwine.backend.module.auth.api.dto.LoginResponseDto;
+import com.popwine.backend.module.auth.api.dto.UserCacheDto;
 import com.popwine.backend.module.auth.domain.entity.User;
-import com.popwine.backend.module.auth.domain.repository.UserRepository;
+import com.popwine.backend.module.auth.domain.repo.UserRepository;
 import com.popwine.backend.module.auth.domain.vo.Username;
 import com.popwine.backend.core.security.jwt.JwtTokenProvider;
 import com.popwine.backend.core.infra.redis.RedisService;

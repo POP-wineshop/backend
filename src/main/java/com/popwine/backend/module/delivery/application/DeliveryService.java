@@ -1,7 +1,7 @@
 package com.popwine.backend.module.delivery.application;
 
-import com.popwine.backend.module.delivery.controller.dto.DeliveryRequestDto;
-import com.popwine.backend.module.delivery.controller.dto.DeliveryResponseDto;
+import com.popwine.backend.module.delivery.api.dto.DeliveryRequestDto;
+import com.popwine.backend.module.delivery.api.dto.DeliveryResponseDto;
 import com.popwine.backend.module.delivery.domain.entity.Delivery;
 import com.popwine.backend.module.delivery.domain.repository.DeliveryRepository;
 import org.springframework.transaction.annotation.Transactional;

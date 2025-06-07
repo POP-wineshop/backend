@@ -1,8 +1,8 @@
 package com.popwine;
 
 import com.popwine.backend.module.wine.application.WineService;
-import com.popwine.backend.module.wine.controller.dto.WineRequestDto;
-import com.popwine.backend.module.wine.controller.dto.WineResponseDto;
+import com.popwine.backend.module.wine.api.dto.WineRequestDto;
+import com.popwine.backend.module.wine.api.dto.WineResponseDto;
 import com.popwine.backend.module.wine.domain.entity.Wine;
 import com.popwine.backend.module.wine.domain.repository.WineRepository;
 import com.popwine.backend.module.wine.domain.vo.Price;

@@ -38,3 +38,6 @@ out/
 
 ###aplication.yml###
 application.yml
+
+### Certificates ###
+winehallee.pem

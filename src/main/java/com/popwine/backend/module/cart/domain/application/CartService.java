@@ -44,30 +44,7 @@ public class CartService {
         }
     }
 
-    // 장바구니 조회
-    @Transactional(readOnly = true)
-    public List<CartResponse> getMyCart() {
-        Long userId = SecurityUtil.getCurrentUserId();
-        List<CartItem> cartItems = cartRepo.findByUserId(userId);
 
-        List<Long> wineIds = cartItems.stream()
-                .map(CartItem::getWineId)
-                .collect(Collectors.toList());
-
-        List<Wine> wines = wineRepository.findAllById(wineIds);
-        Map<Long, Wine> wineMap = wines.stream()
-                .collect(Collectors.toMap(Wine::getId, Function.identity()));
-
-        return cartItems.stream()
-                .map(item -> {
-                    Wine wine = wineMap.get(item.getWineId());
-                    if (wine == null) {
-                        throw new BadRequestException("해당 와인 정보를 찾을 수 없습니다.");
-                    }
-                    return CartResponse.of(item, wine);
-                })
-                .collect(Collectors.toList());
-    }
 
     // 수량 수정
     @Transactional

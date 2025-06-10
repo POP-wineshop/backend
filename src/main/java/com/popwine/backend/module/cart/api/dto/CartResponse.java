@@ -13,7 +13,7 @@ public class CartResponse {
     private String wineName;
     private int quantity;
     private int totalPrice;
-    private Long wineId;
+    private int winePrice;
     private String thumbnail;
 
     public static CartResponse of(CartItem cart, Wine wine) {
@@ -22,7 +22,7 @@ public class CartResponse {
                 wine.getName().getKorean(),
                 cart.getQuantity(),
                 wine.getPrice().getValue() * cart.getQuantity(),
-                wine.getId(),
+                wine.getPrice().getValue(),
                 wine.getImageUrl()
         );
     }

@@ -44,6 +44,27 @@ public class CartService {
         }
     }
 
+    // 장바구니 조회
+    @Transactional(readOnly = true)
+    public List<CartResponse> getMyCart() {
+        Long userId = SecurityUtil.getCurrentUserId();
+        List<CartItem> cartItems = cartRepo.findByUserId(userId);
+
+        if (cartItems.isEmpty()) {
+            return List.of();
+        }
+
+        List<Long> wineIds = cartItems.stream()
+                .map(CartItem::getWineId)
+                .collect(Collectors.toList());
+
+        Map<Long, Wine> wineMap = wineRepository.findAllById(wineIds).stream()
+                .collect(Collectors.toMap(Wine::getId, Function.identity()));
+
+        return cartItems.stream()
+                .map(cart -> CartResponse.of(cart, wineMap.get(cart.getWineId())))
+                .collect(Collectors.toList());
+    }
 
 
     // 수량 수정

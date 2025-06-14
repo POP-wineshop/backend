@@ -134,5 +134,19 @@ public OrderResponse getOrderDetail(Long orderId) {
         orderRepository.save(order);
         orderEventPublisher.publish(order.toEvent());
     }
+
+
+    @Transactional
+    public Order completeOrderWithoutKafka(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new BadRequestException("주문 정보가 없습니다."));
+
+        order.complete();
+        orderRepository.save(order);
+
+        // Kafka 발행 X
+        return order;
+    }
+
 }
 

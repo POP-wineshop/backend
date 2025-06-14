@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class DeliveryResponseDto {
 
     private Long id; // 배송지 ID
+    private String orderId; // 주문 ID (optional, if needed)
     private String address; // 배송지 주소
     private String detailAddress; // 상세 주소
     private String recipientName; // 수령인 이름

@@ -29,6 +29,13 @@ public class DeliveryController {
         return ApiResponse.success(response);
     }
 
+    // 기본 배송지 조회
+    @GetMapping("/default")
+    public ApiResponse<DeliveryResponseDto> getDefaultDelivery() {
+        DeliveryResponseDto response = deliveryService.getDefaultDelivery();
+        return ApiResponse.success(response);
+    }
+
 
     // 배송지 수정
     @PutMapping("/{id}")

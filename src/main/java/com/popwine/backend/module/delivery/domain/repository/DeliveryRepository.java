@@ -21,4 +21,7 @@ public interface DeliveryRepository {
     // 기본 배송지 조회
     Delivery findDefaultDeliveryByUserId(Long userId);
 
+    // 기본 배송지 여부를 초기화
+    void resetDefaultAddressForUser(Long userId);
+
 }

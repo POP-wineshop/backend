@@ -1,5 +1,7 @@
 package com.popwine.backend.module.delivery.application;
 
+import com.popwine.backend.core.exception.BadRequestException;
+import com.popwine.backend.core.security.util.SecurityUtil;
 import com.popwine.backend.module.delivery.api.dto.DeliveryRequestDto;
 import com.popwine.backend.module.delivery.api.dto.DeliveryResponseDto;
 import com.popwine.backend.module.delivery.domain.entity.Delivery;
@@ -17,6 +19,14 @@ public class DeliveryService {
     // 배송지 등록
     @Transactional
     public DeliveryResponseDto createDelivery(DeliveryRequestDto requestDto) {
+
+        Long userId = SecurityUtil.getCurrentUserId();
+
+        // 기본 배송지 설정 시, 기존 기본 배송지의 상태를 변경
+        if (requestDto.isDefault()) {
+            deliveryRepository.resetDefaultAddressForUser(userId);
+        }
+
         Delivery delivery = requestDto.toEntity();
         Delivery savedDelivery = deliveryRepository.save(delivery);
         return DeliveryResponseDto.from(savedDelivery);
@@ -28,6 +38,20 @@ public class DeliveryService {
         Delivery delivery = deliveryRepository.findById(id);
         return DeliveryResponseDto.from(delivery);
     }
+
+    // 기본 배송지 조회
+    @Transactional(readOnly = true)
+    public DeliveryResponseDto getDefaultDelivery() {
+        Long userId = SecurityUtil.getCurrentUserId();
+        Delivery delivery = deliveryRepository.findDefaultDeliveryByUserId(userId);
+
+        if (delivery == null) {
+            throw new BadRequestException("기본 배송지가 없습니다.");
+        }
+
+        return DeliveryResponseDto.from(delivery);
+    }
+
 
     // 배송지 수정
     @Transactional

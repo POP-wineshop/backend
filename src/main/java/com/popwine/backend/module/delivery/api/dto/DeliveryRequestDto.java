@@ -14,7 +14,6 @@ public class DeliveryRequestDto {
 
     private Long userId; // 사용자 ID
     private Long orderId; // 주문 ID
-
     private String address; // 배송지 주소
     private String detailAddress; // 상세 주소
     private String recipientName; // 수령인 이름
@@ -26,6 +25,8 @@ public class DeliveryRequestDto {
     // DTO -> Entity 변환
     public Delivery toEntity() {
         return Delivery.builder()
+                .userId(userId)
+                .orderId(orderId)
                 .address(address)
                 .detailAddress(detailAddress)
                 .recipientName(recipientName)

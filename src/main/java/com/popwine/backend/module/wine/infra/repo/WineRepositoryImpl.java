@@ -9,10 +9,13 @@ import com.popwine.backend.module.wine.domain.enums.CategoryType;
 import com.popwine.backend.module.wine.domain.repository.WineRepository;
 import com.popwine.backend.module.wine.domain.entity.Wine;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,15 +36,15 @@ public class WineRepositoryImpl implements WineRepository {
     public List<Wine> findAll() {
         return jpa.findAll();
     }
+
+    //  와인 필터링 기능 구현
     @Override
     public List<Wine> findByFilters(String country, String region, String type, String keyword) {
         QWine wine = QWine.wine;
         QWineCategory wineCategory = QWineCategory.wineCategory;
         QCategory category = QCategory.category;
 
-        BooleanBuilder condition = new BooleanBuilder();
-        BooleanBuilder categoryCondition = new BooleanBuilder();
-
+        BooleanBuilder condition = new BooleanBuilder(); // 검색어 (keyword)
         if (keyword != null && !keyword.isBlank()) {
             condition.andAnyOf(
                     wine.name.korean.containsIgnoreCase(keyword),
@@ -51,35 +54,57 @@ public class WineRepositoryImpl implements WineRepository {
             );
         }
 
+        //  조건을 리스트로 만들기
+        List<CategoryFilter> filters = new ArrayList<>();
         if (type != null && !type.isBlank()) {
-            categoryCondition.or(
-                    category.name.eq(type)
-                            .and(category.type.eq(CategoryType.WINE_TYPE))
-            );
+            filters.add(new CategoryFilter(CategoryType.WINE_TYPE, type));
         }
-
         if (country != null && !country.isBlank()) {
-            categoryCondition.or(
-                    category.name.eq(country)
-                            .and(category.type.eq(CategoryType.COUNTRY))
-            );
+            filters.add(new CategoryFilter(CategoryType.COUNTRY, country));
         }
-
         if (region != null && !region.isBlank()) {
-            categoryCondition.or(
-                    category.name.eq(region)
-                            .and(category.type.eq(CategoryType.REGION))
-            );
+            filters.add(new CategoryFilter(CategoryType.REGION, region));
         }
 
+        // 조건들을 or로 묶기
+        BooleanExpression categoryCond = null;
+        for (CategoryFilter filter : filters) {
+            BooleanExpression oneCond = category.name.eq(filter.name)
+                    .and(category.type.eq(filter.type));
+            if (categoryCond == null) {
+                categoryCond = oneCond;
+            } else {
+                categoryCond = categoryCond.or(oneCond);
+            }
+        }
+
+        // null 처리 (조건이 없을 때를 대비)
+        if (categoryCond == null) {
+            categoryCond = Expressions.TRUE.isTrue(); // 무조건 참
+        }
+
+        // 쿼리 실행
         return jpaQueryFactory
                 .selectFrom(wine)
                 .distinct()
                 .join(wine.wineCategories, wineCategory)
                 .join(wineCategory.category, category)
-                .where(condition.and(categoryCondition))
+                .where(condition.and(categoryCond))
+                .groupBy(wine.id)
+                .having(category.type.countDistinct().eq((long) filters.size()))
                 .fetch();
     }
+
+    private static class CategoryFilter {
+        CategoryType type;
+        String name;
+
+        public CategoryFilter(CategoryType type, String name) {
+            this.type = type;
+            this.name = name;
+        }
+    }
+
 
 
     @Override

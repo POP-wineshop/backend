@@ -10,6 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CartResponse {
     private Long cartItemId;
+    private Long wineId;
     private String wineName;
     private int quantity;
     private int totalPrice;
@@ -19,6 +20,7 @@ public class CartResponse {
     public static CartResponse of(CartItem cart, Wine wine) {
         return new CartResponse(
                 cart.getId(),
+                wine.getId(),
                 wine.getName().getKorean(),
                 cart.getQuantity(),
                 wine.getPrice().getValue() * cart.getQuantity(),

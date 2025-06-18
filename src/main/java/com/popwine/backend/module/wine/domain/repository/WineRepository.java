@@ -15,4 +15,6 @@ public interface WineRepository {
 
 
      List<Wine> findAllById(List<Long> wineIds);
+
+     List<Wine> saveAll(List<Wine> wines);
 }

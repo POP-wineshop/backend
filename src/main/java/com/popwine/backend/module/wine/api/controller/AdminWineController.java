@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/admin/wines")
 @RequiredArgsConstructor
@@ -18,7 +20,7 @@ public class AdminWineController {
     private final WineService wineService;
     //4. 와인 등록 (관리자용)
     @PostMapping
-    public ApiResponse<WineResponseDto> createWine(@RequestBody WineRequestDto wineRequestDto) {
+    public ApiResponse<List<WineResponseDto>> createWines(@RequestBody List<WineRequestDto> wineRequestDto) {
         return ApiResponse.success(wineService.createWine(wineRequestDto));
     }
 }

@@ -117,4 +117,9 @@ public class WineRepositoryImpl implements WineRepository {
         return jpa.findAllById(wineIds);
     }
 
+    @Override
+    public List<Wine> saveAll(List<Wine> wines) {
+        return jpa.saveAll(wines);
+    }
+
 }

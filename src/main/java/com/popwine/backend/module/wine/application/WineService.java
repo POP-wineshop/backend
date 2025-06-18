@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,22 +53,30 @@ public class WineService {
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 와인을 찾을 수 없다: " + id));
     }
 
-    //4. 와인 등록 (관리자용)
     @Transactional
-    public WineResponseDto createWine(WineRequestDto dto) {
-        Wine wine = dto.toEntity();
+    public List<WineResponseDto> createWine(List<WineRequestDto> dtos) {
+        List<Wine> wines = new ArrayList<>();
 
-        Category countryCategory = getOrCreateCategory(dto.getCountry(), CategoryType.COUNTRY);
-        Category regionCategory = getOrCreateCategory(dto.getRegion(), CategoryType.REGION);
-        Category wineTypeCategory = getOrCreateCategory(dto.getWineType().name(), CategoryType.WINE_TYPE);
+        for (WineRequestDto dto : dtos) {
+            Wine wine = dto.toEntity();
 
-        wine.addCategory(countryCategory);
-        wine.addCategory(regionCategory);
-        wine.addCategory(wineTypeCategory);
+            Category country = getOrCreateCategory(dto.getCountry(), CategoryType.COUNTRY);
+            Category region = getOrCreateCategory(dto.getRegion(), CategoryType.REGION);
+            Category type = getOrCreateCategory(dto.getWineType().name(), CategoryType.WINE_TYPE);
 
-        Wine savedWine = wineRepository.save(wine);
-        return WineResponseDto.from(savedWine);
+            wine.addCategory(country);
+            wine.addCategory(region);
+            wine.addCategory(type);
+
+            wines.add(wine);
+        }
+
+        List<Wine> saved = wineRepository.saveAll(wines);
+        return saved.stream()
+                .map(WineResponseDto::from)
+                .toList();
     }
+
 
 
 

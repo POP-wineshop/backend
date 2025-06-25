@@ -52,7 +52,7 @@ public class WineService {
                 .toList();
     }
 
-    // 문자열이 비었는지 확인하는 도우미 메서드
+    // 문자열이 비었는지 확인하는 메서드
     private boolean isEmpty(String s) {
         return s == null || s.trim().isEmpty();
     }

@@ -40,11 +40,23 @@ public class WineService {
     //2. 카테고리 와인 조회
     @Transactional(readOnly = true)
     public List<WineResponseDto> searchWines(String country, String region, String type, String keyword) {
+        // 필터가 전부 비어있다면 전체 와인 조회
+        if (isEmpty(country) && isEmpty(region) && isEmpty(type) && isEmpty(keyword)) {
+            return getAllWines();
+        }
+
+        // 아니면 필터 조건에 맞춰 검색
         List<Wine> wines = wineRepository.findByFilters(country, region, type, keyword);
         return wines.stream()
                 .map(WineResponseDto::from)
                 .toList();
     }
+
+    // 문자열이 비었는지 확인하는 도우미 메서드
+    private boolean isEmpty(String s) {
+        return s == null || s.trim().isEmpty();
+    }
+
 
     //3. 와인 ID통해 상세정보 조회
     public WineResponseDto getWineById(Long id) {

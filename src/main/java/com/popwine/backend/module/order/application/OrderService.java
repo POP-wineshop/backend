@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -67,6 +68,7 @@ public class OrderService {
                 .userId(userId)
                 .orderstatus(Orderstatus.PENDING)
                 .orderItems(orderItems)
+                .tossOrderId(UUID.randomUUID().toString())
                 .build();
 
         Order saved = orderRepository.save(order);

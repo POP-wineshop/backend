@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class OrderResponse {
 
     private Long orderId;
-    // private String ordererName; 추후 예정
+    private String tossOrderId;
     private String orderStatus;
     private List<OrderItemResponse> orderItems;
     private int totalPrice;
@@ -32,6 +32,7 @@ public class OrderResponse {
 
         return OrderResponse.builder()
                 .orderId(order.getId())
+                .tossOrderId(order.getTossOrderId())
                 .orderStatus(order.getOrderstatus().name())
                 .orderItems(orderItemResponses)
                 .totalPrice(totalPrice)

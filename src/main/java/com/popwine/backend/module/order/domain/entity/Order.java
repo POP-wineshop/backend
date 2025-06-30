@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Getter
@@ -22,6 +23,8 @@ public class Order extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String tossOrderId; // 주문 키 (PG사에서 발급받은 키)
 
 
     private Long userId; // 주문자 ID
@@ -67,6 +70,7 @@ public class Order extends BaseTimeEntity {
                 .userId(userId)
                 .orderItems(orderItems)
                 .orderstatus(Orderstatus.PENDING)
+                .tossOrderId(UUID.randomUUID().toString())
                 .build();
     }
 

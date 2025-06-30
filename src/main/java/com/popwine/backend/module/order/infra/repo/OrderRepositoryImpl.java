@@ -42,6 +42,11 @@ public class OrderRepositoryImpl implements OrderRepository {
         return jpaOrderRepository.findById(id);
     }
 
+    @Override
+    public Optional<Order> findByTossOrderId(String tossOrderId) {
+        return jpaOrderRepository.findByTossOrderId(tossOrderId);
+    }
+
     //주문 상태로 주문 조회
     @Override
     public List<Order> findByUserIdAndOrderstatus(Long userId, Orderstatus orderstatus) {

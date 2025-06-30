@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class PaymentConfirmResponse {
-    private Long orderId;
+    private Long orderId; // 주문 ID
+    private String tossOrderId; // 주문 키 (PG사에서 발급받은 키)
     private String paymentKey;
     private int amount;
     private String status;
@@ -30,28 +31,12 @@ public class PaymentConfirmResponse {
     public Payment toEntity(Long orderId) {
         return Payment.builder()
                 .orderId(orderId)
+                .tossOrderId(tossOrderId)
                 .paymentKey(paymentKey)
                 .amount(amount)
                 .status(PaymentStatus.valueOf(status))
                 .approvedAt(approvedAt)
                 .build();
     }
-    /**
-     * 테스트용 가짜 결제 응답 생성
-     *
-     * @param orderId 주문 ID
-     * @param amount  결제 금액
-     * @return 가짜 PaymentConfirmResponse 객체
-     */
-    public static PaymentConfirmResponse fakeResponse(Long orderId, int amount) {
-        return PaymentConfirmResponse.builder()
-                .orderId(orderId)
-                .paymentKey("FAKE-PG-KEY")
-                .amount(amount)
-                .status(PaymentStatus.COMPLETED.name()) // 가짜 결제 상태
-                .approvedAt(LocalDateTime.now().toString())
-                .build();
-    }
-
 
 }

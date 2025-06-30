@@ -18,6 +18,7 @@ public class Payment {
 
     private Long orderId;
     private String paymentKey;
+    private String tossOrderId;
     private int amount;
 
     @Enumerated(EnumType.STRING)

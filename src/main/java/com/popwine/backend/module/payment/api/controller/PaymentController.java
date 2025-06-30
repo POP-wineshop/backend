@@ -21,16 +21,15 @@ public class PaymentController {
      * 결제 승인 요청
      *
      * @param request 결제 승인 요청 정보
-     * @param orderId 주문 ID
      * @return 결제 승인 응답
      */
 
-    @PostMapping("/{orderId}/confirm")
+    @PostMapping("/confirm")
     public ApiResponse<PaymentConfirmResponse> confirmPayment(
-            @RequestBody PaymentConfirmRequest request,
-            @PathVariable("orderId") Long  orderId
-    ) {
-        PaymentConfirmResponse response = paymentService.confirmPayment(request, orderId);
+            @RequestBody PaymentConfirmRequest request
+            ) {
+
+        PaymentConfirmResponse response = paymentService.confirmPayment(request);
         return ApiResponse.success(response);
     }
 }

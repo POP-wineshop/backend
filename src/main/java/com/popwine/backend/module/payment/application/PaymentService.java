@@ -27,7 +27,7 @@ public class PaymentService {
 
 
     @Transactional
-    public PaymentConfirmResponse confirmPayment(PaymentConfirmRequest request, Long orderId) {
+    public PaymentConfirmResponse confirmPayment(PaymentConfirmRequest request) {
         // Toss API 연동
         PaymentConfirmResponse response = paymentProcessor.confirmPayment(request);
 

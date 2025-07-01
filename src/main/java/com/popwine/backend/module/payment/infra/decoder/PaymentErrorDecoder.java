@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
 import feign.codec.ErrorDecoder;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 public class PaymentErrorDecoder implements ErrorDecoder {
 
     private final ErrorDecoder defaultDecoder = new Default();
@@ -16,6 +18,10 @@ public class PaymentErrorDecoder implements ErrorDecoder {
     public Exception decode(String methodKey, Response response) {
         try {
             String body = new String(response.body().asInputStream().readAllBytes(), StandardCharsets.UTF_8);
+
+            // Toss 응답 바디 출력
+             log.error("[Toss 응답 바디] {}", body);
+
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode json = objectMapper.readTree(body);
 

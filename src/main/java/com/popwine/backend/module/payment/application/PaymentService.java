@@ -28,11 +28,22 @@ public class PaymentService {
 
     @Transactional
     public PaymentConfirmResponse confirmPayment(PaymentConfirmRequest request) {
+
+        log.info("[결제 승인 요청] paymentKey={}, tossOrderId={}, amount={}",
+                request.getPaymentKey(), request.getOrderId(), request.getAmount());
+
+        // 🔒 널/빈 값 체크
+        if (request.getPaymentKey() == null || request.getPaymentKey().isBlank()
+                || request.getOrderId() == null || request.getOrderId().isBlank()
+                || request.getAmount() <= 0) {
+            throw new IllegalArgumentException("결제 승인 요청에 필수 값이 누락되었습니다.");
+        }
+
         // Toss API 연동
         PaymentConfirmResponse response = paymentProcessor.confirmPayment(request);
 
         // 1. tossOrderId로 Order 찾기
-                Order order = orderRepository.findByTossOrderId(request.getTossOrderId())
+                Order order = orderRepository.findByTossOrderId(request.getOrderId())
                         .orElseThrow(() -> new IllegalArgumentException("주문 없음"));
 
         // 2. 주문 상태 변경은 OrderService에 위임

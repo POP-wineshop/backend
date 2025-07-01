@@ -3,6 +3,7 @@ package com.popwine.backend.module.auth.api.controller;
 import com.popwine.backend.module.auth.api.dto.AdminUserDto;
 import com.popwine.backend.module.auth.domain.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

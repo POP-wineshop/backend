@@ -6,6 +6,7 @@ import com.popwine.backend.module.order.domain.repo.OrderRepository;
 import com.popwine.backend.module.order.domain.vo.OrderItem;
 import com.popwine.backend.module.wine.api.dto.WineRequestDto;
 import com.popwine.backend.module.wine.domain.entity.Category;
+import com.popwine.backend.module.wine.domain.entity.WineLike;
 import com.popwine.backend.module.wine.domain.enums.CategoryType;
 import com.popwine.backend.module.wine.domain.repo.CategoryRepo;
 import com.popwine.backend.module.wine.domain.repo.WineRepo;
@@ -111,6 +112,8 @@ public class WineService {
             wine.decreaseStock(item.getOrderedQuantity().getQuantity());
         }
     }
+
+    //7.와인 좋아요
 
 
 }

@@ -5,7 +5,7 @@ import com.popwine.backend.module.order.domain.entity.Order;
 import com.popwine.backend.module.order.domain.repo.OrderRepository;
 import com.popwine.backend.module.payment.api.dto.PaymentConfirmRequest;
 import com.popwine.backend.module.payment.api.dto.PaymentConfirmResponse;
-import com.popwine.backend.module.payment.domain.repository.PaymentRepository;
+import com.popwine.backend.module.payment.domain.repo.PaymentRepository;
 import com.popwine.backend.module.payment.infra.kafka.PaymentCompletedEvent;
 import com.popwine.backend.module.payment.infra.kafka.PaymentEventPublisher;
 import lombok.RequiredArgsConstructor;

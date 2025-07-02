@@ -1,7 +1,7 @@
 package com.popwine.backend.module.payment.infra.repo;
 
 import com.popwine.backend.module.payment.domain.entity.Payment;
-import com.popwine.backend.module.payment.domain.repository.PaymentRepository;
+import com.popwine.backend.module.payment.domain.repo.PaymentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

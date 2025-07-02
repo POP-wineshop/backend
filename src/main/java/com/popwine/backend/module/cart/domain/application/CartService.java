@@ -8,7 +8,7 @@ import com.popwine.backend.module.cart.api.dto.CartResponse;
 import com.popwine.backend.module.cart.domain.entity.CartItem;
 import com.popwine.backend.module.cart.domain.repo.CartRepo;
 import com.popwine.backend.module.wine.domain.entity.Wine;
-import com.popwine.backend.module.wine.domain.repository.WineRepository;
+import com.popwine.backend.module.wine.domain.repo.WineRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class CartService {
 
     private final CartRepo cartRepo;
-    private final WineRepository wineRepository;
+    private final WineRepo wineRepo;
 
     // 장바구니 담기
     @Transactional
@@ -58,7 +58,7 @@ public class CartService {
                 .map(CartItem::getWineId)
                 .collect(Collectors.toList());
 
-        Map<Long, Wine> wineMap = wineRepository.findAllById(wineIds).stream()
+        Map<Long, Wine> wineMap = wineRepo.findAllById(wineIds).stream()
                 .collect(Collectors.toMap(Wine::getId, Function.identity()));
 
         return cartItems.stream()

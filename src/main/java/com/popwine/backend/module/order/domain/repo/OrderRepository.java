@@ -1,4 +1,4 @@
-package com.popwine.backend.module.order.domain.repository;
+package com.popwine.backend.module.order.domain.repo;
 
 import com.popwine.backend.module.order.domain.entity.Order;
 import com.popwine.backend.module.order.domain.enums.Orderstatus;

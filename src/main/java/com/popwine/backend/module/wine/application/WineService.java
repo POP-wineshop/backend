@@ -2,13 +2,13 @@ package com.popwine.backend.module.wine.application;
 
 import com.popwine.backend.core.exception.BadRequestException;
 import com.popwine.backend.module.order.domain.entity.Order;
-import com.popwine.backend.module.order.domain.repository.OrderRepository;
+import com.popwine.backend.module.order.domain.repo.OrderRepository;
 import com.popwine.backend.module.order.domain.vo.OrderItem;
 import com.popwine.backend.module.wine.api.dto.WineRequestDto;
 import com.popwine.backend.module.wine.domain.entity.Category;
 import com.popwine.backend.module.wine.domain.enums.CategoryType;
-import com.popwine.backend.module.wine.domain.repository.CategoryRepository;
-import com.popwine.backend.module.wine.domain.repository.WineRepository;
+import com.popwine.backend.module.wine.domain.repo.CategoryRepo;
+import com.popwine.backend.module.wine.domain.repo.WineRepo;
 import com.popwine.backend.module.wine.api.dto.WineResponseDto;
 import com.popwine.backend.module.wine.domain.entity.Wine;
 import lombok.AllArgsConstructor;
@@ -23,15 +23,15 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class WineService {
-    private final WineRepository wineRepository;
-    private final CategoryRepository categoryRepository;
+    private final WineRepo wineRepo;
+    private final CategoryRepo categoryRepo;
     private final OrderRepository orderRepository;
 
 
     //1. 모든 와인 조회
     @Transactional(readOnly = true)
     public List<WineResponseDto> getAllWines() {
-        return wineRepository.findAll()
+        return wineRepo.findAll()
                 .stream()
                 .map(WineResponseDto::from)
                 .collect(Collectors.toList());
@@ -46,7 +46,7 @@ public class WineService {
         }
 
         // 아니면 필터 조건에 맞춰 검색
-        List<Wine> wines = wineRepository.findByFilters(country, region, type, keyword);
+        List<Wine> wines = wineRepo.findByFilters(country, region, type, keyword);
         return wines.stream()
                 .map(WineResponseDto::from)
                 .toList();
@@ -60,7 +60,7 @@ public class WineService {
 
     //3. 와인 ID통해 상세정보 조회
     public WineResponseDto getWineById(Long id) {
-        return wineRepository.findById(id)
+        return wineRepo.findById(id)
                 .map(WineResponseDto::from)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 와인을 찾을 수 없다: " + id));
     }
@@ -83,7 +83,7 @@ public class WineService {
             wines.add(wine);
         }
 
-        List<Wine> saved = wineRepository.saveAll(wines);
+        List<Wine> saved = wineRepo.saveAll(wines);
         return saved.stream()
                 .map(WineResponseDto::from)
                 .toList();
@@ -94,8 +94,8 @@ public class WineService {
 
     //5.  카테고리 이름으로 카테고리 조회, 없으면 생성
     private Category getOrCreateCategory(String name, CategoryType type) {
-        return categoryRepository.findByNameAndType(name, type)
-                .orElseGet(() -> categoryRepository.save(new Category(name, type)));
+        return categoryRepo.findByNameAndType(name, type)
+                .orElseGet(() -> categoryRepo.save(new Category(name, type)));
     }
 
 
@@ -106,7 +106,7 @@ public class WineService {
                 .orElseThrow(() -> new BadRequestException("주문 정보가 없습니다."));
 
         for (OrderItem item : order.getOrderItems()) {
-            Wine wine = wineRepository.findById(item.getWineId())
+            Wine wine = wineRepo.findById(item.getWineId())
                     .orElseThrow(() -> new BadRequestException("해당 와인이 존재하지 않습니다."));
             wine.decreaseStock(item.getOrderedQuantity().getQuantity());
         }

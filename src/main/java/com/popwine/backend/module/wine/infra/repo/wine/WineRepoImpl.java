@@ -1,4 +1,4 @@
-package com.popwine.backend.module.wine.infra.repo;
+package com.popwine.backend.module.wine.infra.repo.wine;
 
 
 
@@ -6,7 +6,7 @@ import com.popwine.backend.module.wine.domain.entity.QCategory;
 import com.popwine.backend.module.wine.domain.entity.QWine;
 import com.popwine.backend.module.wine.domain.entity.QWineCategory;
 import com.popwine.backend.module.wine.domain.enums.CategoryType;
-import com.popwine.backend.module.wine.domain.repository.WineRepository;
+import com.popwine.backend.module.wine.domain.repo.WineRepo;
 import com.popwine.backend.module.wine.domain.entity.Wine;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -22,9 +22,9 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class WineRepositoryImpl implements WineRepository {
+public class WineRepoImpl implements WineRepo {
 
-    private final JpaWineRepository jpa;
+    private final JpaWineRepo jpa;
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override

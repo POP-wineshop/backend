@@ -4,7 +4,7 @@ import com.popwine.backend.module.wine.application.WineService;
 import com.popwine.backend.module.wine.api.dto.WineRequestDto;
 import com.popwine.backend.module.wine.api.dto.WineResponseDto;
 import com.popwine.backend.module.wine.domain.entity.Wine;
-import com.popwine.backend.module.wine.domain.repository.WineRepository;
+import com.popwine.backend.module.wine.domain.repo.WineRepo;
 import com.popwine.backend.module.wine.domain.vo.Price;
 import com.popwine.backend.module.wine.domain.vo.TasteProfile;
 import com.popwine.backend.module.wine.domain.enums.WineType;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.when;
 class WineServiceTest {
 
     @Mock
-    private WineRepository wineRepository;
+    private WineRepo wineRepo;
 
     @InjectMocks
     private WineService wineService;
@@ -57,7 +57,7 @@ class WineServiceTest {
                 .wineType(WineType.RED)
                 .build();
 
-        when(wineRepository.findAll()).thenReturn(List.of(wine1, wine2));
+        when(wineRepo.findAll()).thenReturn(List.of(wine1, wine2));
 
         // When
         List<WineResponseDto> result = wineService.getAllWines();
@@ -88,7 +88,7 @@ class WineServiceTest {
                 .imageUrl("https://example.com/image.jpg")
                 .build();
 
-        when(wineRepository.findByCategoryAndNameFilters(categoryIds,keyword)).thenReturn(List.of(wine));
+        when(wineRepo.findByCategoryAndNameFilters(categoryIds,keyword)).thenReturn(List.of(wine));
 
         // When
         List<WineResponseDto> result = wineService.getWinesByCategory(categoryIds,keyword);
@@ -117,7 +117,7 @@ class WineServiceTest {
                 .imageUrl("https://example.com/image.jpg")
                 .build();
 
-        when(wineRepository.findById(wineId)).thenReturn(Optional.of(wine));
+        when(wineRepo.findById(wineId)).thenReturn(Optional.of(wine));
 
         // When
         WineResponseDto result = wineService.getWineById(wineId);
@@ -162,7 +162,7 @@ class WineServiceTest {
                 .imageUrl("https://example.com/image.jpg")
                 .build();
 
-        when(wineRepository.save(any(Wine.class))).thenReturn(wine);
+        when(wineRepo.save(any(Wine.class))).thenReturn(wine);
 
 
         // When

@@ -19,6 +19,7 @@ public class Payment {
     private Long orderId;
     private String paymentKey;
     private String tossOrderId;
+    //걀제 가격
     private int amount;
 
     @Enumerated(EnumType.STRING)

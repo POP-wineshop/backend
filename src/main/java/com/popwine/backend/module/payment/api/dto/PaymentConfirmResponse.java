@@ -13,29 +13,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class PaymentConfirmResponse {
-    private Long orderId; // 주문 ID
-    private String tossOrderId; // 주문 키 (PG사에서 발급받은 키)
+    private String tossOrderId;  // Toss orderId(UUID) → 여기로만 쓰자
     private String paymentKey;
     private int amount;
     private String status;
     private String approvedAt;
 
-
-    /**
-     * 결제 응답을 Payment 엔티티로 변환
-     *
-     * @param orderId 주문 ID
-     * @return Payment 엔티티
-     */
-    public Payment toEntity(Long orderId) {
+    public Payment toEntity(Long realOrderId) {
         return Payment.builder()
-                .orderId(orderId)
-                .tossOrderId(tossOrderId)
+                .orderId(realOrderId) // 실제 DB ID
+                .tossOrderId(tossOrderId) // Toss UUID
                 .paymentKey(paymentKey)
                 .amount(amount)
                 .status(PaymentStatus.valueOf(status))
                 .approvedAt(approvedAt)
                 .build();
     }
-
 }

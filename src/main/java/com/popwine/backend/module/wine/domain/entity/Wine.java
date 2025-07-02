@@ -71,6 +71,8 @@ public class Wine extends BaseTimeEntity {
     //와인 재고
     private int stock;
 
+
+
     @Builder.Default
     @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WineCategory> wineCategories = new ArrayList<>();

@@ -8,11 +8,11 @@ import com.popwine.backend.module.order.api.dto.InstantOrderRequestDto;
 import com.popwine.backend.module.order.api.dto.OrderResponse;
 import com.popwine.backend.module.order.domain.entity.Order;
 import com.popwine.backend.module.order.domain.enums.Orderstatus;
-import com.popwine.backend.module.order.domain.repository.OrderRepository;
+import com.popwine.backend.module.order.domain.repo.OrderRepository;
 import com.popwine.backend.module.order.domain.vo.OrderItem;
 import com.popwine.backend.module.order.infra.kafka.OrderEventPublisher;
 import com.popwine.backend.module.wine.domain.entity.Wine;
-import com.popwine.backend.module.wine.domain.repository.WineRepository;
+import com.popwine.backend.module.wine.domain.repo.WineRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final WineRepository wineRepository;
+    private final WineRepo wineRepo;
     private final CartRepo cartRepo;
     private final OrderEventPublisher orderEventPublisher;
 
@@ -47,7 +47,7 @@ public class OrderService {
         List<Long> wineIds = cartItems.stream()
                 .map(CartItem::getWineId)
                 .collect(Collectors.toList());
-        List<Wine> wines = wineRepository.findAllById(wineIds);
+        List<Wine> wines = wineRepo.findAllById(wineIds);
         Map<Long, Wine> wineMap = wines.stream()
                 .collect(Collectors.toMap(Wine::getId, Function.identity()));
 
@@ -82,7 +82,7 @@ public class OrderService {
     public OrderResponse createInstantOrder(InstantOrderRequestDto request) {
         Long userId = SecurityUtil.getCurrentUserId();
 
-        Wine wine = wineRepository.findById(request.getWineId())
+        Wine wine = wineRepo.findById(request.getWineId())
                 .orElseThrow(() -> new BadRequestException("와인 정보가 없습니다."));
 
         OrderItem orderItem = OrderItem.of(wine, request.getQuantity());

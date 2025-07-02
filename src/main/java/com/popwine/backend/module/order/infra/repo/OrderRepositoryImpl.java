@@ -2,7 +2,7 @@ package com.popwine.backend.module.order.infra.repo;
 
 import com.popwine.backend.module.order.domain.entity.Order;
 import com.popwine.backend.module.order.domain.enums.Orderstatus;
-import com.popwine.backend.module.order.domain.repository.OrderRepository;
+import com.popwine.backend.module.order.domain.repo.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

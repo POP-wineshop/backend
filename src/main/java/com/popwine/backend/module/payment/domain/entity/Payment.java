@@ -1,6 +1,7 @@
 package com.popwine.backend.module.payment.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.popwine.backend.module.payment.domain.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,8 +19,10 @@ public class Payment {
 
     private Long orderId;
     private String paymentKey;
+
+    @JsonProperty("orderID") // JSON TOSS 응답에서 orderID를 tossOrderId로 매핑
     private String tossOrderId;
-    //걀제 가격
+    //결제 가격
     private int amount;
 
     @Enumerated(EnumType.STRING)

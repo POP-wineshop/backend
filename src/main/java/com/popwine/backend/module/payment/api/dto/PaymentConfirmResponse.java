@@ -1,5 +1,6 @@
 package com.popwine.backend.module.payment.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.popwine.backend.module.payment.domain.entity.Payment;
 import com.popwine.backend.module.payment.domain.enums.PaymentStatus;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class PaymentConfirmResponse {
-    private String tossOrderId;  // Toss orderId(UUID) → 여기로만 쓰자
+
+    @JsonProperty("orderId") // JSON TOSS 응답에서 orderId를 tossOrderId로 매핑
+    private String tossOrderId;
     private String paymentKey;
     private int amount;
     private String status;
@@ -21,8 +24,8 @@ public class PaymentConfirmResponse {
 
     public Payment toEntity(Long realOrderId) {
         return Payment.builder()
-                .orderId(realOrderId) // 실제 DB ID
-                .tossOrderId(tossOrderId) // Toss UUID
+                .orderId(realOrderId)
+                .tossOrderId(tossOrderId)
                 .paymentKey(paymentKey)
                 .amount(amount)
                 .status(PaymentStatus.valueOf(status))

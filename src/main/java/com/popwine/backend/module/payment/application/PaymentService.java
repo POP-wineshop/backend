@@ -1,5 +1,6 @@
 package com.popwine.backend.module.payment.application;
 
+import com.popwine.backend.core.exception.BadRequestException;
 import com.popwine.backend.module.order.application.OrderService;
 import com.popwine.backend.module.order.domain.entity.Order;
 import com.popwine.backend.module.order.domain.repo.OrderRepository;
@@ -32,7 +33,7 @@ public class PaymentService {
         log.info("[결제 승인 요청] paymentKey={}, tossOrderId={}, amount={}",
                 request.getPaymentKey(), request.getOrderId(), request.getAmount());
 
-        // 🔒 널/빈 값 체크
+        // 널/빈 값 체크
         if (request.getPaymentKey() == null || request.getPaymentKey().isBlank()
                 || request.getOrderId() == null || request.getOrderId().isBlank()
                 || request.getAmount() <= 0) {
@@ -44,13 +45,15 @@ public class PaymentService {
 
         // 1. tossOrderId로 Order 찾기
                 Order order = orderRepository.findByTossOrderId(request.getOrderId())
-                        .orElseThrow(() -> new IllegalArgumentException("주문 없음"));
+                        .orElseThrow(() -> new BadRequestException("주문 없음"));
 
         // 2. 주문 상태 변경은 OrderService에 위임
                 orderService.completeOrder(order.getId());
 
         // 3. 결제 저장
-                paymentRepository.save(response.toEntity(order.getId()));
+         //toentity 로그 찍어보기 tossOrdeid, amount 값 안들어옴
+        log.info("[Toss 응답] tossOrderId={}, amount={}", response.getTossOrderId(), response.getAmount());
+        paymentRepository.save(response.toEntity(order.getId()));
 
         // 4. 이벤트 발행
                 paymentEventPublisher.publish(new PaymentCompletedEvent(order.getId()));

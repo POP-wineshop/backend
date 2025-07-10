@@ -128,7 +128,7 @@ public OrderResponse getOrderDetail(Long orderId) {
 
 
     //5. 결제 완료된 주문 상태 변경 및 이벤트 발행
-    @Transactional
+    @Transactional()
     public void completeOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new BadRequestException("주문 정보가 없습니다."));
@@ -149,6 +149,29 @@ public OrderResponse getOrderDetail(Long orderId) {
         // Kafka 발행 X
         return order;
     }
+
+    //장바구니에서 선택해서 주문
+    @Transactional
+    public OrderResponse createOrderFromSingleCartItem(Long cartItemId) {
+        Long userId = SecurityUtil.getCurrentUserId();
+
+        CartItem cartItem = cartRepo.findById(cartItemId)
+                .orElseThrow(() -> new BadRequestException("장바구니 항목이 없습니다."));
+
+        if (!cartItem.getUserId().equals(userId)) {
+            throw new BadRequestException("해당 장바구니 항목에 접근할 수 없습니다.");
+        }
+
+        Wine wine = wineRepo.findById(cartItem.getWineId())
+                .orElseThrow(() -> new BadRequestException("와인 정보가 없습니다."));
+
+        OrderItem orderItem = OrderItem.of(wine, cartItem.getQuantity());
+        Order order = Order.create(userId, List.of(orderItem));
+
+        Order savedOrder = orderRepository.save(order);
+        return OrderResponse.from(savedOrder);
+    }
+
 
 }
 

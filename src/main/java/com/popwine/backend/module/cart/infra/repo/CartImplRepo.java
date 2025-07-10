@@ -38,4 +38,9 @@ public class CartImplRepo implements CartRepo {
     public void deleteById(Long id) {
         jpaCartRepo.deleteById(id);
     }
+
+    @Override
+    public List<CartItem> findAllById(List<Long> cartItemIds) {
+        return jpaCartRepo.findAllById(cartItemIds);
+    }
 }

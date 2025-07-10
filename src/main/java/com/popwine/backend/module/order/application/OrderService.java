@@ -150,27 +150,44 @@ public OrderResponse getOrderDetail(Long orderId) {
         return order;
     }
 
-    //장바구니에서 선택해서 주문
+    // 장바구니에서 '여러 개 선택'해서 주문
     @Transactional
-    public OrderResponse createOrderFromSingleCartItem(Long cartItemId) {
+    public OrderResponse createOrderFromSelectedCartItems(List<Long> cartItemIds) {
         Long userId = SecurityUtil.getCurrentUserId();
 
-        CartItem cartItem = cartRepo.findById(cartItemId)
-                .orElseThrow(() -> new BadRequestException("장바구니 항목이 없습니다."));
-
-        if (!cartItem.getUserId().equals(userId)) {
-            throw new BadRequestException("해당 장바구니 항목에 접근할 수 없습니다.");
+        List<CartItem> cartItems = cartRepo.findAllById(cartItemIds);
+        if (cartItems.isEmpty()) {
+            throw new BadRequestException("선택된 장바구니 항목이 없습니다.");
         }
 
-        Wine wine = wineRepo.findById(cartItem.getWineId())
-                .orElseThrow(() -> new BadRequestException("와인 정보가 없습니다."));
+        // 내 장바구니인지 확인
+        for (CartItem item : cartItems) {
+            if (!item.getUserId().equals(userId)) {
+                throw new BadRequestException("다른 사용자의 장바구니 항목은 주문할 수 없습니다.");
+            }
+        }
 
-        OrderItem orderItem = OrderItem.of(wine, cartItem.getQuantity());
-        Order order = Order.create(userId, List.of(orderItem));
+        // 와인 정보 매핑
+        List<Long> wineIds = cartItems.stream()
+                .map(CartItem::getWineId)
+                .toList();
+        Map<Long, Wine> wineMap = wineRepo.findAllById(wineIds).stream()
+                .collect(Collectors.toMap(Wine::getId, Function.identity()));
 
+        // 주문 항목 생성
+        List<OrderItem> orderItems = cartItems.stream()
+                .map(item -> {
+                    Wine wine = wineMap.get(item.getWineId());
+                    return OrderItem.of(wine, item.getQuantity());
+                })
+                .toList();
+
+        Order order = Order.create(userId, orderItems);
         Order savedOrder = orderRepository.save(order);
+
         return OrderResponse.from(savedOrder);
     }
+
 
 
 }

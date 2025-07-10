@@ -16,4 +16,6 @@ public interface CartRepo {
     Optional<CartItem> findById(Long id);
 
     void deleteById(Long id);
+
+    List<CartItem> findAllById(List<Long> cartItemIds);
 }

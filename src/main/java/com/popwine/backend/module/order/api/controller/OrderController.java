@@ -51,6 +51,6 @@ public class OrderController {
     //5.장바구니에서 단일 상품만 주문
     @PostMapping("/cart/{cartItemId}")
     public ApiResponse<OrderResponse> createOrderFromCartItem(@PathVariable Long cartItemId) {
-        return ApiResponse.success(orderService.createOrderFromSingleCartItem(cartItemId));
+        return ApiResponse.success(orderService.createOrderFromSelectedCartItems(List.of(cartItemId)));
 }
 }

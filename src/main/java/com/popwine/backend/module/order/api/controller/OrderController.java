@@ -48,9 +48,10 @@ public class OrderController {
         orderService.cancelOrder(orderId);
         return ApiResponse.success();
     }
-    //5.장바구니에서 단일 상품만 주문
-    @PostMapping("/cart/{cartItemId}")
-    public ApiResponse<OrderResponse> createOrderFromCartItem(@PathVariable Long cartItemId) {
-        return ApiResponse.success(orderService.createOrderFromSelectedCartItems(List.of(cartItemId)));
-}
+    //5.장바구니에서 여러개 주문
+    @PostMapping("/cart")
+    public ApiResponse<OrderResponse> createOrderFromCartItems(@RequestBody List<Long> cartItemIds) {
+        return ApiResponse.success(orderService.createOrderFromSelectedCartItems(cartItemIds));
+    }
+
 }

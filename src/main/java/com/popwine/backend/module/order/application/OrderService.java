@@ -150,7 +150,7 @@ public OrderResponse getOrderDetail(Long orderId) {
         return order;
     }
 
-    // 장바구니에서 '여러 개 선택'해서 주문
+    //TODO
     @Transactional
     public OrderResponse createOrderFromSelectedCartItems(List<Long> cartItemIds) {
         Long userId = SecurityUtil.getCurrentUserId();

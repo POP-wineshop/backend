@@ -1,7 +1,7 @@
-package com.popwine.backend.core.security.config;
+package com.popwine.backend.module.auth.security.config;
 
-import com.popwine.backend.core.security.jwt.JwtAuthFilter;
-import com.popwine.backend.core.security.jwt.JwtTokenProvider;
+import com.popwine.backend.module.auth.security.jwt.JwtAuthFilter;
+import com.popwine.backend.module.auth.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

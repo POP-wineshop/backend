@@ -1,4 +1,4 @@
-package com.popwine.backend.core.security.model;
+package com.popwine.backend.module.auth.security.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

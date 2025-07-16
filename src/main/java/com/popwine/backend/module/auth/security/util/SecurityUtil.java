@@ -1,9 +1,9 @@
-package com.popwine.backend.core.security.util;
+package com.popwine.backend.module.auth.security.util;
 
 import com.popwine.backend.core.exception.BadRequestException;
 
 import com.popwine.backend.core.exception.ErrorCode;
-import com.popwine.backend.core.security.model.CustomUserPrincipal;
+import com.popwine.backend.module.auth.security.model.CustomUserPrincipal;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

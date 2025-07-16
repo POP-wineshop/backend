@@ -1,8 +1,8 @@
-package com.popwine.backend.core.security.jwt;
+package com.popwine.backend.module.auth.security.jwt;
 
 import com.popwine.backend.core.exception.BadRequestException;
 import com.popwine.backend.core.exception.ErrorCode;
-import com.popwine.backend.core.security.model.CustomUserPrincipal;
+import com.popwine.backend.module.auth.security.model.CustomUserPrincipal;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;

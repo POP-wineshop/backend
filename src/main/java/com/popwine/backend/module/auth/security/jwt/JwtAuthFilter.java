@@ -1,4 +1,4 @@
-package com.popwine.backend.core.security.jwt;
+package com.popwine.backend.module.auth.security.jwt;
 
 import com.popwine.backend.core.exception.BaseException;
 import jakarta.servlet.FilterChain;

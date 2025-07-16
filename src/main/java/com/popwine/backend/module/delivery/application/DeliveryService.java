@@ -1,7 +1,7 @@
 package com.popwine.backend.module.delivery.application;
 
 import com.popwine.backend.core.exception.BadRequestException;
-import com.popwine.backend.core.security.util.SecurityUtil;
+import com.popwine.backend.module.auth.security.util.SecurityUtil;
 import com.popwine.backend.module.delivery.api.dto.DeliveryRequestDto;
 import com.popwine.backend.module.delivery.api.dto.DeliveryResponseDto;
 import com.popwine.backend.module.delivery.domain.entity.Delivery;

@@ -1,7 +1,7 @@
 package com.popwine.backend.module.order.application;
 
 import com.popwine.backend.core.exception.BadRequestException;
-import com.popwine.backend.core.security.util.SecurityUtil;
+import com.popwine.backend.module.auth.security.util.SecurityUtil;
 import com.popwine.backend.module.cart.domain.entity.CartItem;
 import com.popwine.backend.module.cart.domain.repo.CartRepo;
 import com.popwine.backend.module.order.api.dto.InstantOrderRequestDto;

@@ -8,7 +8,7 @@ import com.popwine.backend.module.auth.api.dto.UserCacheDto;
 import com.popwine.backend.module.auth.domain.entity.User;
 import com.popwine.backend.module.auth.domain.repo.UserRepository;
 import com.popwine.backend.module.auth.domain.vo.Username;
-import com.popwine.backend.core.security.jwt.JwtTokenProvider;
+import com.popwine.backend.module.auth.security.jwt.JwtTokenProvider;
 import com.popwine.backend.core.infra.redis.RedisService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;

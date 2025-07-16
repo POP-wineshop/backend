@@ -64,12 +64,7 @@ public class OrderService {
                 .collect(Collectors.toList());
 
         // 1-4. 주문 생성
-        Order order = Order.builder()
-                .userId(userId)
-                .orderstatus(Orderstatus.PENDING)
-                .orderItems(orderItems)
-                .tossOrderId(UUID.randomUUID().toString())
-                .build();
+        Order order = Order.create(userId, orderItems);
 
         Order saved = orderRepository.save(order);
 

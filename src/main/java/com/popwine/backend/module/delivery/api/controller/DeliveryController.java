@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/delivery")
 @RequiredArgsConstructor
@@ -17,15 +19,15 @@ public class DeliveryController {
 
     // 배송지 등록
     @PostMapping("/create")
-    public ApiResponse<DeliveryResponseDto> createDelivery(@RequestBody DeliveryRequestDto requestDto) {
-        DeliveryResponseDto response = deliveryService.createDelivery(requestDto);
+    public ApiResponse<List<DeliveryResponseDto>> createDelivery(@RequestBody List<DeliveryRequestDto> requestDto) {
+        List<DeliveryResponseDto> response = deliveryService.createDeliveries(requestDto);
         return ApiResponse.success(response);
     }
 
     // 배송지 조회
-    @GetMapping("/{id}")
-    public ApiResponse<DeliveryResponseDto> getDelivery(@PathVariable Long id) {
-        DeliveryResponseDto response = deliveryService.getDelivery(id);
+    @GetMapping
+    public ApiResponse<List<DeliveryResponseDto>> getAllDeliveries() {
+        List<DeliveryResponseDto> response = deliveryService.getAllDeliveriesForUser();
         return ApiResponse.success(response);
     }
 
@@ -50,7 +52,5 @@ public class DeliveryController {
         deliveryService.deleteDelivery(id);
         return ApiResponse.success();
     }
-
-
 
 }

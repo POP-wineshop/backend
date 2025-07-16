@@ -5,6 +5,8 @@ import com.popwine.backend.module.delivery.domain.repository.DeliveryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class DeliveryRepositoryImpl implements DeliveryRepository {
@@ -52,5 +54,10 @@ public class DeliveryRepositoryImpl implements DeliveryRepository {
     @Override
     public void resetDefaultAddressForUser(Long userId) {
         jpa.resetDefaultAddressForUser(userId);
+    }
+
+    @Override
+    public List<Delivery> findAllByUserId(Long userId) {
+        return jpa.findAllByUserId(userId);
     }
 }

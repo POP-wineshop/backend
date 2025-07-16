@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DeliveryService {
@@ -18,25 +21,33 @@ public class DeliveryService {
 
     // 배송지 등록
     @Transactional
-    public DeliveryResponseDto createDelivery(DeliveryRequestDto requestDto) {
-
+    public List<DeliveryResponseDto> createDeliveries(List<DeliveryRequestDto> requestDtos) {
         Long userId = SecurityUtil.getCurrentUserId();
 
-        // 기본 배송지 설정 시, 기존 기본 배송지의 상태를 변경
-        if (requestDto.isDefault()) {
-            deliveryRepository.resetDefaultAddressForUser(userId);
+        List<Delivery> savedList = new ArrayList<>();
+        for (DeliveryRequestDto dto : requestDtos) {
+            if (dto.isDefault()) {
+                deliveryRepository.resetDefaultAddressForUser(userId);
+            }
+
+            Delivery saved = deliveryRepository.save(dto.toEntity());
+            savedList.add(saved);
         }
 
-        Delivery delivery = requestDto.toEntity();
-        Delivery savedDelivery = deliveryRepository.save(delivery);
-        return DeliveryResponseDto.from(savedDelivery);
+        return savedList.stream()
+                .map(DeliveryResponseDto::from)
+                .toList();
     }
 
-    // 배송지 조회
+
+    //배송지 조회
     @Transactional(readOnly = true)
-    public DeliveryResponseDto getDelivery(Long id) {
-        Delivery delivery = deliveryRepository.findById(id);
-        return DeliveryResponseDto.from(delivery);
+    public List<DeliveryResponseDto> getAllDeliveriesForUser() {
+        Long userId = SecurityUtil.getCurrentUserId();
+        List<Delivery> deliveries = deliveryRepository.findAllByUserId(userId);
+        return deliveries.stream()
+                .map(DeliveryResponseDto::from)
+                .toList();
     }
 
     // 기본 배송지 조회

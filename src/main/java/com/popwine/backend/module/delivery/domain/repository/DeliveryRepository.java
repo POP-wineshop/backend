@@ -3,6 +3,8 @@ package com.popwine.backend.module.delivery.domain.repository;
 import com.popwine.backend.module.delivery.domain.entity.Delivery;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface DeliveryRepository {
 
@@ -24,4 +26,5 @@ public interface DeliveryRepository {
     // 기본 배송지 여부를 초기화
     void resetDefaultAddressForUser(Long userId);
 
+    List<Delivery> findAllByUserId(Long userId);
 }

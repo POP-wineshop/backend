@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface JpaDeliveryRepository extends JpaRepository<Delivery, Long> {
     // 기본 배송지 조회
     Delivery findByUserIdAndIsDefaultTrue(Long userId);
@@ -17,4 +19,5 @@ public interface JpaDeliveryRepository extends JpaRepository<Delivery, Long> {
     @Query("UPDATE Delivery d SET d.isDefault = false WHERE d.userId = :userId AND d.isDefault = true")
     void resetDefaultAddressForUser(@Param("userId") Long userId);
 
+    List<Delivery> findAllByUserId(Long userId);
 }

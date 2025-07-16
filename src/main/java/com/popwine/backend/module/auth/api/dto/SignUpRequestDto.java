@@ -31,10 +31,6 @@ public class SignUpRequestDto {
     }
 
     public User toEntity(Password password) {
-        return User.builder()
-                .name(name)
-                .username(username)
-                .password(password)
-                .build();
+        return User.of(username, name, password);
     }
 }

@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Delivery {
 
     @Id
@@ -37,17 +36,17 @@ public class Delivery {
     private boolean isDefault; // 기본 배송지 여부
 
 
-    public static Delivery of(Long userId, Long orderId, String address, String detailAddress, String recipientName, String recipientPhoneNumber, String deliveryMessage, boolean isDefault) {
-        return Delivery.builder()
-                .userId(userId)
-                .orderId(orderId)
-                .address(address)
-                .detailAddress(detailAddress)
-                .recipientName(recipientName)
-                .recipientPhoneNumber(recipientPhoneNumber)
-                .deliveryMessage(deliveryMessage)
-                .isDefault(isDefault)
-                .build();
+    public static Delivery of(
+            Long userId,
+            Long orderId,
+            String address,
+            String detailAddress,
+            String recipientName,
+            String recipientPhoneNumber,
+            String deliveryMessage,
+            boolean isDefault
+    ) {
+        return new Delivery(null, userId, orderId, address, detailAddress, recipientName, recipientPhoneNumber, deliveryMessage, isDefault);
     }
 
     // 수정 메서드

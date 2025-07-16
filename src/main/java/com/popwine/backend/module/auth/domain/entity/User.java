@@ -9,7 +9,6 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Builder
 @Table(name = "users")
 public class User extends BaseTimeEntity {
 
@@ -18,8 +17,18 @@ public class User extends BaseTimeEntity {
     private Long id;
 
     private String username;
-
-    private String name;
     @Embedded
     private Password password;
+    private String name;
+
+    public User(String username,Password password, String name) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+    }
+
+    public static User of(String username,String name, Password password) {
+        return new User(username, password, name);
+    }
+
 }

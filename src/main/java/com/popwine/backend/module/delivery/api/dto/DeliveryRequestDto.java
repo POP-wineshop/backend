@@ -24,17 +24,16 @@ public class DeliveryRequestDto {
 
     // DTO -> Entity 변환
     public Delivery toEntity() {
-        return Delivery.builder()
-                .userId(userId)
-                .orderId(orderId)
-                .address(address)
-                .detailAddress(detailAddress)
-                .recipientName(recipientName)
-                .recipientPhoneNumber(recipientPhoneNumber)
-                .deliveryMessage(deliveryMessage)
-                .isDefault(isDefault)
-                .build();
-
+        return Delivery.of(
+                userId,
+                orderId,
+                address,
+                detailAddress,
+                recipientName,
+                recipientPhoneNumber,
+                deliveryMessage,
+                isDefault
+        );
     }
 }
 

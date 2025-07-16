@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ public class OrderResponse {
     private String orderStatus;
     private List<OrderItemResponse> orderItems;
     private int totalPrice;
-
+    private LocalDateTime createdAt;
     public static OrderResponse from(Order order) {
         List<OrderItemResponse> orderItemResponses = order.getOrderItems().stream()
                 .map(OrderItemResponse::from)
@@ -36,6 +37,7 @@ public class OrderResponse {
                 .orderStatus(order.getOrderstatus().name())
                 .orderItems(orderItemResponses)
                 .totalPrice(totalPrice)
+                .createdAt(order.getCreatedAt())
                 .build();
     }
 }

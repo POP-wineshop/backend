@@ -10,12 +10,9 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Entity
 @Table(name = "orders")
 public class Order extends BaseTimeEntity {
@@ -44,36 +41,16 @@ public class Order extends BaseTimeEntity {
     private List<OrderItem> orderItems = new ArrayList<>();
 
 
-    // 장바구니 상품 수량 수정
-    public void updateItemQuantity(Long wineId, int newQuantity) {
-        // 새로운 OrderItem 리스트 생성
-        List<OrderItem> updatedItems = this.orderItems.stream()
-                .map(item -> {
-                    if (item.getWineId().equals(wineId)) {
-                        return item.changeQuantity(newQuantity);
-                    }
-                    return item;
-                })
-                .collect(Collectors.toList());
-
-        this.orderItems = updatedItems;
-    }
-
-    // 장바구니 상품 삭제
-    public void deleteItem(Long wineId) {
-        orderItems.removeIf(item -> item.getWineId().equals(wineId));
-    }
-
     // 주문 생성 메서드
     public static Order create(Long userId, List<OrderItem> orderItems) {
-        return Order.builder()
-                .userId(userId)
-                .orderItems(orderItems)
-                .orderstatus(Orderstatus.PENDING)
-                .tossOrderId(UUID.randomUUID().toString())
-                .build();
-    }
+        Order order = new Order();
+        order.userId = userId;
+        order.orderItems = orderItems;
+        order.orderstatus = Orderstatus.PENDING; // 초기 상태 PENDING
+        order.tossOrderId = UUID.randomUUID().toString(); // 주문 키 생성
+        return order;
 
+    }
 
     // 결제 완료 처리
     public void complete() {
@@ -91,13 +68,6 @@ public class Order extends BaseTimeEntity {
     // 주문 완료 이벤트로 변환
     public OrderCompletedEvent toEvent() {
         return new OrderCompletedEvent(this.id);
-    }
-
-    // 총 주문 금액 계산
-    public int getTotalPrice() {
-        return this.orderItems.stream()
-                .mapToInt(OrderItem::getTotalPrice)
-                .sum();
     }
 
 }

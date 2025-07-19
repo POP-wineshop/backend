@@ -2,8 +2,8 @@ package com.popwine.backend.module.payment.application;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.popwine.backend.module.payment.api.dto.PaymentConfirmRequest;
-import com.popwine.backend.module.payment.api.dto.PaymentConfirmResponse;
+import com.popwine.backend.module.payment.api.dto.PaymentConfirmReq;
+import com.popwine.backend.module.payment.api.dto.PaymentConfirmRes;
 import com.popwine.backend.module.payment.infra.client.TossPaymentClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ public class TossPaymentProcessor implements PgPaymentProcessor {
     private final ObjectMapper objectMapper; // 주입 받아야 함!
 
     @Override
-    public PaymentConfirmResponse confirmPayment(PaymentConfirmRequest request) {
+    public PaymentConfirmRes confirmPayment(PaymentConfirmReq request) {
 
         // ✅ 실제로 나가는 JSON을 로그로 확인
         try {

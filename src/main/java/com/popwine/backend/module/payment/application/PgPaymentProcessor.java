@@ -1,9 +1,9 @@
 package com.popwine.backend.module.payment.application;
 
-import com.popwine.backend.module.payment.api.dto.PaymentConfirmRequest;
-import com.popwine.backend.module.payment.api.dto.PaymentConfirmResponse;
+import com.popwine.backend.module.payment.api.dto.PaymentConfirmReq;
+import com.popwine.backend.module.payment.api.dto.PaymentConfirmRes;
 
 
 public interface PgPaymentProcessor {
-    PaymentConfirmResponse confirmPayment(PaymentConfirmRequest request);
+    PaymentConfirmRes confirmPayment(PaymentConfirmReq request);
 }

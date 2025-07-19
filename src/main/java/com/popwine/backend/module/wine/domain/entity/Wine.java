@@ -2,6 +2,7 @@ package com.popwine.backend.module.wine.domain.entity;
 
 import com.popwine.backend.core.common.BaseTimeEntity;
 import com.popwine.backend.core.exception.BadRequestException;
+import com.popwine.backend.module.Like.domain.entity.Like;
 import com.popwine.backend.module.wine.domain.vo.Price;
 import com.popwine.backend.module.wine.domain.enums.WineType;
 import com.popwine.backend.module.wine.domain.vo.TasteProfile;
@@ -71,6 +72,13 @@ public class Wine extends BaseTimeEntity {
     //와인 재고
     private int stock;
 
+    private Long likeId; // 좋아요 ID
+
+
+    // 좋아요를 누른 유저 수
+    private int likeCount;
+    //likeCount는 wineLikes 테이블에서 userId + isLiked = true인 것의 개수로 관리
+    //where userId = ? and isLiked = true
 
 
     @Builder.Default
@@ -89,6 +97,5 @@ public class Wine extends BaseTimeEntity {
         }
         this.stock -= quantity;
     }
-
 }
 

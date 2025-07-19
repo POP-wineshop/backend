@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PaymentConfirmResponse {
+public class PaymentConfirmRes {
 
     @JsonProperty("orderId") // JSON TOSS 응답에서 orderId를 tossOrderId로 매핑
     private String tossOrderId;

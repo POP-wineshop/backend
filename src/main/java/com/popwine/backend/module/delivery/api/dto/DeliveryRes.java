@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DeliveryResponseDto {
+public class DeliveryRes {
 
     private Long id; // 배송지 ID
     private String address; // 배송지 주소
@@ -22,8 +22,8 @@ public class DeliveryResponseDto {
 
 
     //Entity -> DTO 변환
-    public static DeliveryResponseDto from(Delivery savedDelivery) {
-        return DeliveryResponseDto.builder()
+    public static DeliveryRes from(Delivery savedDelivery) {
+        return DeliveryRes.builder()
                 .id(savedDelivery.getId())
                 .address(savedDelivery.getAddress())
                 .detailAddress(savedDelivery.getDetailAddress())

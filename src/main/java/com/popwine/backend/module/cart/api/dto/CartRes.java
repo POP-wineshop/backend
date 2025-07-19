@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class CartResponse {
+public class CartRes {
     private Long cartItemId;
     private Long wineId;
     private String wineName;
@@ -18,8 +18,8 @@ public class CartResponse {
     private int winePrice;
     private String thumbnail;
 
-    public static CartResponse of(CartItem cart, Wine wine) {
-        return new CartResponse(
+    public static CartRes of(CartItem cart, Wine wine) {
+        return new CartRes(
                 cart.getId(),
                 wine.getId(),
                 wine.getName().getKorean(),

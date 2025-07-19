@@ -9,7 +9,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class WineResponseDto {
+public class WineRes {
     private final Long id;
     private final String korName;
     private final String engName;
@@ -23,9 +23,11 @@ public class WineResponseDto {
     private final TasteProfile tasteProfile;
     private final WineType wineType;
     private final int stock;
+    private final String description;
+    private final String tastingNote;
 
-    public static WineResponseDto from(Wine wine) {
-        return new WineResponseDto(
+    public static WineRes from(Wine wine) {
+        return new WineRes(
                 wine.getId(),
                 wine.getName().getKorean(),
                 wine.getName().getEnglish(),
@@ -37,8 +39,10 @@ public class WineResponseDto {
                 wine.getAlcoholContent(),
                 wine.getImageUrl(),
                 wine.getTasteProfile(),
-                wine.getWineType()
-                , wine.getStock()
+                wine.getWineType(),
+                wine.getStock(),
+                wine.getDescription(),
+                wine.getTastingNote()
         );
     }
 }

@@ -3,8 +3,8 @@ package com.popwine.backend.module.payment.api.controller;
 
 import com.popwine.backend.core.common.ApiResponse;
 import com.popwine.backend.module.payment.application.PaymentService;
-import com.popwine.backend.module.payment.api.dto.PaymentConfirmRequest;
-import com.popwine.backend.module.payment.api.dto.PaymentConfirmResponse;
+import com.popwine.backend.module.payment.api.dto.PaymentConfirmReq;
+import com.popwine.backend.module.payment.api.dto.PaymentConfirmRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +25,11 @@ public class PaymentController {
      */
 
     @PostMapping("/confirm")
-    public ApiResponse<PaymentConfirmResponse> confirmPayment(
-            @RequestBody PaymentConfirmRequest request
+    public ApiResponse<PaymentConfirmRes> confirmPayment(
+            @RequestBody PaymentConfirmReq request
             ) {
 
-        PaymentConfirmResponse response = paymentService.confirmPayment(request);
+        PaymentConfirmRes response = paymentService.confirmPayment(request);
         return ApiResponse.success(response);
     }
 }

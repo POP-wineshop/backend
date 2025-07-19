@@ -4,8 +4,8 @@ import com.popwine.backend.core.exception.BadRequestException;
 import com.popwine.backend.module.order.application.OrderService;
 import com.popwine.backend.module.order.domain.entity.Order;
 import com.popwine.backend.module.order.domain.repo.OrderRepository;
-import com.popwine.backend.module.payment.api.dto.PaymentConfirmRequest;
-import com.popwine.backend.module.payment.api.dto.PaymentConfirmResponse;
+import com.popwine.backend.module.payment.api.dto.PaymentConfirmReq;
+import com.popwine.backend.module.payment.api.dto.PaymentConfirmRes;
 import com.popwine.backend.module.payment.domain.repo.PaymentRepository;
 import com.popwine.backend.module.payment.infra.kafka.PaymentCompletedEvent;
 import com.popwine.backend.module.payment.infra.kafka.PaymentEventPublisher;
@@ -28,7 +28,7 @@ public class PaymentService {
 
 
     @Transactional
-    public PaymentConfirmResponse confirmPayment(PaymentConfirmRequest request) {
+    public PaymentConfirmRes confirmPayment(PaymentConfirmReq request) {
 
         log.info("[결제 승인 요청] paymentKey={}, tossOrderId={}, amount={}",
                 request.getPaymentKey(), request.getOrderId(), request.getAmount());
@@ -41,7 +41,7 @@ public class PaymentService {
         }
 
         // Toss API 연동
-        PaymentConfirmResponse response = paymentProcessor.confirmPayment(request);
+        PaymentConfirmRes response = paymentProcessor.confirmPayment(request);
 
         // 1. tossOrderId로 Order 찾기
                 Order order = orderRepository.findByTossOrderId(request.getOrderId())

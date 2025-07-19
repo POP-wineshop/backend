@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CartAddRequest {
+public class CartReq {
     private Long wineId;
     private int quantity;
 
     @Builder
-    public CartAddRequest(Long wineId, int quantity) {
+    public CartReq(Long wineId, int quantity) {
         this.wineId = wineId;
         this.quantity = quantity;
     }

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class WineRequestDto {
+public class WineReq {
     private WineName wineName;
     private Price price;
     private WineType wineType;
@@ -32,6 +32,7 @@ public class WineRequestDto {
     private String imageUrl;
 
     private int stock;
+    private int likeCount;
 
     public Wine toEntity() {
         return Wine.builder()
@@ -50,6 +51,7 @@ public class WineRequestDto {
                 .description(description)
                 .imageUrl(imageUrl)
                 .stock(stock)
+                .likeCount(likeCount)
                 .build();
     }
 

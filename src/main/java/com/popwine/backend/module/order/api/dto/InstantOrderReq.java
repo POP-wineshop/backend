@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class InstantOrderRequestDto extends OrderRequestDto.OrderItemRequest {
+public class InstantOrderReq extends OrderReqDto.OrderItemRequest {
 
 }
 

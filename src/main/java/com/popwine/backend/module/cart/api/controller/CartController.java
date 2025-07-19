@@ -1,9 +1,9 @@
 package com.popwine.backend.module.cart.api.controller;
 
 import com.popwine.backend.core.common.ApiResponse;
-import com.popwine.backend.module.cart.api.dto.CartAddRequest;
-import com.popwine.backend.module.cart.api.dto.CartResponse;
-import com.popwine.backend.module.cart.api.dto.UpdateQuantityRequest;
+import com.popwine.backend.module.cart.api.dto.CartReq;
+import com.popwine.backend.module.cart.api.dto.CartRes;
+import com.popwine.backend.module.cart.api.dto.UpdateQuantityReq;
 import com.popwine.backend.module.cart.domain.application.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +19,15 @@ public class CartController {
 
     // 1. 장바구니에 상품 담기
     @PostMapping
-    public ApiResponse<Void> addToCart(@RequestBody CartAddRequest request) {
+    public ApiResponse<Void> addToCart(@RequestBody CartReq request) {
         cartService.addToCart(request);
         return ApiResponse.success();
     }
 
     // 2. 장바구니 전체 조회
     @GetMapping
-    public ApiResponse<List<CartResponse>> getCartItems() {
-        List<CartResponse> cartItems = cartService.getMyCart();
+    public ApiResponse<List<CartRes>> getCartItems() {
+        List<CartRes> cartItems = cartService.getMyCart();
         return ApiResponse.success(cartItems);
     }
 
@@ -35,7 +35,7 @@ public class CartController {
     @PatchMapping("/{cartItemId}")
     public ApiResponse<Void> updateQuantity(
             @PathVariable Long cartItemId,
-            @RequestBody UpdateQuantityRequest request) {
+            @RequestBody UpdateQuantityReq request) {
         cartService.updateQuantity(cartItemId, request.getQuantity());
         return ApiResponse.success();
     }

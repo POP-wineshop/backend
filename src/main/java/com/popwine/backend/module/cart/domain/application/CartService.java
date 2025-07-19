@@ -3,8 +3,8 @@ package com.popwine.backend.module.cart.domain.application;
 
 import com.popwine.backend.core.exception.BadRequestException;
 import com.popwine.backend.core.security.util.SecurityUtil;
-import com.popwine.backend.module.cart.api.dto.CartAddRequest;
-import com.popwine.backend.module.cart.api.dto.CartResponse;
+import com.popwine.backend.module.cart.api.dto.CartReq;
+import com.popwine.backend.module.cart.api.dto.CartRes;
 import com.popwine.backend.module.cart.domain.entity.CartItem;
 import com.popwine.backend.module.cart.domain.repo.CartRepo;
 import com.popwine.backend.module.wine.domain.entity.Wine;
@@ -28,7 +28,7 @@ public class CartService {
 
     // 장바구니 담기
     @Transactional
-    public void addToCart(CartAddRequest request) {
+    public void addToCart(CartReq request) {
         Long userId = SecurityUtil.getCurrentUserId();
         Optional<CartItem> existing = cartRepo.findByUserIdAndWineId(userId, request.getWineId());
 
@@ -46,7 +46,7 @@ public class CartService {
 
     // 장바구니 조회
     @Transactional(readOnly = true)
-    public List<CartResponse> getMyCart() {
+    public List<CartRes> getMyCart() {
         Long userId = SecurityUtil.getCurrentUserId();
         List<CartItem> cartItems = cartRepo.findByUserId(userId);
 
@@ -62,7 +62,7 @@ public class CartService {
                 .collect(Collectors.toMap(Wine::getId, Function.identity()));
 
         return cartItems.stream()
-                .map(cart -> CartResponse.of(cart, wineMap.get(cart.getWineId())))
+                .map(cart -> CartRes.of(cart, wineMap.get(cart.getWineId())))
                 .collect(Collectors.toList());
     }
 

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DeliveryRequestDto {
+public class DeliveryReq {
 
     private Long userId; // 사용자 ID
     private Long orderId; // 주문 ID

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class OrderRequestDto {
+public class OrderReqDto {
 
     private String ordererName;
     private List<OrderItemRequest> orderItems;

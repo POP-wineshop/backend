@@ -2,12 +2,9 @@ package com.popwine.backend.module.wine.infra.repo.wine;
 
 
 
-import com.popwine.backend.module.wine.domain.entity.QCategory;
-import com.popwine.backend.module.wine.domain.entity.QWine;
-import com.popwine.backend.module.wine.domain.entity.QWineCategory;
+import com.popwine.backend.module.wine.domain.entity.*;
 import com.popwine.backend.module.wine.domain.enums.CategoryType;
 import com.popwine.backend.module.wine.domain.repo.WineRepo;
-import com.popwine.backend.module.wine.domain.entity.Wine;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;

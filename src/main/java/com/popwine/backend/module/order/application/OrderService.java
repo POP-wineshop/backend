@@ -4,10 +4,9 @@ import com.popwine.backend.core.exception.BadRequestException;
 import com.popwine.backend.core.security.util.SecurityUtil;
 import com.popwine.backend.module.cart.domain.entity.CartItem;
 import com.popwine.backend.module.cart.domain.repo.CartRepo;
-import com.popwine.backend.module.order.api.dto.InstantOrderRequestDto;
+import com.popwine.backend.module.order.api.dto.InstantOrderReq;
 import com.popwine.backend.module.order.api.dto.OrderResponse;
 import com.popwine.backend.module.order.domain.entity.Order;
-import com.popwine.backend.module.order.domain.enums.Orderstatus;
 import com.popwine.backend.module.order.domain.repo.OrderRepository;
 import com.popwine.backend.module.order.domain.vo.OrderItem;
 import com.popwine.backend.module.order.infra.kafka.OrderEventPublisher;
@@ -19,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -74,7 +72,7 @@ public class OrderService {
 
     // 2. 단일 상품 즉시 주문 생성
     @Transactional
-    public OrderResponse createInstantOrder(InstantOrderRequestDto request) {
+    public OrderResponse createInstantOrder(InstantOrderReq request) {
         Long userId = SecurityUtil.getCurrentUserId();
 
         Wine wine = wineRepo.findById(request.getWineId())

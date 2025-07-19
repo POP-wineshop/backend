@@ -2,8 +2,8 @@ package com.popwine.backend.module.delivery.application;
 
 import com.popwine.backend.core.exception.BadRequestException;
 import com.popwine.backend.core.security.util.SecurityUtil;
-import com.popwine.backend.module.delivery.api.dto.DeliveryRequestDto;
-import com.popwine.backend.module.delivery.api.dto.DeliveryResponseDto;
+import com.popwine.backend.module.delivery.api.dto.DeliveryReq;
+import com.popwine.backend.module.delivery.api.dto.DeliveryRes;
 import com.popwine.backend.module.delivery.domain.entity.Delivery;
 import com.popwine.backend.module.delivery.domain.repository.DeliveryRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,11 +21,11 @@ public class DeliveryService {
 
     // 배송지 등록
     @Transactional
-    public List<DeliveryResponseDto> createDeliveries(List<DeliveryRequestDto> requestDtos) {
+    public List<DeliveryRes> createDeliveries(List<DeliveryReq> requestDtos) {
         Long userId = SecurityUtil.getCurrentUserId();
 
         List<Delivery> savedList = new ArrayList<>();
-        for (DeliveryRequestDto dto : requestDtos) {
+        for (DeliveryReq dto : requestDtos) {
             if (dto.isDefault()) {
                 deliveryRepository.resetDefaultAddressForUser(userId);
             }
@@ -35,24 +35,24 @@ public class DeliveryService {
         }
 
         return savedList.stream()
-                .map(DeliveryResponseDto::from)
+                .map(DeliveryRes::from)
                 .toList();
     }
 
 
     //배송지 조회
     @Transactional(readOnly = true)
-    public List<DeliveryResponseDto> getAllDeliveriesForUser() {
+    public List<DeliveryRes> getAllDeliveriesForUser() {
         Long userId = SecurityUtil.getCurrentUserId();
         List<Delivery> deliveries = deliveryRepository.findAllByUserId(userId);
         return deliveries.stream()
-                .map(DeliveryResponseDto::from)
+                .map(DeliveryRes::from)
                 .toList();
     }
 
     // 기본 배송지 조회
     @Transactional(readOnly = true)
-    public DeliveryResponseDto getDefaultDelivery() {
+    public DeliveryRes getDefaultDelivery() {
         Long userId = SecurityUtil.getCurrentUserId();
         Delivery delivery = deliveryRepository.findDefaultDeliveryByUserId(userId);
 
@@ -60,16 +60,16 @@ public class DeliveryService {
             throw new BadRequestException("기본 배송지가 없습니다.");
         }
 
-        return DeliveryResponseDto.from(delivery);
+        return DeliveryRes.from(delivery);
     }
 
 
     // 배송지 수정
     @Transactional
-    public DeliveryResponseDto updateDelivery(Long id, DeliveryRequestDto requestDto) {
+    public DeliveryRes updateDelivery(Long id, DeliveryReq requestDto) {
         Delivery delivery = deliveryRepository.findById(id);
         delivery.update(requestDto.toEntity());
-        return DeliveryResponseDto.from(delivery);
+        return DeliveryRes.from(delivery);
     }
 
     // 배송지 삭제 상태만 변경

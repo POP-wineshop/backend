@@ -3,7 +3,7 @@ package com.popwine.backend.module.order.api.controller;
 import com.popwine.backend.core.common.ApiResponse;
 import com.popwine.backend.module.order.api.dto.OrderResponse;
 import com.popwine.backend.module.order.application.OrderService;
-import com.popwine.backend.module.order.api.dto.InstantOrderRequestDto;
+import com.popwine.backend.module.order.api.dto.InstantOrderReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +25,7 @@ public class OrderController {
 
     //2. 즉시 주문 생성
     @PostMapping("/instant")
-    public ApiResponse<OrderResponse> createInstantOrder(@RequestBody InstantOrderRequestDto request) {
+    public ApiResponse<OrderResponse> createInstantOrder(@RequestBody InstantOrderReq request) {
         return ApiResponse.success(orderService.createInstantOrder(request));
     }
 

@@ -1,8 +1,8 @@
 package com.popwine.backend.module.delivery.api.controller;
 
 import com.popwine.backend.core.common.ApiResponse;
-import com.popwine.backend.module.delivery.api.dto.DeliveryRequestDto;
-import com.popwine.backend.module.delivery.api.dto.DeliveryResponseDto;
+import com.popwine.backend.module.delivery.api.dto.DeliveryReq;
+import com.popwine.backend.module.delivery.api.dto.DeliveryRes;
 import com.popwine.backend.module.delivery.application.DeliveryService;
 import lombok.RequiredArgsConstructor;
 
@@ -19,30 +19,30 @@ public class DeliveryController {
 
     // 배송지 등록
     @PostMapping("/create")
-    public ApiResponse<List<DeliveryResponseDto>> createDelivery(@RequestBody List<DeliveryRequestDto> requestDto) {
-        List<DeliveryResponseDto> response = deliveryService.createDeliveries(requestDto);
+    public ApiResponse<List<DeliveryRes>> createDelivery(@RequestBody List<DeliveryReq> requestDto) {
+        List<DeliveryRes> response = deliveryService.createDeliveries(requestDto);
         return ApiResponse.success(response);
     }
 
     // 배송지 조회
     @GetMapping
-    public ApiResponse<List<DeliveryResponseDto>> getAllDeliveries() {
-        List<DeliveryResponseDto> response = deliveryService.getAllDeliveriesForUser();
+    public ApiResponse<List<DeliveryRes>> getAllDeliveries() {
+        List<DeliveryRes> response = deliveryService.getAllDeliveriesForUser();
         return ApiResponse.success(response);
     }
 
     // 기본 배송지 조회
     @GetMapping("/default")
-    public ApiResponse<DeliveryResponseDto> getDefaultDelivery() {
-        DeliveryResponseDto response = deliveryService.getDefaultDelivery();
+    public ApiResponse<DeliveryRes> getDefaultDelivery() {
+        DeliveryRes response = deliveryService.getDefaultDelivery();
         return ApiResponse.success(response);
     }
 
 
     // 배송지 수정
     @PutMapping("/{id}")
-    public ApiResponse<DeliveryResponseDto> updateDelivery(@PathVariable Long id,@RequestBody DeliveryRequestDto requestDto) {
-        DeliveryResponseDto response = deliveryService.updateDelivery(id, requestDto);
+    public ApiResponse<DeliveryRes> updateDelivery(@PathVariable Long id, @RequestBody DeliveryReq requestDto) {
+        DeliveryRes response = deliveryService.updateDelivery(id, requestDto);
         return ApiResponse.success(response);
     }
 

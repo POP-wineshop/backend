@@ -32,4 +32,10 @@ public class LikeService {
             return LikeRes.from(newLike);
         }
     }
+
+    public boolean isLiked(Long wineId) {
+        Long userId = SecurityUtil.getCurrentUserId();
+        return likeRepo.isLiked(wineId, userId);
+    }
+
 }

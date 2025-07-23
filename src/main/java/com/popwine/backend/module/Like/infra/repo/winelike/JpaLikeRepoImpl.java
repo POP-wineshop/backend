@@ -7,18 +7,15 @@ import java.util.Optional;
 
 public interface JpaLikeRepoImpl extends JpaRepository<Like, Long> {
 
-    // 와인 좋아요 저장
-    Like saveLike(Long wineId, Long userId);
-
-    // 와인 좋아요 삭제
-    void deleteLike(Long wineId, Long userId);
-
-    // 와인 좋아요 여부 확인
-    boolean isLiked(Long wineId, Long userId);
-
-    // 와인 좋아요 개수 조회
-    int countLikes(Long wineId);
-
-    // 사용자 ID와 와인 ID로 좋아요 조회
+    // 사용자 ID와 와인 ID로 좋아요 단건 조회
     Optional<Like> findByUserIdAndWineId(Long userId, Long wineId);
+
+    // 좋아요 개수 조회
+    int countByWineId(Long wineId);
+
+    // 좋아요 삭제
+    void deleteByUserIdAndWineId(Long userId, Long wineId);
+
+    // 좋아요 여부 확인 (존재 여부만 체크할 때)
+    boolean existsByUserIdAndWineId(Long userId, Long wineId);
 }

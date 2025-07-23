@@ -3,9 +3,11 @@ package com.popwine.backend.module.Like.infra.repo.winelike;
 import com.popwine.backend.module.Like.domain.entity.Like;
 import com.popwine.backend.module.Like.domain.repo.LikeRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 @AllArgsConstructor
 public class LikeRepoImpl implements LikeRepo {
     private final JpaLikeRepoImpl jpa;

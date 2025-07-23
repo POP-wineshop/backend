@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
+
 public interface LikeRepo {
     //와인 좋아요 저장
     Like saveLike(Long wineId, Long userId);

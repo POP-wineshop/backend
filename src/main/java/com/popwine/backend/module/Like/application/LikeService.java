@@ -2,7 +2,6 @@ package com.popwine.backend.module.Like.application;
 
 
 import com.popwine.backend.core.security.util.SecurityUtil;
-import com.popwine.backend.module.Like.api.dto.LikeReq;
 import com.popwine.backend.module.Like.api.dto.LikeRes;
 import com.popwine.backend.module.Like.domain.entity.Like;
 import com.popwine.backend.module.Like.domain.repo.LikeRepo;

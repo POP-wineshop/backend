@@ -6,12 +6,14 @@ import com.popwine.backend.module.Like.api.dto.LikeRes;
 import com.popwine.backend.module.Like.domain.entity.Like;
 import com.popwine.backend.module.Like.domain.repo.LikeRepo;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class LikeService {
 
     private final LikeRepo likeRepo;
